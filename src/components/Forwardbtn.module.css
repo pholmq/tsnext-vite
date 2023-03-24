@@ -1,0 +1,30 @@
+.forward label {
+  display: block;
+  box-sizing: border-box;
+  width: 0;
+  height: 30px;
+  border-color: transparent transparent transparent white;
+  transition: 50ms all ease;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 15px 15px 15px 15px ;
+  border-radius: 1px;
+  background-color: #383b4b;
+  border-bottom: 10px solid #32557f;
+  border-left: px solid transparent;
+}
+.forward input[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+/* .forward input[type="checkbox"]:checked + label {
+  border-style: solid;
+  border-width: 15px 15px 15px 15px ;
+} */
+/* .playpause input[type="checkbox"]:focus + label {
+  box-shadow: 0 0 5px white;
+} */
+
+.forward input[type="checkbox"]:hover + label{
+  box-shadow: 0 0 0 2px white;
+}

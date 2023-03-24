@@ -1,0 +1,43 @@
+.play_pause {
+  width: 60px;
+  height:60px;
+  color: white;
+  border-radius: 4px;
+  background-color: #2d2f3c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.playpause label {
+  display: block;
+  box-sizing: border-box;
+  width: 0;
+  height: 30px;
+  border-color: transparent transparent transparent white;
+  transition: 50ms all ease;
+  cursor: pointer;
+  border-style: double;
+  border-width: 0px 0 0px 30px;
+  border-radius: 1px;
+  background-color: #383b4b;
+
+}
+.playpause input[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+.playpause input[type="checkbox"]:checked + label {
+  border-style: solid;
+  border-width: 15px 0 15px 30px;
+}
+/* .playpause input[type="checkbox"]:focus + label {
+  box-shadow: 0 0 5px white;
+} */
+
+.playpause input[type="checkbox"]:hover + label{
+  box-shadow: 0 0 0 2px white;
+}
