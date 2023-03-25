@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { folder, useControls, button } from "leva";
-import celestialSettings from "../settings/celestial-settings.json"
+import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
 import { useStore } from "../store";
 import { Vector3 } from "three";
@@ -11,45 +11,46 @@ import { Planet } from "./Planet";
 import { Earth } from "./Earth";
 
 type Props = {
-    name: string;
-    children?: React.ReactNode;
-  };
+  name: string;
+  children?: React.ReactNode;
+};
 
 type Settings = {
-    color: string;
-    type: string;
-    visible: boolean;
-    axesHelper: boolean;
-    name: string;
-    size: number;
-    containerPos?: number;
-    startPos: number;
-    speed: number;
-    rotationSpeed: number;
-    tilt: number;
-    tiltb: number;
-    orbitRadius: number;
-    orbitCentera: number;
-    orbitCenterb: number;
-    orbitCenterc: number;
-    orbitTilta: number;
-    orbitTiltb: number;
-    arrows: boolean;
-    reverseArrows: boolean;
-    rotationArrows: number;
-    earth: boolean;
-  }
+  color: string;
+  type: string;
+  visible: boolean;
+  axesHelper: boolean;
+  name: string;
+  size: number;
+  containerPos?: number;
+  startPos: number;
+  speed: number;
+  rotationSpeed: number;
+  tilt: number;
+  tiltb: number;
+  orbitRadius: number;
+  orbitCentera: number;
+  orbitCenterb: number;
+  orbitCenterc: number;
+  orbitTilta: number;
+  orbitTiltb: number;
+  arrows: boolean;
+  reverseArrows: boolean;
+  rotationArrows: number;
+  earth: boolean;
+};
 
-export const Cobj = ({name, children}: Props) => {
-    const cName: string = name;
+export const Cobj = ({ name, children }: Props) => {
+  const cName: string = name;
   //REMINDER to self: DONT FORGET PLANET TILT OF EARTH tilt and tiltb
   // Cobj = Celestial Object
   //console.log(name + " rendered");
-  
+
   //Get the settings for this object and merge
-  const cSettings: any = celestialSettings[name as keyof typeof celestialSettings];
+  const cSettings: any =
+    celestialSettings[name as keyof typeof celestialSettings];
   const aSettings: any = miscSettings[name as keyof typeof miscSettings];
-//   const { [name]: aSettings } = miscSettings;
+  //   const { [name]: aSettings } = miscSettings;
   const s: Settings = { ...cSettings, ...aSettings };
 
   const containerRef: any = useRef();
@@ -96,42 +97,42 @@ export const Cobj = ({name, children}: Props) => {
     orbitCenterb,
     orbitCenterc,
     orbitTilta,
-    orbitTiltb
+    orbitTiltb,
   } = useControls(
     "Celestial settings",
     {
       [name]: folder({
         startPos: {
-          value: s.startPos
+          value: s.startPos,
         },
         speed: {
-          value: s.speed
+          value: s.speed,
         },
         orbitRadius: {
           value: s.orbitRadius,
-          min: 0
+          min: 0,
         },
         orbitCentera: {
-          value: s.orbitCentera
+          value: s.orbitCentera,
         },
         orbitCenterb: {
-          value: s.orbitCenterb
+          value: s.orbitCenterb,
         },
         orbitCenterc: {
-          value: s.orbitCenterc
+          value: s.orbitCenterc,
         },
         orbitTilta: {
-          value: s.orbitTilta
+          value: s.orbitTilta,
         },
         orbitTiltb: {
-          value: s.orbitTiltb
+          value: s.orbitTiltb,
         },
         printPosToConsole: button(() => {
           printPositions();
-        })
-      })
+        }),
+      }),
     },
-    
+
     // {options : { collapsed : true }}
     { collapsed: true }
   );
@@ -158,7 +159,7 @@ export const Cobj = ({name, children}: Props) => {
       rotation={[
         orbitTilta * (Math.PI / 180),
         -containerPos * (Math.PI / 180),
-        orbitTiltb * (Math.PI / 180)
+        orbitTiltb * (Math.PI / 180),
       ]}
     >
       {orbitRadius && (
@@ -183,4 +184,4 @@ export const Cobj = ({name, children}: Props) => {
       </group>
     </group>
   );
-}
+};

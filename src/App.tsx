@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stats, OrbitControls, Stars } from "@react-three/drei";
 import AnimationController from "./components/AnimationController";
+import SolarSystem from "./components/SolarSystem";
 function TSNext() {
   return (
     <Canvas
@@ -17,7 +18,7 @@ function TSNext() {
       <ambientLight intensity={0.5} />
       <Stars radius={100000} />
       <AnimationController />
-
+      <SolarSystem />
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="orange" />
