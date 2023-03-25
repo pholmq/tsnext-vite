@@ -162,7 +162,7 @@ export const Cobj = ({ name, children }: Props) => {
           orbitTiltb * (Math.PI / 180),
         ]}
       >
-        x{s.orbitRadius ? (
+        {s.orbitRadius ? (
           <group rotation-x={-Math.PI / 2} visible={s.visible}>
             <Orbit
               radius={orbitRadius}
