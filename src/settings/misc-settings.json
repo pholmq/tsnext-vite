@@ -118,7 +118,7 @@
       "visible": false
     },
     "Jupiter": {
-      "color": "0xa79662",
+      "color": "grey",
       "type": "planet",
       "visible": true,
       "texture": "/textures/planets/2k_jupiter.jpg"
@@ -128,7 +128,7 @@
       "visible": false
     },
     "Saturn": {
-      "color": "0xa79662",
+      "color": "grey",
       "type": "planet",
       "visible": true,
       "planet": true,

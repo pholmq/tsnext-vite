@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Sphere, useTexture, Html, Billboard } from "@react-three/drei";
-import {
-  Selection,
-  Select,
-  EffectComposer,
-  SelectiveBloom
-} from "@react-three/postprocessing";
+// import {
+//   Selection,
+//   Select,
+//   EffectComposer,
+//   SelectiveBloom
+// } from "@react-three/postprocessing";
 
 // import PlanetCamera from "./PlanetCamera";
 

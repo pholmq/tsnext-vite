@@ -14,7 +14,6 @@ type Props = {
   name: string;
   children?: React.ReactNode;
 };
-
 type Settings = {
   color: string;
   type: string;
@@ -152,36 +151,38 @@ export const Cobj = ({ name, children }: Props) => {
   });
 
   return (
-    <group
-      name="Container"
-      ref={containerRef}
-      position={[orbitCentera, orbitCenterc, orbitCenterb]}
-      rotation={[
-        orbitTilta * (Math.PI / 180),
-        -containerPos * (Math.PI / 180),
-        orbitTiltb * (Math.PI / 180),
-      ]}
-    >
-      {orbitRadius && (
-        <group rotation-x={-Math.PI / 2} visible={s.visible}>
-          <Orbit
-            radius={orbitRadius}
-            color={s.color}
-            lineWidth={2}
-            arrows={s.arrows}
-            reverse={s.reverseArrows}
-            rotation={s.rotationArrows ? s.rotationArrows : 0}
-          />
-        </group>
-      )}
-      <group name="Orbit" ref={orbitRef}>
-        <group name="Pivot" ref={pivotRef} position={[orbitRadius, 0, 0]}>
-          {s.axesHelper && <axesHelper args={[10]} />}
-          {s.earth && <Earth {...s} />}
-          {s.type === "planet" && <Planet {...s} />}
-          {children}
+    <>
+      <group
+        name="Container"
+        ref={containerRef}
+        position={[orbitCentera, orbitCenterc, orbitCenterb]}
+        rotation={[
+          orbitTilta * (Math.PI / 180),
+          -containerPos * (Math.PI / 180),
+          orbitTiltb * (Math.PI / 180),
+        ]}
+      >
+        x{s.orbitRadius ? (
+          <group rotation-x={-Math.PI / 2} visible={s.visible}>
+            <Orbit
+              radius={orbitRadius}
+              color={s.color}
+              lineWidth={2}
+              arrows={s.arrows}
+              reverse={s.reverseArrows}
+              rotation={s.rotationArrows ? s.rotationArrows : 0}
+            />
+          </group>
+        ) : null}
+        <group name="Orbit" ref={orbitRef}>
+          <group name="Pivot" ref={pivotRef} position={[orbitRadius, 0, 0]}>
+            {s.axesHelper ? <axesHelper args={[10]} /> : null}
+            {s.earth ? <Earth {...s} /> : null}
+            {s.type === "planet" ? <Planet {...s} /> : null}
+            {children}
+          </group>
         </group>
       </group>
-    </group>
+    </>
   );
 };
