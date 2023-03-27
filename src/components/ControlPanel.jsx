@@ -1,4 +1,4 @@
-import styles from "./Controls.module.css";
+// import styles from "./Controls.module.css";
 import { useEffect, useRef, useState } from "react";
 // import { useFrame } from "@react-three/fiber";
 import { folder, Leva, useControls } from "leva";
@@ -14,11 +14,9 @@ import {
   julianDayTimeToPos,
   speedFactOptions,
 } from "../utils/time-date-functions";
-import Playbtn from "./Playbtn";
-import Forwardbtn from "./Forwardbtn";
 import { Stats } from "@react-three/drei";
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
-const ControlsNew = () => {
+const ControlPanel = () => {
   const posRef = useStore((state) => state.posRef);
   const date = useStore((state) => state.date);
   const time = useStore((state) => state.time);
@@ -33,8 +31,7 @@ const ControlsNew = () => {
   useEffect(() => {
     dateRef.current.value = date;
     timeRef.current.value = time;
-  },[date, time, running])
-
+  }, [date, time, running]);
 
   useControls(() => ({
     Orbits: {
@@ -105,63 +102,55 @@ const ControlsNew = () => {
     );
   }
   return (
-    <div className={styles.controls}>
-      <h2 className={styles.header}>The TYCHOSIUM</h2>
-      <div className={styles.control}>
-        <Stats className={styles.stats} />
-        <div className={styles.playbGroup}>
+    <div className="max-h-[95vh] absolute top-0 left-0 m-2 w-80 flex flex-col bg-gray-900 opacity-80 rounded-md select-none">
+      <h2 className=" font-cambria text-white text-3xl text-center italic font-bold">
+        The TYCHOSIUM
+      </h2>
+      <div className="flex items-center justify-center m-1">
+        <Stats className="mt-12 ml-4" />
+        <div className=" ml-20 ">
           <button
-            className={styles.playb}
+            className="bg-gray-700 text-white rounded ml-2 text-2xl p-2 px-4"
             onClick={() => {
               posRef.current -= speedFact;
               useStore.setState({ date: posToDate(posRef.current) });
               useStore.setState({ time: posToTime(posRef.current) });
-          }}
+            }}
           >
-            <FaStepBackward className={styles.playbIcon} />
+            <FaStepBackward />
           </button>
           <button
-            className={styles.playb}
+            className="bg-gray-700 text-white rounded ml-2 text-2xl p-2 px-4"
             onClick={() => {
               useStore.setState((state) => ({ run: !state.run }));
             }}
           >
-            {running ? (
-              <FaPause className={styles.playbIcon} />
-            ) : (
-              <FaPlay className={styles.playbIcon} />
-            )}
+            {running ? <FaPause /> : <FaPlay />}
           </button>
-          <button className={styles.playb}>
+          <button className="bg-gray-700 text-white rounded ml-2 text-2xl p-2 px-4">
             <FaStepForward
-              className={styles.playbIcon}
               onClick={() => {
                 posRef.current += speedFact;
                 useStore.setState({ date: posToDate(posRef.current) });
                 useStore.setState({ time: posToTime(posRef.current) });
-              
               }}
             />
           </button>
         </div>
       </div>
 
-      <div className={styles.control}>
-        <label>Date:</label>
-        <input
-          ref={dateRef}
-          onKeyDown={dateKeyDown}
-          onBlur={dateOnBlur}
-        />
+      <div className="flex items-center justify-center m-1">
+        <label className="text-base text-white mr-2 ml-1 flex-1">Date:</label>
+        <input className="text-base text-white bg-gray-700 rounded p-1" ref={dateRef} onKeyDown={dateKeyDown} onBlur={dateOnBlur} />
       </div>
-      <div className={styles.control}>
-        <label>Time (UTC):</label>
-        <input ref={timeRef} onKeyDown={timeKeyDown} onBlur={timeOnBlur} />
+      <div className="flex items-center justify-center m-1">
+        <label className="text-base text-white mr-2 ml-1 flex-1">Time (UTC):</label>
+        <input className="text-base text-white bg-gray-700 rounded p-1" ref={timeRef} onKeyDown={timeKeyDown} onBlur={timeOnBlur} />
       </div>
 
-      <div className={styles.control}>
-        <label>1 second equals</label>
-        <select
+      <div className="flex items-center justify-center m-1">
+        <label className="text-base text-white mr-2 ml-1 flex-1">1 second equals</label>
+        <select className="text-base text-white bg-gray-700 mr-8 rounded p-1"
           value={speedFact}
           onChange={(e) => {
             useStore.setState({ speedFact: Number(e.target.value) });
@@ -175,7 +164,7 @@ const ControlsNew = () => {
         </select>
       </div>
 
-      <div className={styles.controlLeva}>
+      <div className="mt-2 overflow-auto">
         <Leva
           fill
           hideCopyButton
@@ -190,4 +179,4 @@ const ControlsNew = () => {
   );
 };
 
-export default ControlsNew;
+export default ControlPanel;

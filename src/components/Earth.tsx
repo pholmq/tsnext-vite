@@ -35,7 +35,7 @@ export function Earth(props: any) {
       <CelestialSphere tilt={props.tilt} tiltb={props.tiltb} visible={false} />
       {hovered && (
         <Html position={[0, 0, 0]} style={{ pointerEvents: 'none' }}>
-          <div className="planetLabel">Earth</div>
+          <div className="text-white text-center select-none">Earth</div>
         </Html>
       )}
       <mesh
