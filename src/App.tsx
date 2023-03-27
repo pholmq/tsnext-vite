@@ -26,7 +26,7 @@ function TSNext() {
         <mesh rotation={[-Math.PI/5, 0, Math.PI/4]}>
           <tetrahedronGeometry/>
           {/* <boxGeometry args={[1, 1, 1]} /> */}
-          <meshStandardMaterial color="orange" />
+          <meshBasicMaterial color="orange" />
         </mesh>
       </Canvas>
       <ControlPanel />

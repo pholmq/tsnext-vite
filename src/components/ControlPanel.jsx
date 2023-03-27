@@ -102,7 +102,7 @@ const ControlPanel = () => {
     );
   }
   return (
-    <div className="max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none">
+    <div className="flex flex-col max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none">
       <h2 className=" font-cambria text-white text-4xl text-center italic font-bold">
         The TYCHOSIUM
       </h2>
