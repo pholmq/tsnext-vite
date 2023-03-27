@@ -16,4 +16,7 @@ export const useStore = create((set) => ({
   orbitsLinewidth: 1,
   arrows: false,
   arrowScale: 1,
+
+  plotPosRef: createRef(),
+
 }));

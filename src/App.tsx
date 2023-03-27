@@ -4,6 +4,7 @@ import { Stats, OrbitControls, Stars } from "@react-three/drei";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
+import PlotSolarSystem from "./components/PlotSolarSystem";
 function TSNext() {
   return (
     <>
@@ -21,8 +22,10 @@ function TSNext() {
         <Stars radius={100000} />
         <AnimationController />
         <SolarSystem />
-        <mesh>
-          <boxGeometry args={[1, 1, 1]} />
+        <PlotSolarSystem/>
+        <mesh rotation={[-Math.PI/5, 0, Math.PI/4]}>
+          <tetrahedronGeometry/>
+          {/* <boxGeometry args={[1, 1, 1]} /> */}
           <meshStandardMaterial color="orange" />
         </mesh>
       </Canvas>
