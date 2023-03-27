@@ -102,13 +102,13 @@ const ControlPanel = () => {
     );
   }
   return (
-    <div className="max-h-[95vh] absolute top-0 left-0 m-2 w-80 flex flex-col bg-gray-900 opacity-80 rounded-md select-none">
-      <h2 className=" font-cambria text-white text-3xl text-center italic font-bold">
+    <div className="max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none">
+      <h2 className=" font-cambria text-white text-4xl text-center italic font-bold">
         The TYCHOSIUM
       </h2>
-      <div className="flex items-center justify-center m-1">
-        <Stats className="mt-12 ml-4" />
-        <div className=" ml-20 ">
+      <div>
+        <Stats className="mt-11 ml-3" />
+        <div className="flex justify-end mr-1">
           <button
             className="bg-gray-700 text-white rounded ml-2 text-2xl p-2 px-4"
             onClick={() => {
@@ -141,16 +141,31 @@ const ControlPanel = () => {
 
       <div className="flex items-center justify-center m-1">
         <label className="text-base text-white mr-2 ml-1 flex-1">Date:</label>
-        <input className="text-base text-white bg-gray-700 rounded p-1" ref={dateRef} onKeyDown={dateKeyDown} onBlur={dateOnBlur} />
+        <input
+          className="text-base text-white bg-gray-700 rounded p-1"
+          ref={dateRef}
+          onKeyDown={dateKeyDown}
+          onBlur={dateOnBlur}
+        />
       </div>
       <div className="flex items-center justify-center m-1">
-        <label className="text-base text-white mr-2 ml-1 flex-1">Time (UTC):</label>
-        <input className="text-base text-white bg-gray-700 rounded p-1" ref={timeRef} onKeyDown={timeKeyDown} onBlur={timeOnBlur} />
+        <label className="text-base text-white mr-2 ml-1 flex-1">
+          Time (UTC):
+        </label>
+        <input
+          className="text-base text-white bg-gray-700 rounded p-1"
+          ref={timeRef}
+          onKeyDown={timeKeyDown}
+          onBlur={timeOnBlur}
+        />
       </div>
 
       <div className="flex items-center justify-center m-1">
-        <label className="text-base text-white mr-2 ml-1 flex-1">1 second equals</label>
-        <select className="text-base text-white bg-gray-700 mr-8 rounded p-1"
+        <label className="text-base text-white mr-2 ml-1 flex-1">
+          1 second equals
+        </label>
+        <select
+          className="text-base text-white bg-gray-700 mr-8 rounded p-1"
           value={speedFact}
           onChange={(e) => {
             useStore.setState({ speedFact: Number(e.target.value) });
