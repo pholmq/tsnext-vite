@@ -24,7 +24,7 @@ function TSNext() {
         <Stars radius={100000} />
         <AnimationController />
         <SolarSystem />
-        <PlotSolarSystem/>
+        {/* <PlotSolarSystem/> */}
         <mesh rotation={[-Math.PI/5, 0, Math.PI/4]}>
           <tetrahedronGeometry/>
           {/* <boxGeometry args={[1, 1, 1]} /> */}
