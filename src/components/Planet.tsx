@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Sphere, useTexture, Html, Billboard } from "@react-three/drei";
+import { Vector3, Spherical } from "three";
+import { radToRa, radToDec } from "../utils/celestial-functions";
 // import {
 //   Selection,
 //   Select,
@@ -10,9 +12,9 @@ import { Sphere, useTexture, Html, Billboard } from "@react-three/drei";
 
 // import PlanetCamera from "./PlanetCamera";
 
-
 export function Planet(props: any) {
   const ref: any = useRef();
+  const posRef: any = useRef();
   // useFrame(() => {
   //   ref.current.rotation.y -= 0.0005;
   // });
@@ -22,18 +24,50 @@ export function Planet(props: any) {
   // console.log(props);
 
   const [hovered, setHover] = useState(false);
+  const { scene } = useThree();
+  const planetPos = new Vector3();
+  const lookAtDir = new Vector3(0, 0, 1);
+  const csPos = new Vector3();
+  const sphericalPos = new Spherical();
+
+  if (hovered) {
+    //Some geometrical gymnastics to get the Right Ascension, Declination and distance
+    //to the planet hovered
+    console.log(props.name + " hovered");
+    scene.getObjectByName(props.name).getWorldPosition(planetPos);
+    const csObj = scene.getObjectByName("CelestialSphere");
+    const csLookAtObj = scene.getObjectByName("CSLookAtObj");
+    csLookAtObj.lookAt(planetPos);
+    lookAtDir.applyQuaternion(csLookAtObj.quaternion);
+    lookAtDir.setLength(csPos.distanceTo(planetPos));
+    sphericalPos.setFromVector3(lookAtDir);
+    // console.log(radToRa(sphericalPos.theta));
+    // console.log(radToDec(sphericalPos.phi));
+    posRef.current.textContent = "RA: " + radToRa(sphericalPos.theta) + "Dec: " + radToDec(sphericalPos.phi);
+  }
 
   return (
     <>
-      {hovered && (
-        <Html position={[0, 0, 0]} style={{ pointerEvents: 'none' }}>
-          <div className="text-white text-center select-none">
+        <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
+          <div hidden={hovered ? false: true} className="text-white text-center select-none">
             {props.name} <br />
-            RA:&nbsp;XXhXXmXXs Dec:&nbsp;+XX°XX&apos;XX&quot;
+            <label ref={posRef}>
+              RA:&nbsp;XXhXXmXXs Dec:&nbsp;+XX°XX&apos;XX&quot;
+            </label>
           </div>
         </Html>
-      )}
+      {/* {hovered ? (
+        <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
+          <div className="text-white text-center select-none">
+            {props.name} <br />
+            <div ref={posRef}>
+              RA:&nbsp;XXhXXmXXs Dec:&nbsp;+XX°XX&apos;XX&quot;
+            </div>
+          </div>
+        </Html>
+      ) : null} */}
       <mesh
+        name={props.name}
         ref={ref}
         scale={1}
         // { e.stopPropagation(); handleT(); }}

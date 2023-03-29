@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree  } from "@react-three/fiber";
 import { Stats, OrbitControls, Stars } from "@react-three/drei";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
 import PlotSolarSystem from "./components/PlotSolarSystem";
+
 function TSNext() {
+  
   return (
     <>
       <Canvas

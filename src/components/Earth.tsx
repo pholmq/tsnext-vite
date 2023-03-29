@@ -32,7 +32,7 @@ export function Earth(props: any) {
   });
   return (
     <>
-      <CelestialSphere tilt={props.tilt} tiltb={props.tiltb} visible={false} />
+      <CelestialSphere tilt={props.tilt} tiltb={props.tiltb} visible={true} />
       {hovered && (
         <Html position={[0, 0, 0]} style={{ pointerEvents: 'none' }}>
           <div className="text-white text-center select-none">Earth</div>
