@@ -3,7 +3,7 @@ import { Html } from "@react-three/drei";
 import { Vector3, Spherical } from "three";
 import { useThree } from "@react-three/fiber";
 import { radToRa, radToDec } from "../utils/celestial-functions";
-export function PlanetInfo({hovered, name}) {
+export function PlanetInfo({hovered, name, unicode}) {
   const ref: any = useRef();
   const { scene } = useThree();
 
@@ -57,6 +57,7 @@ export function PlanetInfo({hovered, name}) {
     // console.log(radToRa(sphericalPos.theta));
     // console.log(radToDec(sphericalPos.phi));
     ref.current.innerHTML =
+    name + " " + unicode + "<br/>" +
       "RA:&nbsp;" +
       ra +
       "<br/>Dec:&nbsp;" +
@@ -75,7 +76,6 @@ export function PlanetInfo({hovered, name}) {
         hidden={hovered ? false : true}
         className="text-white text-center select-none"
       >
-        {name} <br />
         <label ref={ref}>
           RA:&nbsp;XXhXXmXXs Dec:&nbsp;+XX°XX&apos;XX&quot;
         </label>

@@ -11,12 +11,11 @@ export function Planet(props: any) {
 
   return (
     <>
-      <PlanetInfo hovered={hovered} name={props.name} />
+      <PlanetInfo hovered={hovered} name={props.name} unicode={props.unicodeSymbol} />
       <mesh
         name={props.name}
         ref={ref}
         scale={1}
-        // { e.stopPropagation(); handleT(); }}
         onPointerOver={(e) => {
           e.stopPropagation();
           setHover(true);
@@ -27,27 +26,8 @@ export function Planet(props: any) {
         }}
       >
         <sphereGeometry args={[props.size, 128, 128]} />
-        {/* <meshPhongMaterial specularMap={specularMap} /> */}
-        <meshStandardMaterial
-          map={planetTexture}
-          // normalMap={normalMap}
-          // metalness={0.4}
-          // roughness={0.7}
-          // side={DoubleSide}
-        />
-        {/* <PlanetCamera /> */}
-        {/* {props.glow && (
-          <EffectComposer>
-            {" "}
-            <SelectiveBloom
-              mipmapBlur
-              radius={0.5}
-              luminanceThreshold={0.001}
-              intensity={5}
-            />{" "}
-          </EffectComposer>
-        )} */}
-        {props.light ? <pointLight intensity={3} />: null}
+        <meshStandardMaterial map={planetTexture} />
+        {props.light ? <pointLight intensity={3} /> : null}
       </mesh>
     </>
   );

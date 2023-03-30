@@ -1,137 +1,145 @@
 {
-    "SystemCenter": {
-      "color": "grey",
-      "type": "deferent",
-      "visible": true,
-      "axesHelper": false
-    },
-    "Earth": {
-      "earth": true,
-      "color": "blue",
-      "visible": true,
-      "axesHelper": false,
-      "arrows": true,
-      "reverseArrows": true,
-      "texture": "/textures/8k_earth_daymap.jpg"
-    },
-    "MoonDefA": {
-      "color": "gray",
-      "type": "deferent",
-      "visible": false,
-      "axesHelper": false
-    },
-  
-    "MoonDefB": {
-      "color": "gray",
-      "type": "deferent",
-      "visible": false,
-      "axesHelper": false
-    },
-    "Moon": {
-      "color": "gray",
-      "type": "planet",
-      "visible": true,
-      "axesHelper": false,
-      "planet": true,
-      "texture": "/textures/planets/2k_moon.jpg"
-    },
-  
-    "SunDefA": {
-      "color": "yellow",
-      "type": "deferent",
-      "visible": false
-    },
-    "Sun": {
-      "color": "yellow",
-      "type": "planet",
-      "visible": true,
-      "axesHelper": false,
-      "arrows": true,
-      "planet": true,
-      "texture": "/textures/planets/2k_sun.jpg",
-      "light": true,
-      "glow": true
-    },
-    "MercuryDefA": {
-      "color": "gray",
-      "type": "deferent",
-      "visible": false
-    },
-    "MercuryDefB": {
-      "color": "gray",
-      "type": "deferent",
-      "visible": false
-    },
-    "Mercury": {
-      "color": "gray",
-      "type": "planet",
-      "visible": true,
-      "axesHelper": false,
-      "arrows": true,
-      "texture": "/textures/planets/2k_mercury.jpg"
-    },
-    "VenusDefA": {
-      "color": "orange",
-      "type": "deferent",
-      "visible": false
-    },
-    "VenusDefB": {
-      "color": "orange",
-      "type": "deferent",
-      "visible": false
-    },
-    "Venus": {
-      "color": "orange",
-      "type": "planet",
-      "visible": true,
-      "axesHelper": false,
-      "arrows": true,
-      "texture": "/textures/planets/2k_venus.jpg"
-    },
-    "MarsDefE": {
-      "color": "red",
-      "type": "deferent",
-      "visible": false
-    },
-    "MarsDefS": {
-      "color": "red",
-      "type": "deferent",
-      "visible": false
-    },
-    "Mars": {
-      "color": "red",
-      "type": "planet",
-      "visible": true,
-      "axesHelper": false,
-      "arrows": true,
-      "rotationArrows": -6.67,
-      "texture": "/textures/planets/2k_mars.jpg"
-    },
-    "Phobos": {
-      "type": "planet"
-    },
-    "Deimos": {
-      "type": "planet"
-    },
-    "JupiterDef": {
-      "type": "deferent",
-      "visible": false
-    },
-    "Jupiter": {
-      "color": "grey",
-      "type": "planet",
-      "visible": true,
-      "texture": "/textures/planets/2k_jupiter.jpg"
-    },
-    "SaturnDef": {
-      "type": "deferent",
-      "visible": false
-    },
-    "Saturn": {
-      "color": "grey",
-      "type": "planet",
-      "visible": true,
-      "planet": true,
-      "texture": "/textures/planets/2k_saturn.jpg"
-    }
+  "SystemCenter": {
+    "color": "grey",
+    "type": "deferent",
+    "visible": true,
+    "axesHelper": false
+  },
+  "Earth": {
+    "earth": true,
+    "color": "blue",
+    "visible": true,
+    "axesHelper": false,
+    "arrows": true,
+    "reverseArrows": true,
+    "texture": "/textures/8k_earth_daymap.jpg",
+    "unicodeSymbol": "&#x1F728;"
+  },
+  "MoonDefA": {
+    "color": "gray",
+    "type": "deferent",
+    "visible": false,
+    "axesHelper": false
+  },
+
+  "MoonDefB": {
+    "color": "gray",
+    "type": "deferent",
+    "visible": false,
+    "axesHelper": false
+  },
+  "Moon": {
+    "color": "gray",
+    "type": "planet",
+    "visible": true,
+    "axesHelper": false,
+    "planet": true,
+    "texture": "/textures/planets/2k_moon.jpg",
+    "unicodeSymbol": "&#x263D;"
+  },
+
+  "SunDefA": {
+    "color": "yellow",
+    "type": "deferent",
+    "visible": false
+  },
+  "Sun": {
+    "color": "yellow",
+    "type": "planet",
+    "visible": true,
+    "axesHelper": false,
+    "arrows": true,
+    "planet": true,
+    "texture": "/textures/planets/2k_sun.jpg",
+    "light": true,
+    "glow": true,
+    "unicodeSymbol": "&#x2609;"
+  },
+  "MercuryDefA": {
+    "color": "gray",
+    "type": "deferent",
+    "visible": false
+  },
+  "MercuryDefB": {
+    "color": "gray",
+    "type": "deferent",
+    "visible": false
+  },
+  "Mercury": {
+    "color": "gray",
+    "type": "planet",
+    "visible": true,
+    "axesHelper": false,
+    "arrows": true,
+    "texture": "/textures/planets/2k_mercury.jpg",
+    "unicodeSymbol": "&#x263F;"
+  },
+  "VenusDefA": {
+    "color": "orange",
+    "type": "deferent",
+    "visible": false
+  },
+  "VenusDefB": {
+    "color": "orange",
+    "type": "deferent",
+    "visible": false
+  },
+  "Venus": {
+    "color": "orange",
+    "type": "planet",
+    "visible": true,
+    "axesHelper": false,
+    "arrows": true,
+    "texture": "/textures/planets/2k_venus.jpg",
+    "unicodeSymbol": "&#x2640;"
+  },
+  "MarsDefE": {
+    "color": "red",
+    "type": "deferent",
+    "visible": false
+  },
+  "MarsDefS": {
+    "color": "red",
+    "type": "deferent",
+    "visible": false
+  },
+  "Mars": {
+    "color": "red",
+    "type": "planet",
+    "visible": true,
+    "axesHelper": false,
+    "arrows": true,
+    "rotationArrows": -6.67,
+    "texture": "/textures/planets/2k_mars.jpg",
+    "unicodeSymbol": "&#x2642;"
+  },
+  "Phobos": {
+    "type": "planet"
+  },
+  "Deimos": {
+    "type": "planet"
+  },
+  "JupiterDef": {
+    "type": "deferent",
+    "visible": false
+  },
+  "Jupiter": {
+    "color": "grey",
+    "type": "planet",
+    "visible": true,
+    "texture": "/textures/planets/2k_jupiter.jpg",
+    "unicodeSymbol": "&#x2643;"
+  },
+  "SaturnDef": {
+    "type": "deferent",
+    "visible": false
+  },
+  "Saturn": {
+    "color": "grey",
+    "type": "planet",
+    "visible": true,
+    "planet": true,
+    "texture": "/textures/planets/2k_saturn.jpg",
+    "unicodeSymbol": "&#x2644;"
   }
+}
