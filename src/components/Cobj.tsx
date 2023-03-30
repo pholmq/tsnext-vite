@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { folder, useControls, button } from "leva";
 import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
@@ -40,7 +40,6 @@ type Settings = {
 };
 
 export const Cobj = ({ name, children }: Props) => {
-  const cName: string = name;
   //REMINDER to self: DONT FORGET PLANET TILT OF EARTH tilt and tiltb
   // Cobj = Celestial Object
   //console.log(name + " rendered");
@@ -56,36 +55,19 @@ export const Cobj = ({ name, children }: Props) => {
   const pivotRef: any = useRef();
   const orbitRef: any = useRef();
 
-  //const _vector = new Vector3();
-  function printPositions() {
-    const worldPosVec = new Vector3();
-    const worldDirVec = new Vector3();
+  const traceOn = useStore((s) => s.trace);
+  const { scene } = useThree();
+  if (traceOn) {
+    //Init trace
+    const csPos = new Vector3();
+    // scene.getObjectByName(name).getWorldPosition(csPos);
+    scene.updateMatrixWorld();
+    console.log("trace is: " + traceOn + " Positon of " + name + " is " + csPos)
 
-    containerRef.current.getWorldPosition(worldPosVec);
-    containerRef.current.getWorldDirection(worldDirVec);
-    console.log(`${name} group
-    World position
-    x : ${worldPosVec.x}
-    y : ${worldPosVec.y}
-    z : ${worldPosVec.z}
-    World direction
-    x : ${worldDirVec.x}
-    y : ${worldDirVec.y}
-    z : ${worldDirVec.z}
-    `);
-    pivotRef.current.getWorldPosition(worldPosVec);
-    pivotRef.current.getWorldDirection(worldDirVec);
-    console.log(`${name} Sphere
-    World position
-    x : ${worldPosVec.x}
-    y : ${worldPosVec.y}
-    z : ${worldPosVec.z}
-    World direction
-    x : ${worldDirVec.x}
-    y : ${worldDirVec.y}
-    z : ${worldDirVec.z}
-    `);
+  } else {
+    //Reset trace
   }
+
 
   //  useControls(s.orbitRadius)
   const {
@@ -127,24 +109,18 @@ export const Cobj = ({ name, children }: Props) => {
           value: s.orbitTiltb,
         },
         printPosToConsole: button(() => {
-          printPositions();
+          console.log("X");
         }),
       }),
     },
 
-    // {options : { collapsed : true }}
-    { collapsed: true }
   );
 
   const containerPos = s.containerPos ? s.containerPos : 0;
-  // let pos = 0;
-  //  const pos = useStore((state) => state.pos);
+
   const posRef: any = useStore((state) => state.posRef);
+
   useFrame(() => {
-    // const pos = posx.current;
-    //pos += 0.01;
-    // console.log(MathUtils.lerp(orbitRef.current.rotation.y, posRef.current - startPos * (Math.PI / 180, 0.5))
-    // console.log(orbitRef.current.rotation.y)
 
     orbitRef.current.rotation.y =
       speed * posRef.current - startPos * (Math.PI / 180);

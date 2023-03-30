@@ -34,6 +34,10 @@ const ControlPanel = () => {
   }, [date, time, running]);
 
   useControls(() => ({
+    Trace: {
+      value: useStore.getState().trace,
+      onChange: (v) => useStore.setState({ trace: v }),
+    },
     Orbits: {
       value: useStore.getState().orbits,
       onChange: (v) => useStore.setState({ orbits: v }),
