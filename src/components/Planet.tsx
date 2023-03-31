@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
+import { useStore } from "../store";
 import { useTexture } from "@react-three/drei";
-import { PlanetInfo } from "./PlanetInfo";
+import { CelestialInfo } from "./CelestialInfo";
+import { Trace } from "./Trace";
 
 export function Planet(props: any) {
   const ref: any = useRef();
@@ -9,9 +11,17 @@ export function Planet(props: any) {
 
   const [hovered, setHover] = useState(false);
 
+  const traceOn = useStore((s) => s.trace);
+
+
   return (
     <>
-      <PlanetInfo hovered={hovered} name={props.name} unicode={props.unicodeSymbol} />
+    <Trace traceOn={traceOn} name={props.name}/>
+      <CelestialInfo
+        hovered={hovered}
+        name={props.name}
+        symbol={props.unicodeSymbol}
+      />
       <mesh
         name={props.name}
         ref={ref}

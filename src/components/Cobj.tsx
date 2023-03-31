@@ -1,10 +1,9 @@
 import { useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { folder, useControls, button } from "leva";
 import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
 import { useStore } from "../store";
-import { Vector3 } from "three";
 
 import { Orbit } from "./Orbit";
 import { Planet } from "./Planet";
@@ -54,20 +53,6 @@ export const Cobj = ({ name, children }: Props) => {
   const containerRef: any = useRef();
   const pivotRef: any = useRef();
   const orbitRef: any = useRef();
-
-  const traceOn = useStore((s) => s.trace);
-  const { scene } = useThree();
-  if (traceOn) {
-    //Init trace
-    const csPos = new Vector3();
-    // scene.getObjectByName(name).getWorldPosition(csPos);
-    scene.updateMatrixWorld();
-    console.log("trace is: " + traceOn + " Positon of " + name + " is " + csPos)
-
-  } else {
-    //Reset trace
-  }
-
 
   //  useControls(s.orbitRadius)
   const {

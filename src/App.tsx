@@ -1,13 +1,11 @@
-import { useState } from "react";
-import { Canvas, useThree  } from "@react-three/fiber";
-import { Stats, OrbitControls, Stars } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Stars } from "@react-three/drei";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
 import PlotSolarSystem from "./components/PlotSolarSystem";
-
+import TraceObjects from "./components/TraceObjects";
 function TSNext() {
-  
   return (
     <>
       <Canvas
@@ -19,14 +17,15 @@ function TSNext() {
         }}
       >
         <OrbitControls makeDefault enableDamping={false} maxDistance={500000} />
-        <axesHelper args={[10]} position={[0, 0, 0]} />
         <ambientLight intensity={0.5} />
         <Stars radius={100000} />
         <AnimationController />
         <SolarSystem />
+        <TraceObjects />
         {/* <PlotSolarSystem/> */}
-        <mesh rotation={[-Math.PI/5, 0, Math.PI/4]}>
-          <tetrahedronGeometry/>
+        <axesHelper args={[5]} position={[0, 0, 0]} />
+        <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
+          <tetrahedronGeometry />
           {/* <boxGeometry args={[1, 1, 1]} /> */}
           <meshBasicMaterial color="orange" />
         </mesh>
