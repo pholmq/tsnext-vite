@@ -5,6 +5,7 @@ import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
 import PlotSolarSystem from "./components/PlotSolarSystem";
 import TraceObjects from "./components/TraceObjects";
+//tst
 function TSNext() {
   return (
     <>
