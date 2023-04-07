@@ -14,10 +14,9 @@ export const useStore = create((set) => ({
   speedFact: getDefaultSpeedFact(),
   trace: false,
   orbits: true,
-  orbitsLinewidth: 1,
+  orbitsLinewidth: 2,
   arrows: false,
   arrowScale: 1,
 
   plotPosRef: createRef(),
-
 }));

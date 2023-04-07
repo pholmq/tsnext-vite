@@ -26,9 +26,13 @@ function Arrow({
   }
   return (
     <group rotation={[0, 0, rotation]}>
-      <mesh position={[radius, 0, 0]} rotation={[0, 0, arrowDirection]} scale={arrowScale}>
+      <mesh
+        position={[radius, 0, 0]}
+        rotation={[0, 0, arrowDirection]}
+        scale={arrowScale}
+      >
         <coneGeometry args={[3, 8]} />
-        <meshBasicMaterial color={color} opacity={0.5} transparent />
+        <meshBasicMaterial color={color} opacity={0.8} transparent />
       </mesh>
     </group>
   );
@@ -57,9 +61,8 @@ export function Orbit({
   const showArrows = useStore((s) => s.arrows);
   const showOrbits = useStore((s) => s.orbits);
   const orbitsLinewidth = useStore((s) => s.orbitsLinewidth);
-  
-  // console.log(showOrbits);
 
+  // console.log(showOrbits);
 
   useFrame(() => {
     if (showOrbits) {
@@ -125,8 +128,8 @@ export function Orbit({
           color={color} // Default
           lineWidth={orbitsLinewidth} // In pixels (default)
           dashed={false}
-          transparent
-          opacity={0.5}
+          // transparent
+          // opacity={0.5}
         />
       </group>
       {/* )} */}

@@ -4,7 +4,8 @@ import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
 import PlotSolarSystem from "./components/PlotSolarSystem";
-import TraceObjects from "./components/TraceObjects";
+import TraceController from "./components/TraceController";
+// import Line from "./components/Line";
 //tst
 function TSNext() {
   return (
@@ -22,7 +23,7 @@ function TSNext() {
         <Stars radius={100000} />
         <AnimationController />
         <SolarSystem />
-        <TraceObjects />
+        <TraceController />
         {/* <PlotSolarSystem/> */}
         <axesHelper args={[5]} position={[0, 0, 0]} />
         <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
