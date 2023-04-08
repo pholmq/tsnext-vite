@@ -13,30 +13,42 @@ function TraceLine({ points }) {
 export default function TraceController() {
   const run = useStore((s) => s.run);
   const [points, setPoints] = useState(null);
-  let deltaSum = 0;
   const { scene } = useThree();
-  const postions = useRef([]);
+  const positions = useRef([]);
+  const marsObj = useRef(null);
+
+  let deltaSum = 0;
+
+  const posArr = [];
+  // let pointsArr = [];
+  let index = 0;
   useFrame((state, delta) => {
-    if (run) {
-      deltaSum += delta;
-      // if (deltaSum > 0.1) {
-      const csPos = new Vector3();
-      scene.getObjectByName("Mars").getWorldPosition(csPos);
-      postions.current.push(csPos);
-      // const points = Array.from({ length: 3 }).map(() => {
-      //   const angle = (index + tickRef.current) * res
-      // const points = [
-      //   new Vector3(-20, 0, 0),
-      //   new Vector3(0, 2, 0),
-      //   new Vector3(2, 0, 0),
-      // ];
-      //   return [extent * Math.sin(angle * x_period), extent * Math.cos(angle * y_period), 0]
-      // })
-      console.log(postions.current);
-      setPoints(postions.current);
-      deltaSum = 0;
+    deltaSum += delta;
+    if (deltaSum > 0.1) {
+      const objectPos = new Vector3();
+      scene.getObjectByName("Mars").getWorldPosition(objectPos);
+      positions.current.push(objectPos);
+      const pointsArr = [];
+      const randNum = Math.floor(Math.random() * 5) + 2;
+      // for (let i = 1; i < randNum; i++) {
+      //   const randomVector = new Vector3(
+      //     Math.floor(Math.random() * 101) - 50,
+      //     Math.floor(Math.random() * 101) - 50,
+      //     Math.floor(Math.random() * 101) - 50
+      //   );
+      //   pointsArr[i] = randomVector;
       // }
+      for (let i = 0; i < positions.current.length; i++) {
+        pointsArr[i] = positions.current[i];
+      }
+      setPoints(pointsArr);
+      deltaSum = 0;
     }
   });
+
+  // const pointsArr = [, new Vector3(0, 2, 0), new Vector3(2, 0, 0)];
+  // postions.current = pointsArr;
+  // setPoints(pointsArr);
+
   return <TraceLine points={points} />;
 }

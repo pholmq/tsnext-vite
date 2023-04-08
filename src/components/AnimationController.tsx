@@ -16,6 +16,7 @@ const AnimationController = () => {
   useStore.setState({ time: posToTime(posRef.current) });
   useFrame((state, delta) => {
     if (run) {
+      // console.log(deltaSum);
       posRef.current = posRef.current + delta * speedFact;
       deltaSum += delta;
       if (deltaSum > 0.1) {
