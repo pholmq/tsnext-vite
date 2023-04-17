@@ -7,7 +7,7 @@
   },
   "Earth": {
     "earth": true,
-    "color": "blue",
+    "color": "skyblue",
     "visible": true,
     "axesHelper": false,
     "arrows": true,

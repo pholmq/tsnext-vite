@@ -12,6 +12,7 @@ function TraceLine({ points }) {
 
 export default function TraceController() {
   const run = useStore((s) => s.run);
+  const traceOn = useStore((s) => s.trace);
   const [points, setPoints] = useState(null);
   const { scene } = useThree();
   const positions = useRef([]);
@@ -22,14 +23,19 @@ export default function TraceController() {
   const posArr = [];
   // let pointsArr = [];
   let index = 0;
+  const pointsArr = [];
   useFrame((state, delta) => {
     deltaSum += delta;
-    if (deltaSum > 0.1) {
+    if (deltaSum > 0.1 && run && traceOn) {
       const objectPos = new Vector3();
       scene.getObjectByName("Mars").getWorldPosition(objectPos);
+      const randomVector = new Vector3(
+        Math.floor(Math.random() * 101) - 50,
+        Math.floor(Math.random() * 101) - 50,
+        Math.floor(Math.random() * 101) - 50
+      );
       positions.current.push(objectPos);
-      const pointsArr = [];
-      const randNum = Math.floor(Math.random() * 5) + 2;
+      // const randNum = Math.floor(Math.random() * 5) + 2;
       // for (let i = 1; i < randNum; i++) {
       //   const randomVector = new Vector3(
       //     Math.floor(Math.random() * 101) - 50,
