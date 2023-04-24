@@ -42,6 +42,10 @@ const ControlPanel = () => {
       value: useStore.getState().orbits,
       onChange: (v) => useStore.setState({ orbits: v }),
     },
+    PlotPos: {
+      value: useStore.getState().plotPos,
+      onChange: (v) => useStore.setState({ plotPos: v }),
+    },
     "Orbits line width": {
       value: useStore.getState().orbitsLinewidth,
       onChange: (v) => useStore.setState({ orbitsLinewidth: v }),

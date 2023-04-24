@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 // import { folder, useControls, button } from "leva";
 import celestialSettings from "../settings/celestial-settings.json";
@@ -59,11 +59,21 @@ export const Pobj = ({ name, children }: Props) => {
   const containerPos = s.containerPos ? s.containerPos : 0;
   // let pos = 0;
   //  const pos = useStore((state) => state.pos);
-  const posRef: any = useStore((state) => state.plotPosRef);
-  useFrame(() => {
+  const plotPos: any = useStore((state) => state.plotPos);
+
+  useEffect(() => {
+    console.log("Useffect blank ran");
+  }, []);
+
+  useEffect(() => {
     orbitRef.current.rotation.y =
-      s.speed * posRef.current - s.startPos * (Math.PI / 180);
-  });
+      s.speed * useStore.getState().plotPos - s.startPos * (Math.PI / 180);
+  }, [plotPos]);
+
+  // useFrame(() => {
+  //     orbitRef.current.rotation.y =
+  //       s.speed * useStore.getState().plotPos - s.startPos * (Math.PI / 180);
+  //   });
 
   return (
     <>

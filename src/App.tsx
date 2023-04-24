@@ -24,7 +24,7 @@ function TSNext() {
         <AnimationController />
         <SolarSystem />
         <TraceController />
-        {/* <PlotSolarSystem/> */}
+        <PlotSolarSystem />
         <axesHelper args={[5]} position={[0, 0, 0]} />
         <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
           <tetrahedronGeometry />
