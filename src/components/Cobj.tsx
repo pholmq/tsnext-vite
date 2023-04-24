@@ -4,6 +4,7 @@ import { folder, useControls, button } from "leva";
 import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
 import { useStore } from "../store";
+import { Vector3 } from "three";
 
 import { Orbit } from "./Orbit";
 import { Planet } from "./Planet";
@@ -54,6 +55,36 @@ export const Cobj = ({ name, children }: Props) => {
   const pivotRef: any = useRef();
   const orbitRef: any = useRef();
 
+  function printPositions() {
+    const worldPosVec = new Vector3();
+    const worldDirVec = new Vector3();
+
+    containerRef.current.getWorldPosition(worldPosVec);
+    containerRef.current.getWorldDirection(worldDirVec);
+    console.log(`${name} group
+    World position
+    x : ${worldPosVec.x}
+    y : ${worldPosVec.y}
+    z : ${worldPosVec.z}
+    World direction
+    x : ${worldDirVec.x}
+    y : ${worldDirVec.y}
+    z : ${worldDirVec.z}
+    `);
+    pivotRef.current.getWorldPosition(worldPosVec);
+    pivotRef.current.getWorldDirection(worldDirVec);
+    console.log(`${name} Sphere
+    World position
+    x : ${worldPosVec.x}
+    y : ${worldPosVec.y}
+    z : ${worldPosVec.z}
+    World direction
+    x : ${worldDirVec.x}
+    y : ${worldDirVec.y}
+    z : ${worldDirVec.z}
+    `);
+  }
+
   //  useControls(s.orbitRadius)
   const {
     startPos,
@@ -64,49 +95,44 @@ export const Cobj = ({ name, children }: Props) => {
     orbitCenterc,
     orbitTilta,
     orbitTiltb,
-  } = useControls(
-    "Celestial settings",
-    {
-      [name]: folder({
-        startPos: {
-          value: s.startPos,
-        },
-        speed: {
-          value: s.speed,
-        },
-        orbitRadius: {
-          value: s.orbitRadius,
-          min: 0,
-        },
-        orbitCentera: {
-          value: s.orbitCentera,
-        },
-        orbitCenterb: {
-          value: s.orbitCenterb,
-        },
-        orbitCenterc: {
-          value: s.orbitCenterc,
-        },
-        orbitTilta: {
-          value: s.orbitTilta,
-        },
-        orbitTiltb: {
-          value: s.orbitTiltb,
-        },
-        printPosToConsole: button(() => {
-          console.log("X");
-        }),
+  } = useControls("Celestial settings", {
+    [name]: folder({
+      startPos: {
+        value: s.startPos,
+      },
+      speed: {
+        value: s.speed,
+      },
+      orbitRadius: {
+        value: s.orbitRadius,
+        min: 0,
+      },
+      orbitCentera: {
+        value: s.orbitCentera,
+      },
+      orbitCenterb: {
+        value: s.orbitCenterb,
+      },
+      orbitCenterc: {
+        value: s.orbitCenterc,
+      },
+      orbitTilta: {
+        value: s.orbitTilta,
+      },
+      orbitTiltb: {
+        value: s.orbitTiltb,
+      },
+      printPosToConsole: button(() => {
+        printPositions();
       }),
-    },
-
-  );
+    }),
+  });
 
   const containerPos = s.containerPos ? s.containerPos : 0;
 
   const posRef: any = useStore((state) => state.posRef);
 
   useFrame(() => {
-
     orbitRef.current.rotation.y =
       speed * posRef.current - startPos * (Math.PI / 180);
   });
