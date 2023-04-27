@@ -1,7 +1,7 @@
 // import styles from "./Controls.module.css";
 import { useEffect, useRef, useState } from "react";
 // import { useFrame } from "@react-three/fiber";
-import { folder, Leva, useControls } from "leva";
+import { button, folder, Leva, useControls } from "leva";
 import { useStore } from "../store";
 import {
   posToDate,
@@ -16,6 +16,7 @@ import {
 } from "../utils/time-date-functions";
 import { Stats } from "@react-three/drei";
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
+import { Vector3 } from "three";
 const ControlPanel = () => {
   const posRef = useStore((state) => state.posRef);
   const date = useStore((state) => state.date);
@@ -46,6 +47,16 @@ const ControlPanel = () => {
       value: useStore.getState().plotPos,
       onChange: (v) => useStore.setState({ plotPos: v }),
     },
+    "Print PlotPos": button(() => {
+      const plotObjects = useStore.getState().plotObjects;
+      plotObjects.forEach((plotObj) => {
+        const csPos = new Vector3();
+        plotObj.obj.getWorldPosition(csPos);
+        console.log(plotObj.name + " X: " + csPos.x);
+      });
+
+      // console.log(useStore.getState().plotObjects);
+    }),
     "Orbits line width": {
       value: useStore.getState().orbitsLinewidth,
       onChange: (v) => useStore.setState({ orbitsLinewidth: v }),

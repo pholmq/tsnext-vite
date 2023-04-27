@@ -19,4 +19,5 @@ export const useStore = create((set) => ({
   arrowScale: 1,
 
   plotPos: 0,
+  plotObjects: [],
 }));

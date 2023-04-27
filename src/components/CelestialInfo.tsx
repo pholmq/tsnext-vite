@@ -33,7 +33,7 @@ export function CelestialInfo({ hovered, name, symbol = "*" }) {
     let distKm;
     let dist;
     if (name === "Moon") {
-      console.log("moon");
+      // console.log("moon");
       distKm = (((sphericalPos.radius / 100) * 149597871) / 39.2078).toFixed(2);
       dist = (sphericalPos.radius / 100 / 39.2078).toFixed(8);
     } else {
@@ -71,7 +71,13 @@ export function CelestialInfo({ hovered, name, symbol = "*" }) {
       dist +
       "<br/>Elongation:&nbsp;" +
       elongation +
-      "\xB0";
+      "\xB0" +
+      "<br/>X:&nbsp;" +
+      objectPos.x +
+      "<br/>Y:&nbsp;" +
+      objectPos.y +
+      "<br/>Z:&nbsp;" +
+      objectPos.z;
   }
 
   return (
