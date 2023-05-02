@@ -29,21 +29,8 @@ export default function TraceController() {
     if (deltaSum > 0.1 && run && traceOn) {
       const objectPos = new Vector3();
       scene.getObjectByName("Mars").getWorldPosition(objectPos);
-      const randomVector = new Vector3(
-        Math.floor(Math.random() * 101) - 50,
-        Math.floor(Math.random() * 101) - 50,
-        Math.floor(Math.random() * 101) - 50
-      );
       positions.current.push(objectPos);
-      // const randNum = Math.floor(Math.random() * 5) + 2;
-      // for (let i = 1; i < randNum; i++) {
-      //   const randomVector = new Vector3(
-      //     Math.floor(Math.random() * 101) - 50,
-      //     Math.floor(Math.random() * 101) - 50,
-      //     Math.floor(Math.random() * 101) - 50
-      //   );
-      //   pointsArr[i] = randomVector;
-      // }
+
       for (let i = 0; i < positions.current.length; i++) {
         pointsArr[i] = positions.current[i];
       }

@@ -18,12 +18,9 @@ import { Stats } from "@react-three/drei";
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
 import { Vector3 } from "three";
 const ControlPanel = () => {
-  const posRef = useStore((state) => state.posRef);
-  const date = useStore((state) => state.date);
-  const time = useStore((state) => state.time);
-  const speedFact = useStore((state) => state.speedFact);
+  const { posRef, date, time, speedFact, run: running } = useStore();
 
-  const running = useStore((state) => state.run);
+  const { trace, toggleTrace } = useStore();
 
   const dateRef = useRef();
   const timeRef = useRef();
@@ -36,8 +33,9 @@ const ControlPanel = () => {
 
   useControls(() => ({
     Trace: {
-      value: useStore.getState().trace,
-      onChange: (v) => useStore.setState({ trace: v }),
+      value: trace,
+      // onChange: (v) => useStore.setState({ trace: v }),
+      onChange: (v) => toggleTrace(),
     },
     Orbits: {
       value: useStore.getState().orbits,
