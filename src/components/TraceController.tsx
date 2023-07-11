@@ -20,17 +20,14 @@ export default function TraceController() {
 
   let deltaSum = 0;
 
-  const posArr = [];
-  // let pointsArr = [];
   let index = 0;
   const pointsArr = [];
+  const objectPos = new Vector3();
   useFrame((state, delta) => {
     deltaSum += delta;
     if (deltaSum > 0.1 && run && traceOn) {
-      const objectPos = new Vector3();
       scene.getObjectByName("Mars").getWorldPosition(objectPos);
       positions.current.push(objectPos);
-
       for (let i = 0; i < positions.current.length; i++) {
         pointsArr[i] = positions.current[i];
       }
@@ -38,10 +35,6 @@ export default function TraceController() {
       deltaSum = 0;
     }
   });
-
-  // const pointsArr = [, new Vector3(0, 2, 0), new Vector3(2, 0, 0)];
-  // postions.current = pointsArr;
-  // setPoints(pointsArr);
 
   return <TraceLine points={points} />;
 }
