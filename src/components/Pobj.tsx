@@ -62,41 +62,46 @@ export const Pobj = ({ name, children }: Props) => {
   const containerPos = s.containerPos ? s.containerPos : 0;
   // let pos = 0;
   //  const pos = useStore((state) => state.pos);
-  const plotPos: any = useStore((state) => state.plotPos);
+  // const plotPos: any = useStore((state) => state.plotPos);
   const { scene } = useThree();
   useEffect(() => {
     useStore.setState((state) => ({
-      plotObjects: [...state.plotObjects, { name: s.name, obj: pivotRef.current }],
+      plotObjects: [
+        ...state.plotObjects,
+        { name: s.name, obj: pivotRef.current },
+      ],
     }));
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   orbitRef.current.rotation.y =
+  //     s.speed * useStore.getState().plotPos - s.startPos * (Math.PI / 180);
+  //   // if (s.type === "planet") {
+  //   //   scene.updateMatrixWorld();
+  //   //   const csPos = new Vector3();
+  //   //   pivotRef.current.getWorldPosition(csPos);
+
+  //   //   // scene.getObjectByName(name).getWorldPosition(csPos);
+  //   //   console.log(
+  //   //     "Positon of " +
+  //   //       name +
+  //   //       " is X: " +
+  //   //       csPos.x +
+  //   //       " Y: " +
+  //   //       csPos.y +
+  //   //       " Z: " +
+  //   //       csPos.z
+  //   //   );
+  //   // }
+  //   // console.log(useStore.getState().plotObjects)
+  // }, [plotPos]);
+
+  const plotPosRef: any = useStore((state) => state.plotPosRef);
+
+  useFrame(() => {
     orbitRef.current.rotation.y =
-      s.speed * useStore.getState().plotPos - s.startPos * (Math.PI / 180);
-    // if (s.type === "planet") {
-    //   scene.updateMatrixWorld();
-    //   const csPos = new Vector3();
-    //   pivotRef.current.getWorldPosition(csPos);
-
-    //   // scene.getObjectByName(name).getWorldPosition(csPos);
-    //   console.log(
-    //     "Positon of " +
-    //       name +
-    //       " is X: " +
-    //       csPos.x +
-    //       " Y: " +
-    //       csPos.y +
-    //       " Z: " +
-    //       csPos.z
-    //   );
-    // }
-    // console.log(useStore.getState().plotObjects)
-  }, [plotPos]);
-
-  // useFrame(() => {
-  //     orbitRef.current.rotation.y =
-  //       s.speed * useStore.getState().plotPos - s.startPos * (Math.PI / 180);
-  //   });
+      s.speed * plotPosRef.current - s.startPos * (Math.PI / 180);
+  });
 
   return (
     <>

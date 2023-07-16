@@ -20,10 +20,11 @@ export const useStore = create((set) => ({
   arrowScale: 1,
 
   plotPos: 0,
+  plotPosRef: createRef(0),
   plotObjects: [],
 
-  tracePos: 0,
-  traceStep: 0.1,
+  tracePosRef: createRef(0),
+  traceStep: 0.01,
   traceLength: 0,
   traceMaxLength: 1000,
   tracePositions: [],

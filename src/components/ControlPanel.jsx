@@ -18,7 +18,7 @@ import { Stats } from "@react-three/drei";
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
 import { Vector3 } from "three";
 const ControlPanel = () => {
-  const { posRef, date, time, speedFact, run: running } = useStore();
+  const { posRef, plotPosRef, date, time, speedFact, run: running } = useStore();
 
   const { trace, toggleTrace } = useStore();
 
@@ -42,8 +42,8 @@ const ControlPanel = () => {
       onChange: (v) => useStore.setState({ orbits: v }),
     },
     PlotPos: {
-      value: useStore.getState().plotPos,
-      onChange: (v) => useStore.setState({ plotPos: v }),
+      value: 0,
+      onChange: (v) => plotPosRef.current = v
     },
     "Print PlotPos": button(() => {
       const plotObjects = useStore.getState().plotObjects;
