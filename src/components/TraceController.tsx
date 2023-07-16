@@ -11,8 +11,6 @@ function TraceLine({ points }) {
 }
 
 export default function TraceController() {
-  // const run = useStore((s) => s.run);
-  // const posRef: any = useStore((s) => s.posRef);
   const traceOn = useStore((s) => s.trace);
   const [points, setPoints] = useState(null);
   const { scene } = useThree();
@@ -20,10 +18,11 @@ export default function TraceController() {
   // const marsObj = useRef(null);
 
   // const plotPos = useStore.getState().plotPos;
-  const traceStep = useStore.getState().traceStep;
-  const posRef = useStore.getState().posRef;
-  const tracePosRef = useStore.getState().tracePosRef;
-
+  // const traceStep = useStore.getState().traceStep;
+  // const posRef = useStore.getState().posRef;
+  // const tracePosRef = useStore.getState().tracePosRef;
+  // const plotPosRef = useStore.getState().plotPosRef;
+  const { traceStep, posRef, tracePosRef, plotPosRef } = useStore();
   let deltaSum = 0;
 
   // let index = 0;
@@ -33,14 +32,13 @@ export default function TraceController() {
     // console.log("blblblb")
     // deltaSum += delta;
     if (traceOn) {
-      console.log("blblblb")
+      // console.log("blblblb")
       while (tracePosRef.current + traceStep < posRef.current) {
-        tracePosRef.current = tracePosRef.current + traceStep
-        useStore.setState({ plotPos: tracePosRef.current });
+        tracePosRef.current = tracePosRef.current + traceStep;
+        plotPosRef.current = tracePosRef.current;
         // console.log(plotPos)
-
       }
-        // useStore.setState({ plotPos: plotPos + traceStep });
+      // useStore.setState({ plotPos: plotPos + traceStep });
       // while (useStore.getState().plotPos + traceStep < posRef.current) useStore.setState({ plotPos: plotPos + traceStep })
       // scene.getObjectByName("Mars").getWorldPosition(objectPos);
       // positions.current.push(objectPos);

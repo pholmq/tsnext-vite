@@ -24,7 +24,7 @@ export const useStore = create((set) => ({
   plotObjects: [],
 
   tracePosRef: createRef(0),
-  traceStep: 0.01,
+  traceStep: 0.001,
   traceLength: 0,
   traceMaxLength: 1000,
   tracePositions: [],
