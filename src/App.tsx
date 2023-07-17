@@ -5,6 +5,7 @@ import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
 import PlotSolarSystem from "./components/PlotSolarSystem";
 import TraceController from "./components/TraceController";
+import { Vector3 } from "three";
 // import Line from "./components/Line";
 //tst
 function TSNext() {
@@ -13,7 +14,7 @@ function TSNext() {
       <Canvas
         camera={{
           fov: 15,
-          position: [0, 3000, 0],
+          position: new Vector3(0, 3000, 0),
           near: 0.1,
           far: 10000000,
         }}

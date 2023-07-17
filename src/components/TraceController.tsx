@@ -13,8 +13,8 @@ function TraceLine({ points }) {
 export default function TraceController() {
   const traceOn = useStore((s) => s.trace);
   const [points, setPoints] = useState(null);
-  const { scene } = useThree();
-  const positions = useRef([]);
+  // const { scene } = useThree();
+  // const positions = useRef([]);
   // const marsObj = useRef(null);
 
   // const plotPos = useStore.getState().plotPos;
@@ -22,7 +22,7 @@ export default function TraceController() {
   // const posRef = useStore.getState().posRef;
   // const tracePosRef = useStore.getState().tracePosRef;
   // const plotPosRef = useStore.getState().plotPosRef;
-  const { traceStep, posRef, tracePosRef, plotPosRef } = useStore();
+  const { traceStep, posRef, tracePosRef, plotPosRef } = useStore.getState();
   let deltaSum = 0;
 
   // let index = 0;
