@@ -16,7 +16,7 @@ export function Planet(props: any) {
 
   return (
     <>
-    <Trace traceOn={traceOn} name={props.name}/>
+    {/* <Trace traceOn={traceOn} name={props.name}/> */}
       <CelestialInfo
         hovered={hovered}
         name={props.name}
