@@ -73,30 +73,8 @@ export const Pobj = ({ name, children }: Props) => {
     }));
   }, []);
 
-  // useEffect(() => {
-  //   orbitRef.current.rotation.y =
-  //     s.speed * useStore.getState().plotPos - s.startPos * (Math.PI / 180);
-  //   // if (s.type === "planet") {
-  //   //   scene.updateMatrixWorld();
-  //   //   const csPos = new Vector3();
-  //   //   pivotRef.current.getWorldPosition(csPos);
-
-  //   //   // scene.getObjectByName(name).getWorldPosition(csPos);
-  //   //   console.log(
-  //   //     "Positon of " +
-  //   //       name +
-  //   //       " is X: " +
-  //   //       csPos.x +
-  //   //       " Y: " +
-  //   //       csPos.y +
-  //   //       " Z: " +
-  //   //       csPos.z
-  //   //   );
-  //   // }
-  //   // console.log(useStore.getState().plotObjects)
-  // }, [plotPos]);
-
-  const plotPosRef: any = useStore((state) => state.plotPosRef);
+  
+  const plotPosRef: any = useStore.getState().plotPosRef;
 
   useFrame(() => {
     orbitRef.current.rotation.y =
@@ -117,14 +95,14 @@ export const Pobj = ({ name, children }: Props) => {
       >
         <group name="Orbit" ref={orbitRef}>
           <group name="Pivot" ref={pivotRef} position={[s.orbitRadius, 0, 0]}>
-            <mesh scale={1}>
+            {/* <mesh scale={1}>
               {s.type === "planet" ? (
                 <mesh ref={objRef}>
                   <sphereGeometry args={[s.size, 128, 128]} />
                   <meshStandardMaterial color={s.color} />
                 </mesh>
               ) : null}
-            </mesh>
+            </mesh> */}
             {children}
           </group>
         </group>
