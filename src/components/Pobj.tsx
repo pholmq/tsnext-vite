@@ -73,7 +73,12 @@ export const Pobj = ({ name, children }: Props) => {
     }));
   }, []);
 
-  
+  // const { plotPos } = useStore();
+  // useEffect(() => {
+  //   orbitRef.current.rotation.y =
+  //     s.speed * plotPos - s.startPos * (Math.PI / 180);
+  // }, [plotPos]);
+
   const plotPosRef: any = useStore.getState().plotPosRef;
 
   useFrame(() => {
@@ -84,6 +89,7 @@ export const Pobj = ({ name, children }: Props) => {
   return (
     <>
       <group
+        visible={false}
         name="Container"
         ref={containerRef}
         position={[s.orbitCentera, s.orbitCenterc, s.orbitCenterb]}
@@ -95,14 +101,14 @@ export const Pobj = ({ name, children }: Props) => {
       >
         <group name="Orbit" ref={orbitRef}>
           <group name="Pivot" ref={pivotRef} position={[s.orbitRadius, 0, 0]}>
-            {/* <mesh scale={1}>
+            <mesh scale={1}>
               {s.type === "planet" ? (
                 <mesh ref={objRef}>
                   <sphereGeometry args={[s.size, 128, 128]} />
                   <meshStandardMaterial color={s.color} />
                 </mesh>
               ) : null}
-            </mesh> */}
+            </mesh>
             {children}
           </group>
         </group>
