@@ -51,19 +51,25 @@ export default function TraceController() {
     // console.log("blblblb")
     // deltaSum += delta;
     if (traceOn) {
+      if (useStore.getState().traceInit) {
+        useStore.setState({ traceInit: false });
+        tracePosRef.current = posRef.current;
+        pointsArrRef.current = [];
+      }
       if (tracePosRef.current + traceStep < posRef.current) {
         while (tracePosRef.current + traceStep < posRef.current) {
           tracePosRef.current = tracePosRef.current + traceStep;
           plotPosRef.current = tracePosRef.current;
           objMars.obj.getWorldPosition(objectPos);
           pointsArrRef.current.push(objectPos);
+          console.log(pointsArrRef.current);
           // setPoints([...pointsArrRef.current]);
           // pointsTest = [...pointsArrRef.current]
           // objVenus.obj.getWorldPosition(objectPos);
           // pointsArrRefV.current.push(objectPos);
           // setPointsVenus([...pointsArrRefV.current]);
+          setPoints([...pointsArrRef.current]);
         }
-        setPoints([...pointsArrRef.current]);
       }
 
       // while (tracePosRef.current + traceStep < posRef.current) {

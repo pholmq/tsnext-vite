@@ -13,7 +13,11 @@ export const useStore = create((set) => ({
   run: false,
   speedFact: getDefaultSpeedFact(),
   trace: false,
-  toggleTrace: () => set((state) => ({ trace: !state.trace })),
+  toggleTrace: () => {
+    set((state) => ({ trace: !state.trace }));
+    set((state) => (state.trace ? { traceInit: true }: null));
+    // state.trace ? set((state) => ({ traceInit: true })): null
+  },
   orbits: true,
   orbitsLinewidth: 2,
   arrows: false,
@@ -28,4 +32,5 @@ export const useStore = create((set) => ({
   traceLength: 0,
   traceMaxLength: 1000,
   tracePositions: [],
+  traceInit: false,
 }));
