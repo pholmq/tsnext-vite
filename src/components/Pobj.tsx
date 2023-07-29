@@ -79,6 +79,20 @@ export const Pobj = ({ name, children }: Props) => {
   //     s.speed * plotPos - s.startPos * (Math.PI / 180);
   // }, [plotPos]);
 
+  // // Fetch initial state
+  // const plotPosRefSub = useRef(useStore.getState().plotPos);
+  // // Connect to the store on mount, disconnect on unmount, catch state-changes in a reference
+  // useEffect(() => {
+  //   useStore.subscribe((state) => (plotPosRefSub.current = state.plotPos));
+  //   orbitRef.current.rotation.y =
+  //     s.speed * plotPosRefSub.current - s.startPos * (Math.PI / 180);
+  // }, []);
+
+  //   useFrame(() => {
+  //   orbitRef.current.rotation.y =
+  //     s.speed * plotPosRefSub.current - s.startPos * (Math.PI / 180);
+  // });
+
   const plotPosRef: any = useStore.getState().plotPosRef;
 
   useFrame(() => {
@@ -89,7 +103,7 @@ export const Pobj = ({ name, children }: Props) => {
   return (
     <>
       <group
-        visible={false}
+        visible={true}
         name="Container"
         ref={containerRef}
         position={[s.orbitCentera, s.orbitCenterc, s.orbitCenterb]}
