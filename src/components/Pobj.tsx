@@ -103,7 +103,7 @@ export const Pobj = ({ name, children }: Props) => {
   return (
     <>
       <group
-        visible={true}
+        visible={false}
         name="Container"
         ref={containerRef}
         position={[s.orbitCentera, s.orbitCenterc, s.orbitCenterb]}

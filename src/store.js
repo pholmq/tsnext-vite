@@ -15,7 +15,7 @@ export const useStore = create((set) => ({
   trace: false,
   toggleTrace: () => {
     set((state) => ({ trace: !state.trace }));
-    set((state) => (state.trace ? { traceInit: true }: null));
+    set((state) => (state.trace ? { traceInit: true } : null));
     // state.trace ? set((state) => ({ traceInit: true })): null
   },
   orbits: true,
@@ -28,8 +28,8 @@ export const useStore = create((set) => ({
   plotObjects: [],
 
   tracePosRef: createRef(0),
-  traceStep: 0.01,
-  traceLength: 0,
+  traceStep: 0.02,
+  traceLength: 1000,
   traceMaxLength: 1000,
   tracePositions: [],
   traceInit: false,
