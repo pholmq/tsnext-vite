@@ -54,7 +54,6 @@ export default function TraceController() {
   let pointsTest = [new Vector3()];
   // console.log(plotObjects)
 
-
   useFrame((state, delta) => {
     // console.log("blblblb")
     // deltaSum += delta;
@@ -71,16 +70,18 @@ export default function TraceController() {
           pointsArrRef.current.splice(0, 1);
         }
 
-        if (tracePosRef.current > posRef.current) {
+        if (tracePosRef.current + traceStep >= posRef.current - traceStep) {
           if (pointsArrRef.current.length) {
-            pointsArrRef.current.pop()  
+            pointsArrRef.current.pop();
+            tracePosRef.current = tracePosRef.current - traceStep;
+            plotPosRef.current = tracePosRef.current;
+          } else {
+            tracePosRef.current = posRef.current;
+            plotPosRef.current = tracePosRef.current;
           }
-          tracePosRef.current = tracePosRef.current - traceStep
-          plotPosRef.current = tracePosRef.current
-
         }
-  
-        if (tracePosRef.current < posRef.current - traceStep  ) {
+
+        if (tracePosRef.current <= posRef.current - traceStep) {
           plotPosRef.current = tracePosRef.current + traceStep;
           tracePosRef.current = tracePosRef.current + traceStep;
           // plotPosRef.current = tracePosRef.current;
@@ -90,19 +91,14 @@ export default function TraceController() {
           // setPoints([...pointsArrRef.current]);
         }
 
+        if (pointsArrRef.current.length > 1) {
+          const curve = new CatmullRomCurve3(pointsArrRef.current);
 
-  
-        if (pointsArrRef.current.length) {
-          // const curve = new CatmullRomCurve3(pointsArrRef.current);
-  
-          // setPoints(curve.getPoints(1000))
-  
-          setPoints([...pointsArrRef.current]);
-        } 
-  
-  
+          setPoints(curve.getPoints(pointsArrRef.current.length * 2));
+
+          // setPoints([...pointsArrRef.current]);
+        }
       }
-
     }
   });
   const [points, setPoints] = useState([new Vector3(-1, -1, -1)]);
