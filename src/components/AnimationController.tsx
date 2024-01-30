@@ -1,4 +1,4 @@
-import { useStore } from "../store";
+import { useStore } from "../store/store";
 import { useFrame } from "@react-three/fiber";
 import { posToDate, posToTime } from "../utils/time-date-functions";
 

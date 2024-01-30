@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useFrame, extend, useThree } from "@react-three/fiber";
 import { useStore } from "../store/store";
-import { usePlotStore } from "../store/usePlotStore";
 import { Line } from "@react-three/drei";
 import { Vector3, CatmullRomCurve3 } from "three";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
@@ -32,15 +31,19 @@ export default function TraceController() {
 
   const lineRef = useRef(null);
 
-  // const plotPos = usePlotStore.getState().plotPos;
+  // const plotPos = useStore.getState().plotPos;
   // const traceStep = useStore.getState().traceStep;
   // const posRef = useStore.getState().posRef;
   // const tracePosRef = useStore.getState().tracePosRef;
   // const plotPosRef = useStore.getState().plotPosRef;
-  const { traceStep, traceLength, posRef, tracePosRef } = useStore.getState();
-
-  const { plotPos, plotPosRef, plotObjects } = usePlotStore.getState();
-
+  const {
+    traceStep,
+    traceLength,
+    posRef,
+    tracePosRef,
+    plotPosRef,
+    plotObjects,
+  } = useStore.getState();
   let deltaSum = 0;
 
   // let index = 0;
@@ -55,8 +58,6 @@ export default function TraceController() {
     // console.log("blblblb")
     // deltaSum += delta;
     if (traceOn) {
-      console.log(objMars.obj);
-      objMars.obj.position.set(0, 0, 0);
       if (useStore.getState().traceInit) {
         useStore.setState({ traceInit: false });
         tracePosRef.current = posRef.current;
@@ -75,17 +76,14 @@ export default function TraceController() {
               pointsArrRef.current.pop();
               tracePosRef.current = tracePosRef.current - traceStep;
               plotPosRef.current = tracePosRef.current;
-              // usePlotStore.setState({ plotPos: tracePosRef.current });
             } else {
               tracePosRef.current = posRef.current;
               plotPosRef.current = tracePosRef.current;
-              // usePlotStore.setState({ plotPos: tracePosRef.current });
             }
           }
 
           if (tracePosRef.current <= posRef.current - traceStep) {
             plotPosRef.current = tracePosRef.current + traceStep;
-            // usePlotStore.setState({ plotPos: tracePosRef.current });
             tracePosRef.current = tracePosRef.current + traceStep;
             // plotPosRef.current = tracePosRef.current;
             objMars.obj.getWorldPosition(objectPos);
@@ -99,7 +97,7 @@ export default function TraceController() {
 
             setPoints(curve.getPoints(pointsArrRef.current.length * 2));
 
-            setPoints([...pointsArrRef.current]);
+            // setPoints([...pointsArrRef.current]);
           }
         }
       }
@@ -111,5 +109,9 @@ export default function TraceController() {
   const pointsArrRef = useRef([]);
   const pointsArrRefV = useRef([]);
   const mlRef = useRef();
-  return <>{/* <TraceLine points={points} /> */}</>;
+  return (
+    <>
+      <TraceLine points={points} />
+    </>
+  );
 }

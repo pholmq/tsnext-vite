@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 // import { useFrame } from "@react-three/fiber";
 import { button, folder, Leva, useControls } from "leva";
-import { useStore } from "../store";
+import { useStore } from "../store/store";
+import { usePlotStore } from "../store/usePlotStore";
 import {
   posToDate,
   posToTime,
@@ -18,7 +19,9 @@ import { Stats } from "@react-three/drei";
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
 import { Vector3 } from "three";
 const ControlPanel = () => {
-  const { posRef, plotPosRef, date, time, speedFact, run: running } = useStore();
+  const { posRef, date, time, speedFact, run: running } = useStore();
+
+  const { plotPosRef } = usePlotStore();
 
   const { trace, toggleTrace } = useStore();
 
@@ -43,10 +46,10 @@ const ControlPanel = () => {
     },
     PlotPos: {
       value: 0,
-      onChange: (v) => plotPosRef.current = v
+      onChange: (v) => (plotPosRef.current = v),
     },
     "Print PlotPos": button(() => {
-      const plotObjects = useStore.getState().plotObjects;
+      const plotObjects = usePlotStore.getState().plotObjects;
       plotObjects.forEach((plotObj) => {
         const csPos = new Vector3();
         plotObj.obj.getWorldPosition(csPos);

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useStore } from "../store";
+import { useStore } from "../store/store";
 import { Line } from "@react-three/drei";
 
 type ArrowProps = {

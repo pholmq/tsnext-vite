@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { folder, useControls, button } from "leva";
 import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
-import { useStore } from "../store";
+import { useStore } from "../store/store";
 import { Vector3 } from "three";
 
 import { Orbit } from "./Orbit";
@@ -136,7 +136,7 @@ export const Cobj = ({ name, children }: Props) => {
     orbitRef.current.rotation.y =
       speed * posRef.current - startPos * (Math.PI / 180);
   });
-
+  console.log(containerRef.current);
   return (
     <>
       <group

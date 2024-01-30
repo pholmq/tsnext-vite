@@ -6,7 +6,6 @@ import { Vector3 } from "three";
 import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
 import { useStore } from "../store/store";
-import { usePlotStore } from "../store/usePlotStore";
 // import { Vector3 } from "three";
 
 // import { Orbit } from "./Orbit";
@@ -61,14 +60,12 @@ export const Pobj = ({ name, children }: Props) => {
   const orbitRef: any = useRef();
   const objRef: any = useRef();
   const containerPos = s.containerPos ? s.containerPos : 0;
-  // console.log("iran");
-  console.log(containerRef.current);
   // let pos = 0;
-  const pos = useStore((state) => state.pos);
+  //  const pos = useStore((state) => state.pos);
   // const plotPos: any = useStore((state) => state.plotPos);
-  // const { scene } = useThree();
+  const { scene } = useThree();
   useEffect(() => {
-    usePlotStore.setState((state) => ({
+    useStore.setState((state) => ({
       plotObjects: [
         ...state.plotObjects,
         { name: s.name, obj: pivotRef.current },
@@ -76,24 +73,27 @@ export const Pobj = ({ name, children }: Props) => {
     }));
   }, []);
 
-  // const { plotPos } = usePlotStore();
+  // const { plotPos } = useStore();
   // useEffect(() => {
   //   orbitRef.current.rotation.y =
   //     s.speed * plotPos - s.startPos * (Math.PI / 180);
   // }, [plotPos]);
 
-  // Fetch initial state
-  // const plotPosRef = useRef(usePlotStore.getState().plotPos);
+  // // Fetch initial state
+  // const plotPosRefSub = useRef(useStore.getState().plotPos);
   // // Connect to the store on mount, disconnect on unmount, catch state-changes in a reference
-  // useEffect(
-  //   () =>
-  //     usePlotStore.subscribe((state) => console.log(state.plotPosRef.current)),
-  //   []
-  // );
+  // useEffect(() => {
+  //   useStore.subscribe((state) => (plotPosRefSub.current = state.plotPos));
+  //   orbitRef.current.rotation.y =
+  //     s.speed * plotPosRefSub.current - s.startPos * (Math.PI / 180);
+  // }, []);
 
-  // const plotPosRef: any = usePlotStore.getState().plotPosRef;
+  //   useFrame(() => {
+  //   orbitRef.current.rotation.y =
+  //     s.speed * plotPosRefSub.current - s.startPos * (Math.PI / 180);
+  // });
 
-  const plotPosRef: any = usePlotStore((state) => state.plotPosRef);
+  const plotPosRef: any = useStore.getState().plotPosRef;
 
   useFrame(() => {
     orbitRef.current.rotation.y =

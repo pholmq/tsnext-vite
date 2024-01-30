@@ -4,7 +4,7 @@ import {
   getDefaultSpeedFact,
   posToDate,
   posToTime,
-} from "./utils/time-date-functions";
+} from "../utils/time-date-functions";
 
 export const useStore = create((set) => ({
   posRef: createRef(),
@@ -23,9 +23,9 @@ export const useStore = create((set) => ({
   arrows: false,
   arrowScale: 1,
 
-  plotPos: 0,
-  plotPosRef: createRef(0),
-  plotObjects: [],
+  // plotPos: 0,
+  // plotPosRef: createRef(0),
+  // plotObjects: [],
 
   tracePosRef: createRef(0),
   traceStep: 0.02,
