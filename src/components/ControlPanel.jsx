@@ -20,8 +20,6 @@ import { Vector3 } from "three";
 const ControlPanel = () => {
   const { posRef, date, time, speedFact, run: running } = useStore();
 
-  const { plotPosRef } = usePlotStore();
-
   const { trace, toggleTrace } = useStore();
 
   const dateRef = useRef();
@@ -44,8 +42,8 @@ const ControlPanel = () => {
       onChange: (v) => useTraceStore.setState({ traceLength: v }),
     },
     "Trace step": {
-      value: useTraceStore.getState().traceStep,
-      onChange: (v) => useTraceStore.setState({ traceStep: v }),
+      value: useTraceStore.getState().traceStepInput,
+      onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
     },
     "Trace linewidth": {
       value: useTraceStore.getState().traceLinewidth,
@@ -55,20 +53,6 @@ const ControlPanel = () => {
       value: useStore.getState().orbits,
       onChange: (v) => useStore.setState({ orbits: v }),
     },
-    PlotPos: {
-      value: 0,
-      onChange: (v) => (plotPosRef.current = v),
-    },
-    "Print PlotPos": button(() => {
-      const plotObjects = useStore.getState().plotObjects;
-      plotObjects.forEach((plotObj) => {
-        const csPos = new Vector3();
-        plotObj.obj.getWorldPosition(csPos);
-        console.log(plotObj.name + " X: " + csPos.x);
-      });
-
-      // console.log(useStore.getState().plotObjects);
-    }),
     "Orbits line width": {
       value: useStore.getState().orbitsLinewidth,
       onChange: (v) => useStore.setState({ orbitsLinewidth: v }),

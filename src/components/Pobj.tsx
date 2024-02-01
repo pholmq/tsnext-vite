@@ -1,10 +1,8 @@
 import { useRef, useEffect, useLayoutEffect } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
-import { Vector3 } from "three";
 
 import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
-import { useStore, usePlotStore } from "../store";
+import { usePlotStore } from "../store";
 
 type Props = {
   name: string;
@@ -55,7 +53,7 @@ export const Pobj = ({ name, children }: Props) => {
   const objRef: any = useRef();
   const containerPos = s.containerPos ? s.containerPos : 0;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     usePlotStore.setState((state) => ({
       plotObjects: [
         ...state.plotObjects,
@@ -69,13 +67,6 @@ export const Pobj = ({ name, children }: Props) => {
       ],
     }));
   }, []);
-
-  const plotPosRef = usePlotStore.getState().plotPosRef;
-
-  useLayoutEffect(() => {
-    orbitRef.current.rotation.y =
-      s.speed * plotPosRef.current - s.startPos * (Math.PI / 180);
-  });
 
   return (
     <>
