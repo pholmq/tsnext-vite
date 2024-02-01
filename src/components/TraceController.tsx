@@ -18,13 +18,13 @@ export default function TraceController() {
 
   const { plotObjects } = usePlotStore();
   const plotPosRef = useRef(0);
-  const { traceLength, traceStepInput, traceLinewidth } = useTraceStore();
+  const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
+    useTraceStore();
   const traceStep = traceStepInput / 1000;
 
   const objMars = plotObjects.find((item) => item.name === "Mars");
   const objectPos = new Vector3();
-  const pointsArrRef = useTraceStore((s) => s.pointsArrRef);
-  pointsArrRef.current = [0, 0, 0];
+  // const pointsArrRef = useTraceStore((s) => s.pointsArrRef);
   const line2Ref = useRef(null);
   let float32arr = new Float32Array(traceLength * 3); //xyz(3) for each point
   float32arr.fill(0);

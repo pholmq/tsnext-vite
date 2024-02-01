@@ -4,9 +4,8 @@ import { useStore, usePlotStore, useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 
 export default function TraceLine() {
-  const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
-    useTraceStore();
-  const traceOn = useStore((s) => s.trace);
+  const { traceLength, traceStepInput, traceLinewidth } = useTraceStore();
+
   // const pointsArrRef = useTraceStore((s) => s.pointsArrRef);
 
   let float32arr = new Float32Array(traceLength * 3); //xyz(3) for each point
@@ -14,14 +13,12 @@ export default function TraceLine() {
 
   const line2Ref = useRef(null);
 
-  useLayoutEffect(() => {
-    if (traceOn) {
-      //Init trace
-      line2Ref.current.geometry.instanceCount = 0;
-    }
-  }, [traceOn]);
+  // float32arr.set(pointsArrRef.current);
+
+  // console.log(pointsArrRef.current);
 
   useLayoutEffect(() => {
+    const pointsArrRef = useTraceStore.getState().pointsArrRef;
     if (float32arr.length < traceLength * 3) {
       float32arr = new Float32Array(traceLength * 3);
     }
@@ -38,6 +35,7 @@ export default function TraceLine() {
   }, [traceLength]);
 
   useFrame(() => {
+    const pointsArrRef = useTraceStore.getState().pointsArrRef;
     float32arr.set(pointsArrRef.current); //bottleneck?
     line2Ref.current.geometry.setPositions(float32arr);
     line2Ref.current.geometry.instanceCount =
