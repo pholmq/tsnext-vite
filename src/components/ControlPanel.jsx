@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 // import { useFrame } from "@react-three/fiber";
 import { button, folder, Leva, useControls } from "leva";
-import { useStore } from "../store";
+import { usePlotStore, useStore, useTraceStore } from "../store";
 import {
   posToDate,
   posToTime,
@@ -18,7 +18,9 @@ import { Stats } from "@react-three/drei";
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
 import { Vector3 } from "three";
 const ControlPanel = () => {
-  const { posRef, plotPosRef, date, time, speedFact, run: running } = useStore();
+  const { posRef, date, time, speedFact, run: running } = useStore();
+
+  const { plotPosRef } = usePlotStore();
 
   const { trace, toggleTrace } = useStore();
 
@@ -37,13 +39,25 @@ const ControlPanel = () => {
       // onChange: (v) => useStore.setState({ trace: v }),
       onChange: (v) => toggleTrace(),
     },
+    "Trace length": {
+      value: useTraceStore.getState().traceLength,
+      onChange: (v) => useTraceStore.setState({ traceLength: v }),
+    },
+    "Trace step": {
+      value: useTraceStore.getState().traceStep,
+      onChange: (v) => useTraceStore.setState({ traceStep: v }),
+    },
+    "Trace linewidth": {
+      value: useTraceStore.getState().traceLinewidth,
+      onChange: (v) => useTraceStore.setState({ traceLinewidth: v }),
+    },
     Orbits: {
       value: useStore.getState().orbits,
       onChange: (v) => useStore.setState({ orbits: v }),
     },
     PlotPos: {
       value: 0,
-      onChange: (v) => plotPosRef.current = v
+      onChange: (v) => (plotPosRef.current = v),
     },
     "Print PlotPos": button(() => {
       const plotObjects = useStore.getState().plotObjects;

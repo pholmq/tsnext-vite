@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
+import { Circle, OrbitControls, Sphere, Stars } from "@react-three/drei";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
@@ -30,7 +30,10 @@ function TSNext() {
         <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
           <tetrahedronGeometry />
           {/* <boxGeometry args={[1, 1, 1]} /> */}
-          <meshBasicMaterial color="orange" />
+          <meshPhongMaterial color="gold" />
+          <Sphere args={[0.35, 64, 32]} position={[0.03, 0.03, 0.03]}>
+            <meshPhongMaterial color="black" />
+          </Sphere>
         </mesh>
       </Canvas>
       <ControlPanel />

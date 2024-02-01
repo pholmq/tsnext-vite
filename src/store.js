@@ -22,15 +22,16 @@ export const useStore = create((set) => ({
   orbitsLinewidth: 2,
   arrows: false,
   arrowScale: 1,
+}));
 
+export const usePlotStore = create((set) => ({
   plotPos: 0,
   plotPosRef: createRef(0),
   plotObjects: [],
+}));
 
-  tracePosRef: createRef(0),
-  traceStep: 0.02,
+export const useTraceStore = create((set) => ({
   traceLength: 1000,
-  traceMaxLength: 1000,
-  tracePositions: [],
-  traceInit: false,
+  traceStep: 5,
+  traceLinewidth: 2,
 }));

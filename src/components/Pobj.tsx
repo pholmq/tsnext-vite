@@ -1,16 +1,10 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useLayoutEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
 
-// import { folder, useControls, button } from "leva";
 import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
-import { useStore } from "../store";
-// import { Vector3 } from "three";
-
-// import { Orbit } from "./Orbit";
-// import { Planet } from "./Planet";
-// import { Earth } from "./Earth";
+import { useStore, usePlotStore } from "../store";
 
 type Props = {
   name: string;
@@ -60,42 +54,25 @@ export const Pobj = ({ name, children }: Props) => {
   const orbitRef: any = useRef();
   const objRef: any = useRef();
   const containerPos = s.containerPos ? s.containerPos : 0;
-  // let pos = 0;
-  //  const pos = useStore((state) => state.pos);
-  // const plotPos: any = useStore((state) => state.plotPos);
-  const { scene } = useThree();
+
   useEffect(() => {
-    useStore.setState((state) => ({
+    usePlotStore.setState((state) => ({
       plotObjects: [
         ...state.plotObjects,
-        { name: s.name, obj: pivotRef.current },
+        {
+          name: s.name,
+          speed: s.speed,
+          startPos: s.startPos,
+          orbitRef: orbitRef,
+          pivotRef: pivotRef,
+        },
       ],
     }));
   }, []);
 
-  // const { plotPos } = useStore();
-  // useEffect(() => {
-  //   orbitRef.current.rotation.y =
-  //     s.speed * plotPos - s.startPos * (Math.PI / 180);
-  // }, [plotPos]);
+  const plotPosRef = usePlotStore.getState().plotPosRef;
 
-  // // Fetch initial state
-  // const plotPosRefSub = useRef(useStore.getState().plotPos);
-  // // Connect to the store on mount, disconnect on unmount, catch state-changes in a reference
-  // useEffect(() => {
-  //   useStore.subscribe((state) => (plotPosRefSub.current = state.plotPos));
-  //   orbitRef.current.rotation.y =
-  //     s.speed * plotPosRefSub.current - s.startPos * (Math.PI / 180);
-  // }, []);
-
-  //   useFrame(() => {
-  //   orbitRef.current.rotation.y =
-  //     s.speed * plotPosRefSub.current - s.startPos * (Math.PI / 180);
-  // });
-
-  const plotPosRef: any = useStore.getState().plotPosRef;
-
-  useFrame(() => {
+  useLayoutEffect(() => {
     orbitRef.current.rotation.y =
       s.speed * plotPosRef.current - s.startPos * (Math.PI / 180);
   });
@@ -116,7 +93,7 @@ export const Pobj = ({ name, children }: Props) => {
         <group name="Orbit" ref={orbitRef}>
           <group name="Pivot" ref={pivotRef} position={[s.orbitRadius, 0, 0]}>
             <mesh scale={1}>
-              {s.type === "planet" ? (
+              {s.type === "planet" || s.earth ? (
                 <mesh ref={objRef}>
                   <sphereGeometry args={[s.size, 128, 128]} />
                   <meshStandardMaterial color={s.color} />
