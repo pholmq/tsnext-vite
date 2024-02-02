@@ -21,7 +21,6 @@
     "visible": false,
     "axesHelper": false
   },
-
   "MoonDefB": {
     "color": "gray",
     "type": "deferent",
@@ -35,9 +34,9 @@
     "axesHelper": false,
     "planet": true,
     "texture": "/textures/planets/2k_moon.jpg",
-    "unicodeSymbol": "&#x263D;"
+    "unicodeSymbol": "&#x263D;",
+    "traceable": true
   },
-
   "SunDefA": {
     "color": "yellow",
     "type": "deferent",
@@ -53,7 +52,8 @@
     "texture": "/textures/planets/2k_sun.jpg",
     "light": true,
     "glow": true,
-    "unicodeSymbol": "&#x2609;"
+    "unicodeSymbol": "&#x2609;",
+    "traceable": true
   },
   "MercuryDefA": {
     "color": "gray",
@@ -72,7 +72,8 @@
     "axesHelper": false,
     "arrows": true,
     "texture": "/textures/planets/2k_mercury.jpg",
-    "unicodeSymbol": "&#x263F;"
+    "unicodeSymbol": "&#x263F;",
+    "traceable": true
   },
   "VenusDefA": {
     "color": "orange",
@@ -91,7 +92,8 @@
     "axesHelper": false,
     "arrows": true,
     "texture": "/textures/planets/2k_venus.jpg",
-    "unicodeSymbol": "&#x2640;"
+    "unicodeSymbol": "&#x2640;",
+    "traceable": true
   },
   "MarsDefE": {
     "color": "red",
@@ -111,7 +113,8 @@
     "arrows": true,
     "rotationArrows": -6.67,
     "texture": "/textures/planets/2k_mars.jpg",
-    "unicodeSymbol": "&#x2642;"
+    "unicodeSymbol": "&#x2642;",
+    "traceable": true
   },
   "Phobos": {
     "type": "planet"
@@ -128,7 +131,8 @@
     "type": "planet",
     "visible": true,
     "texture": "/textures/planets/2k_jupiter.jpg",
-    "unicodeSymbol": "&#x2643;"
+    "unicodeSymbol": "&#x2643;",
+    "traceable": true
   },
   "SaturnDef": {
     "type": "deferent",
@@ -140,6 +144,7 @@
     "visible": true,
     "planet": true,
     "texture": "/textures/planets/2k_saturn.jpg",
-    "unicodeSymbol": "&#x2644;"
+    "unicodeSymbol": "&#x2644;",
+    "traceable": true
   }
 }

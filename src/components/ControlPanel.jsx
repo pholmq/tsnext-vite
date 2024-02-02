@@ -49,6 +49,8 @@ const ControlPanel = () => {
       value: useTraceStore.getState().traceLinewidth,
       onChange: (v) => useTraceStore.setState({ traceLinewidth: v }),
     },
+    "Trace planets": folder({}, { collapsed: true }),
+
     Orbits: {
       value: useStore.getState().orbits,
       onChange: (v) => useStore.setState({ orbits: v }),

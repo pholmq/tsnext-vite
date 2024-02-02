@@ -2,7 +2,7 @@ import { useRef, useEffect, useLayoutEffect } from "react";
 
 import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
-import { usePlotStore } from "../store";
+import { usePlotStore, useTraceStore } from "../store";
 
 type Props = {
   name: string;
@@ -31,6 +31,7 @@ type Settings = {
   reverseArrows: boolean;
   rotationArrows: number;
   earth: boolean;
+  traceable?: boolean;
 };
 
 export const Pobj = ({ name, children }: Props) => {
@@ -51,6 +52,7 @@ export const Pobj = ({ name, children }: Props) => {
   const pivotRef: any = useRef();
   const orbitRef: any = useRef();
   const objRef: any = useRef();
+
   const containerPos = s.containerPos ? s.containerPos : 0;
 
   useLayoutEffect(() => {
@@ -66,6 +68,17 @@ export const Pobj = ({ name, children }: Props) => {
         },
       ],
     }));
+    if (s.traceable) {
+      useTraceStore.setState((state) => ({
+        traceableObjects: [
+          ...state.traceableObjects,
+          {
+            name: s.name,
+          },
+        ],
+      }));
+      console.log(useTraceStore.getState().traceableObjects);
+    }
   }, []);
 
   return (
