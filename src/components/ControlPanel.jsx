@@ -20,8 +20,6 @@ import { Vector3 } from "three";
 const ControlPanel = () => {
   const { posRef, date, time, speedFact, run: running } = useStore();
 
-  const { trace, toggleTrace } = useStore();
-
   const dateRef = useRef();
   const timeRef = useRef();
   const julianDayRef = useRef();
@@ -33,9 +31,9 @@ const ControlPanel = () => {
 
   useControls(() => ({
     Trace: {
-      value: trace,
+      value: useStore.getState().trace,
       // onChange: (v) => useStore.setState({ trace: v }),
-      onChange: (v) => toggleTrace(),
+      onChange: (v) => useStore.setState({ trace: v }),
     },
     "Trace length": {
       value: useTraceStore.getState().traceLength,
