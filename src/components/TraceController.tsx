@@ -32,6 +32,8 @@ export default function TraceController() {
   useLayoutEffect(() => {
     if (traceOn) {
       plotPosRef.current = posRef.current;
+    } else {
+      pointsArrRef.current = [];
     }
   }, [traceOn]);
 
@@ -53,7 +55,6 @@ export default function TraceController() {
       pointsArrRef.current.splice(pointsArrRef.current.length - 3, 3);
     }
 
-    // let i = 0;
     while (plotPosRef.current < posRef.current - traceStep) {
       plotPosRef.current = plotPosRef.current + traceStep;
       moveModel(plotObjects, plotPosRef.current);
@@ -66,5 +67,5 @@ export default function TraceController() {
     }
   });
 
-  return <TraceLine />;
+  return <>{traceOn ? <TraceLine /> : null}</>;
 }

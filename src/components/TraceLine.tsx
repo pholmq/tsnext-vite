@@ -7,15 +7,16 @@ export default function TraceLine() {
   const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
     useTraceStore();
 
-  let float32arr = new Float32Array(traceLength * 3); //xyz(3) for each point
+  let float32arr = new Float32Array(traceLength * 3); //xyz for each point
   float32arr.fill(0);
 
   const line2Ref = useRef(null);
 
-  // Note: Animating lines in Three.js are tricky. The array that setPositions receive
-  // must be a float32 array of the same length and be filled [x,y,z,x,y,z...] .
+  // Note: Animating lines in Three.js is tricky. The array that geometry.setPositions receive
+  // must be a Float32 array of the same length and be filled [x,y,z,x,y,z...] .
   // So to acheive a line that becomes progessively longer we fill the array with zeroes
-  // and then increase instanceCount that sets how many points in the array that is actually drawn.
+  // and then increase geometry.instanceCount that sets how many points in the array that is
+  // actually drawn.
 
   useLayoutEffect(() => {
     if (float32arr.length < traceLength * 3) {
