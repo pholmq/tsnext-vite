@@ -1,24 +1,23 @@
 import { useLayoutEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useStore, usePlotStore, useTraceStore } from "../store";
+import { useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 
 export default function TraceLine() {
-  const { traceLength, traceStepInput, traceLinewidth } = useTraceStore();
-
-  // const pointsArrRef = useTraceStore((s) => s.pointsArrRef);
+  const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
+    useTraceStore();
 
   let float32arr = new Float32Array(traceLength * 3); //xyz(3) for each point
   float32arr.fill(0);
 
   const line2Ref = useRef(null);
 
-  // float32arr.set(pointsArrRef.current);
-
-  // console.log(pointsArrRef.current);
+  // Note: Animating lines in Three.js are tricky. The array that setPositions receive
+  // must be a float32 array of the same length and be filled [x,y,z,x,y,z...] .
+  // So to acheive a line that becomes progessively longer we fill the array with zeroes
+  // and then increase instanceCount that sets how many points in the array that is actually drawn.
 
   useLayoutEffect(() => {
-    const pointsArrRef = useTraceStore.getState().pointsArrRef;
     if (float32arr.length < traceLength * 3) {
       float32arr = new Float32Array(traceLength * 3);
     }
@@ -35,7 +34,6 @@ export default function TraceLine() {
   }, [traceLength]);
 
   useFrame(() => {
-    const pointsArrRef = useTraceStore.getState().pointsArrRef;
     float32arr.set(pointsArrRef.current); //bottleneck?
     line2Ref.current.geometry.setPositions(float32arr);
     line2Ref.current.geometry.instanceCount =
