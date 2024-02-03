@@ -34,23 +34,27 @@ const ControlPanel = () => {
       value: useStore.getState().trace,
       onChange: (v) => useStore.setState({ trace: v }),
     },
-    "Trace length": {
-      value: useTraceStore.getState().traceLength,
-      onChange: (v) => useTraceStore.setState({ traceLength: v }),
-    },
-    "Trace step": {
-      value: useTraceStore.getState().traceStepInput,
-      onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
-    },
-    Dots: {
-      value: useStore.getState().traceDots,
-      onChange: (v) => useStore.setState({ traceDots: v }),
-    },
-    "Linewidth/dotsize": {
-      value: useTraceStore.getState().traceLinewidth,
-      onChange: (v) => useTraceStore.setState({ traceLinewidth: v }),
-    },
-    "Trace planets": folder({}, { collapsed: true }),
+    "Trace settings": folder(
+      {
+        Dots: {
+          value: useStore.getState().traceDots,
+          onChange: (v) => useStore.setState({ traceDots: v }),
+        },
+        "Linewidth/dotsize": {
+          value: useTraceStore.getState().traceLinewidth,
+          onChange: (v) => useTraceStore.setState({ traceLinewidth: v }),
+        },
+        "Trace length": {
+          value: useTraceStore.getState().traceLength,
+          onChange: (v) => useTraceStore.setState({ traceLength: v }),
+        },
+        "Trace step": {
+          value: useTraceStore.getState().traceStepInput,
+          onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
+        },
+      },
+      { collapsed: true }
+    ),
 
     Orbits: {
       value: useStore.getState().orbits,

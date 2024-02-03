@@ -66,15 +66,15 @@ export const Pobj = ({ name, children }: Props) => {
         },
       ],
     }));
-    if (s.traceable) {
-      useTraceStore.setState((state) => ({
-        traceableObjects: {
-          ...state.traceableObjects,
-          name: s.name,
-        },
-      }));
-      console.log(useTraceStore.getState().traceableObjects);
-    }
+    // if (s.traceable) {
+    //   useTraceStore.setState((state) => ({
+    //     traceableObjects: {
+    //       ...state.traceableObjects,
+    //       name: s.name,
+    //     },
+    //   }));
+    //   console.log(useTraceStore.getState().traceableObjects);
+    // }
   }, []);
 
   return (

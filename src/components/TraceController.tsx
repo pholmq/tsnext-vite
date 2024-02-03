@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useStore, usePlotStore, useTraceStore } from "../store";
 import { Vector3 } from "three";
 import TraceLine from "./TraceLine";
+import { useControls } from "leva";
 
 function moveModel(plotObjects: any, plotPos: any) {
   plotObjects.forEach((pObj) => {
@@ -30,6 +31,14 @@ export default function TraceController() {
 
   let float32arr = new Float32Array(traceLength * 3); //xyz(3) for each point
   float32arr.fill(0);
+
+  // const {Mars} = useControls("Trace planets", {"Mars": false})
+  const result = useControls("Trace settings", {
+    "Planets:": { value: "", editable: false },
+    mars: { value: false, label: "Mars" },
+    venus: { value: false, label: "Venus" },
+  });
+  console.log(result);
 
   useLayoutEffect(() => {
     if (trace) {
