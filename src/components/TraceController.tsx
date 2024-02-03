@@ -1,5 +1,5 @@
 //test
-import { useLayoutEffect, useRef } from "react";
+import { createRef, useLayoutEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useStore, usePlotStore, useTraceStore } from "../store";
 import { Vector3 } from "three";
@@ -26,7 +26,7 @@ export default function TraceController() {
   const traceStep = traceStepInput / 1000;
 
   const objMars = plotObjects.find((item) => item.name === "Mars");
-  let tracedObjects = [];
+  // let tracedObjects = [];
   const objectPos = new Vector3();
 
   let float32arr = new Float32Array(traceLength * 3); //xyz(3) for each point
@@ -41,6 +41,9 @@ export default function TraceController() {
     Venus: false,
     Mercury: false,
   });
+
+  const tracedObjects = useState([]);
+
   // console.log(tracePlanets);
 
   useLayoutEffect(() => {
@@ -55,14 +58,18 @@ export default function TraceController() {
     // for (let key in tracePlanets) {
     //   console.log(key, tracePlanets[key]);
     // }
-    tracedObjects = [];
+    // tracedObjects = [];
     for (let key in tracePlanets) {
       if (tracePlanets[key]) {
-        tracedObjects.push(plotObjects.find((item) => item.name === key));
+        tracedObjects.push({
+          name: key,
+          obj: plotObjects.find((item) => item.name === key),
+          pointsArrRef: createRef(),
+        });
       }
+      // console.log(tracedObjects);
+      // console.log(tracedObjectsRef.current);
     }
-    // console.log(tracedObjects);
-    // console.log(tracedObjectsRef.current);
   }, [tracePlanets]);
 
   useFrame(() => {
@@ -94,11 +101,28 @@ export default function TraceController() {
       pointsArrRef.current.push(objectPos.x, objectPos.y, objectPos.z);
 
       tracedObjects.map((tracedObj) => {
-        tracedObj.pivotRef.current.getWorldPosition(objectPos);
-        console.log(tracedObj, objectPos);
+        tracedObj.obj.pivotRef.current.getWorldPosition(objectPos);
+        if (tracedObj.pointsArrRef.current === null) {
+          tracedObj.pointsArrRef.current = [];
+        }
+        tracedObj.pointsArrRef.current.push(objectPos);
+        // console.log(tracedObj.pointsArrRef.current);
       });
     }
   });
 
-  return <>{trace ? <TraceLine /> : null}</>;
+  return (
+    <>
+      {tracedObjects.length > 0
+        ? tracedObjects.map((tracedObj) => (
+            <TraceLine
+              name={tracedObj.name}
+              pointsArrRef={tracedObj.pointsArrRef}
+            />
+          ))
+        : null}
+
+      {/* {trace ? <TraceLine /> : null} */}
+    </>
+  );
 }
