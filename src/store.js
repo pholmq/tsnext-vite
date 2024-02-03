@@ -31,6 +31,4 @@ export const useTraceStore = create((set) => ({
   traceStepInput: 5,
   traceLinewidth: 2,
   pointsArrRef: createRef(),
-  traceableObjects: {},
-  tracedObjects: {},
 }));

@@ -20,25 +20,28 @@ export default function TraceController() {
 
   const plotObjects = usePlotStore((s) => s.plotObjects);
   const plotPosRef = useRef(0);
-  const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
-    useTraceStore();
+  const { traceLength, traceStepInput, pointsArrRef } = useTraceStore();
   // if (pointsArrRef.current === null) pointsArrRef.current = [];
 
   const traceStep = traceStepInput / 1000;
 
   const objMars = plotObjects.find((item) => item.name === "Mars");
+  let tracedObjects = [];
   const objectPos = new Vector3();
 
   let float32arr = new Float32Array(traceLength * 3); //xyz(3) for each point
   float32arr.fill(0);
 
   // const {Mars} = useControls("Trace planets", {"Mars": false})
-  const result = useControls("Trace settings", {
+  const tracePlanets = useControls("Trace settings", {
     "Planets:": { value: "", editable: false },
-    mars: { value: false, label: "Mars" },
-    venus: { value: false, label: "Venus" },
+    Moon: false,
+    Sun: false,
+    Mars: false,
+    Venus: false,
+    Mercury: false,
   });
-  console.log(result);
+  // console.log(tracePlanets);
 
   useLayoutEffect(() => {
     if (trace) {
@@ -47,6 +50,20 @@ export default function TraceController() {
       pointsArrRef.current = [];
     }
   }, [trace]);
+
+  useLayoutEffect(() => {
+    // for (let key in tracePlanets) {
+    //   console.log(key, tracePlanets[key]);
+    // }
+    tracedObjects = [];
+    for (let key in tracePlanets) {
+      if (tracePlanets[key]) {
+        tracedObjects.push(plotObjects.find((item) => item.name === key));
+      }
+    }
+    // console.log(tracedObjects);
+    // console.log(tracedObjectsRef.current);
+  }, [tracePlanets]);
 
   useFrame(() => {
     if (!trace) return;
