@@ -92,6 +92,11 @@ export default function TraceController() {
         pointsArrRef.current.splice(0, 3);
       }
       pointsArrRef.current.push(objectPos.x, objectPos.y, objectPos.z);
+
+      tracedObjects.map((tracedObj) => {
+        tracedObj.pivotRef.current.getWorldPosition(objectPos);
+        console.log(tracedObj, objectPos);
+      });
     }
   });
 
