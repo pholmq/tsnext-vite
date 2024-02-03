@@ -32,7 +32,6 @@ const ControlPanel = () => {
   useControls(() => ({
     Trace: {
       value: useStore.getState().trace,
-      // onChange: (v) => useStore.setState({ trace: v }),
       onChange: (v) => useStore.setState({ trace: v }),
     },
     "Trace length": {
@@ -43,7 +42,11 @@ const ControlPanel = () => {
       value: useTraceStore.getState().traceStepInput,
       onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
     },
-    "Trace linewidth": {
+    Dots: {
+      value: useStore.getState().traceDots,
+      onChange: (v) => useStore.setState({ traceDots: v }),
+    },
+    "Linewidth/dotsize": {
       value: useTraceStore.getState().traceLinewidth,
       onChange: (v) => useTraceStore.setState({ traceLinewidth: v }),
     },

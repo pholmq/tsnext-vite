@@ -39,13 +39,11 @@ export const Pobj = ({ name, children }: Props) => {
   const cName: string = name;
   //REMINDER to self: DONT FORGET PLANET TILT OF EARTH tilt and tiltb
   // Cobj = Celestial Object
-  //console.log(name + " rendered");
 
   //Get the settings for this object and merge
   const cSettings: any =
     celestialSettings[name as keyof typeof celestialSettings];
   const aSettings: any = miscSettings[name as keyof typeof miscSettings];
-  //   const { [name]: aSettings } = miscSettings;
   const s: Settings = { ...cSettings, ...aSettings };
 
   const containerRef: any = useRef();
@@ -70,12 +68,10 @@ export const Pobj = ({ name, children }: Props) => {
     }));
     if (s.traceable) {
       useTraceStore.setState((state) => ({
-        traceableObjects: [
+        traceableObjects: {
           ...state.traceableObjects,
-          {
-            name: s.name,
-          },
-        ],
+          name: s.name,
+        },
       }));
       console.log(useTraceStore.getState().traceableObjects);
     }

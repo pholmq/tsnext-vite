@@ -1,11 +1,16 @@
 import { useLayoutEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useTraceStore } from "../store";
+import { useStore, useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 
 export default function TraceLine() {
   const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
     useTraceStore();
+
+  const traceDots = useStore((s) => s.traceDots);
+
+  //If lineWidth is a negative number the line is dotted
+  const linewOrDotSize = traceDots ? -traceLinewidth : traceLinewidth;
 
   let float32arr = new Float32Array(traceLength * 3); //xyz for each point
   float32arr.fill(0);
@@ -45,7 +50,7 @@ export default function TraceLine() {
     <Line
       ref={line2Ref}
       points={[...float32arr]}
-      lineWidth={traceLinewidth}
+      lineWidth={linewOrDotSize}
       color="red"
     ></Line>
   );

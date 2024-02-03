@@ -12,14 +12,15 @@ function moveModel(plotObjects: any, plotPos: any) {
 }
 
 export default function TraceController() {
-  const traceOn = useStore((s) => s.trace);
+  // const { trace, posRef } = useStore();
+  const trace = useStore((s) => s.trace);
   const posRef = useStore((s) => s.posRef);
 
-  const { plotObjects } = usePlotStore();
+  const plotObjects = usePlotStore((s) => s.plotObjects);
   const plotPosRef = useRef(0);
   const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
     useTraceStore();
-  if (pointsArrRef.current === null) pointsArrRef.current = [];
+  // if (pointsArrRef.current === null) pointsArrRef.current = [];
 
   const traceStep = traceStepInput / 1000;
 
@@ -30,15 +31,15 @@ export default function TraceController() {
   float32arr.fill(0);
 
   useLayoutEffect(() => {
-    if (traceOn) {
+    if (trace) {
       plotPosRef.current = posRef.current;
     } else {
       pointsArrRef.current = [];
     }
-  }, [traceOn]);
+  }, [trace]);
 
   useFrame(() => {
-    if (!traceOn) return;
+    if (!trace) return;
 
     //Check and adjust plotPos if the pos is out of bounds
     if (plotPosRef.current < posRef.current - traceLength * traceStep) {
@@ -67,5 +68,5 @@ export default function TraceController() {
     }
   });
 
-  return <>{traceOn ? <TraceLine /> : null}</>;
+  return <>{trace ? <TraceLine /> : null}</>;
 }
