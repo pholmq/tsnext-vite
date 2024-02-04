@@ -3,12 +3,13 @@ import { useFrame } from "@react-three/fiber";
 import { useStore, useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 
-export default function TraceLine({ name, pointsArrRef }) {
-  console.log(name, pointsArrRef);
+export default function TraceLine({ name }) {
+  console.log(name);
   // const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
   //   useTraceStore();
 
-  const { traceLength, traceStepInput, traceLinewidth } = useTraceStore();
+  const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
+    useTraceStore();
 
   const traceDots = useStore((s) => s.traceDots);
 
@@ -43,7 +44,7 @@ export default function TraceLine({ name, pointsArrRef }) {
   }, [traceLength]);
 
   useFrame(() => {
-    console.log(key);
+    console.log(name);
     float32arr.set(pointsArrRef.current); //bottleneck?
     line2Ref.current.geometry.setPositions(float32arr);
     line2Ref.current.geometry.instanceCount =

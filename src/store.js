@@ -30,5 +30,6 @@ export const useTraceStore = create((set) => ({
   traceLength: 1000,
   traceStepInput: 5,
   traceLinewidth: 2,
+  tracedObjects: [],
   pointsArrRef: createRef(),
 }));

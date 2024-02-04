@@ -20,7 +20,8 @@ export default function TraceController() {
 
   const plotObjects = usePlotStore((s) => s.plotObjects);
   const plotPosRef = useRef(0);
-  const { traceLength, traceStepInput, pointsArrRef } = useTraceStore();
+  const { traceLength, traceStepInput, pointsArrRef, tracedObjects } =
+    useTraceStore();
   // if (pointsArrRef.current === null) pointsArrRef.current = [];
 
   const traceStep = traceStepInput / 1000;
@@ -42,10 +43,6 @@ export default function TraceController() {
     Mercury: false,
   });
 
-  const tracedObjects = useState([]);
-
-  // console.log(tracePlanets);
-
   useLayoutEffect(() => {
     if (trace) {
       plotPosRef.current = posRef.current;
@@ -58,7 +55,8 @@ export default function TraceController() {
     // for (let key in tracePlanets) {
     //   console.log(key, tracePlanets[key]);
     // }
-    // tracedObjects = [];
+    tracedObjects.length = 0;
+
     for (let key in tracePlanets) {
       if (tracePlanets[key]) {
         tracedObjects.push({
@@ -67,9 +65,9 @@ export default function TraceController() {
           pointsArrRef: createRef(),
         });
       }
-      // console.log(tracedObjects);
       // console.log(tracedObjectsRef.current);
     }
+    console.log("tracedObjects: ", tracedObjects);
   }, [tracePlanets]);
 
   useFrame(() => {
@@ -110,19 +108,21 @@ export default function TraceController() {
       });
     }
   });
+  //       {/* {tracedObjects.length > 0
+  //         ? tracedObjects.map((tracedObj) => (
+  //             <TraceLine key={tracedObj.name} name={tracedObj.name} />
+  //           ))
+  //         : null}
+  //  */}
+  //       {/* {trace ? <TraceLine /> : null} */}
 
   return (
     <>
       {tracedObjects.length > 0
         ? tracedObjects.map((tracedObj) => (
-            <TraceLine
-              name={tracedObj.name}
-              pointsArrRef={tracedObj.pointsArrRef}
-            />
+            <TraceLine key={tracedObj.name} name={tracedObj.name} />
           ))
         : null}
-
-      {/* {trace ? <TraceLine /> : null} */}
     </>
   );
 }
