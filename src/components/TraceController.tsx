@@ -64,6 +64,8 @@ export default function TraceController() {
     if (!trace) return;
 
     //Check and adjust plotPos if the pos is out of bounds
+    //This can be optimized...
+
     if (plotPosRef.current < posRef.current - traceLength * traceStep) {
       plotPosRef.current = posRef.current - traceLength * traceStep;
       tracedObjects.map((tracedObj) => {
@@ -86,19 +88,11 @@ export default function TraceController() {
           3
         );
       });
-
-      // pointsArrRef.current.splice(pointsArrRef.current.length - 3, 3);
     }
 
     while (plotPosRef.current < posRef.current - traceStep) {
       plotPosRef.current = plotPosRef.current + traceStep;
       moveModel(plotObjects, plotPosRef.current);
-      // objMars.pivotRef.current.getWorldPosition(objectPos);
-
-      // if (pointsArrRef.current.length + 3 > traceLength * 3) {
-      //   pointsArrRef.current.splice(0, 3);
-      // }
-      // pointsArrRef.current.push(objectPos.x, objectPos.y, objectPos.z);
 
       tracedObjects.map((tracedObj) => {
         tracedObj.obj.pivotRef.current.getWorldPosition(objectPos);
