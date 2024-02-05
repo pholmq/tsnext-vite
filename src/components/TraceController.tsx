@@ -58,7 +58,7 @@ export default function TraceController() {
     }
   }
 
-  console.log(tracedObjects);
+  // console.log(tracedObjects);
 
   useFrame(() => {
     if (!trace) return;
