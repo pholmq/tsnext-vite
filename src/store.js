@@ -17,6 +17,7 @@ export const useStore = create((set) => ({
   orbitsLinewidth: 2,
   arrows: false,
   arrowScale: 1,
+  traceDots: false,
 }));
 
 export const usePlotStore = create((set) => ({
@@ -26,10 +27,9 @@ export const usePlotStore = create((set) => ({
 }));
 
 export const useTraceStore = create((set) => ({
-  traceLength: 1000,
+  traceLength: 5000,
   traceStepInput: 5,
   traceLinewidth: 2,
-  pointsArrRef: createRef(),
-  traceableObjects: [],
   tracedObjects: [],
+  // pointsArrRef: createRef(),
 }));

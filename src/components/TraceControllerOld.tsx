@@ -26,10 +26,10 @@ function moveModel(plotObjects: any, plotPos: any) {
   const objectPos = new Vector3();
   plotObjects.forEach((pObj) => {
     pObj.pivotRef.current.getWorldPosition(objectPos);
-    console.log(pObj.name, " ", objectPos);
+    // console.log(pObj.name, " ", objectPos);
     pObj.orbitRef.current.rotation.y =
       pObj.speed * plotPos - pObj.startPos * (Math.PI / 180);
-    console.log(pObj, "pObj.speed * plotPos: ", pObj.speed * plotPos);
+    // console.log(pObj, "pObj.speed * plotPos: ", pObj.speed * plotPos);
   });
 }
 

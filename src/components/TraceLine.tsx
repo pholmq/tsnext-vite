@@ -1,11 +1,33 @@
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useTraceStore } from "../store";
+import { useStore, useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 
-export default function TraceLine() {
-  const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
-    useTraceStore();
+export default function TraceLine({ name }) {
+  console.log("Tracel rendered: ", name);
+  // const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
+  //   useTraceStore();
+
+  const {
+    traceLength,
+    traceStepInput,
+    traceLinewidth,
+    tracedObjects,
+    // pointsArrRef,
+  } = useTraceStore();
+
+  // const tracedObjects = useTraceStore.getState().tracedObjects;
+  const tracedObj = tracedObjects.find((item) => item.name === name);
+  const pointsArrRef = tracedObj.pointsArrRef;
+  if (pointsArrRef.current === null) {
+    pointsArrRef.current = [];
+  }
+  // console.log(tracedObj, pointsArrRef, pointsArrRef);
+
+  const traceDots = useStore((s) => s.traceDots);
+
+  //If lineWidth is a negative number the line is dotted
+  const linewOrDotSize = traceDots ? -traceLinewidth : traceLinewidth;
 
   let float32arr = new Float32Array(traceLength * 3); //xyz for each point
   float32arr.fill(0);
@@ -35,6 +57,7 @@ export default function TraceLine() {
   }, [traceLength]);
 
   useFrame(() => {
+    // console.log(name);
     float32arr.set(pointsArrRef.current); //bottleneck?
     line2Ref.current.geometry.setPositions(float32arr);
     line2Ref.current.geometry.instanceCount =
@@ -45,8 +68,8 @@ export default function TraceLine() {
     <Line
       ref={line2Ref}
       points={[...float32arr]}
-      lineWidth={traceLinewidth}
-      color="red"
+      lineWidth={linewOrDotSize}
+      color={tracedObj.obj.color}
     ></Line>
   );
 }
