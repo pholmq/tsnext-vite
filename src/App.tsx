@@ -6,9 +6,13 @@ import ControlPanel from "./components/ControlPanel";
 import PlotSolarSystem from "./components/PlotSolarSystem";
 import TraceController from "./components/TraceController";
 import { Vector3 } from "three";
+import { useStore } from "./store";
+
 // import Line from "./components/Line";
 //tstxxx
 function TSNext() {
+  const trace = useStore.getState().trace;
+
   return (
     <>
       <Canvas
