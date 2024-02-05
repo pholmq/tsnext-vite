@@ -4,7 +4,7 @@ import { useStore, useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 
 export default function TraceLine({ name }) {
-  console.log("Tracel rendered: ", name);
+  // console.log("Tracel rendered: ", name);
   // const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
   //   useTraceStore();
 
@@ -58,7 +58,13 @@ export default function TraceLine({ name }) {
 
   useFrame(() => {
     // console.log(name);
+    // console.log("float32arr", float32arr);
+    // console.log("pointsArrRef", pointsArrRef.current);
     float32arr.set(pointsArrRef.current); //bottleneck?
+    // const pArray = pointsArrRef.current;
+    // float32arr[pArray.length - 3] = pArray[pArray.length - 3];
+    // float32arr[pArray.length - 2] = pArray[pArray.length - 2];
+    // float32arr[pArray.length - 1] = pArray[pArray.length - 1];
     line2Ref.current.geometry.setPositions(float32arr);
     line2Ref.current.geometry.instanceCount =
       (pointsArrRef.current.length - 1) / 3;

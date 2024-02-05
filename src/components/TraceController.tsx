@@ -22,19 +22,19 @@ export default function TraceController() {
   const { traceLength, traceStepInput, tracedObjects } = useTraceStore();
   const traceStep = traceStepInput / 1000;
 
-  const objMars = plotObjects.find((item) => item.name === "Mars");
-  // let tracedObjects = [];
   const objectPos = new Vector3();
 
   let float32arr = new Float32Array(traceLength * 3); //xyz(3) for each point
   float32arr.fill(0);
+
+  const plotObjectsReady = plotObjects.length > 0;
 
   // const {Mars} = useControls("Trace planets", {"Mars": false})
   const tracePlanets = useControls("Trace settings", {
     "Planets:": { value: "", editable: false },
     Moon: false,
     Sun: false,
-    Mars: false,
+    Mars: true,
     Venus: false,
     Mercury: false,
   });
@@ -47,23 +47,41 @@ export default function TraceController() {
     });
   }
 
-  for (let key in tracePlanets) {
-    if (tracePlanets[key]) {
-      const obj = plotObjects.find((item) => item.name === key);
-      tracedObjects.push({
-        name: key,
-        obj: plotObjects.find((item) => item.name === key),
-        pointsArrRef: createRef(),
-      });
+  if (plotObjectsReady) {
+    for (let key in tracePlanets) {
+      // console.log("tracePlanets[key]", tracePlanets[key], "key ", key);
+      // console.log(
+      //   "tracedObjects.find((item) => item.name === key",
+      //   tracedObjects.find((item) => item.name === key)
+      // );
+      if (
+        //Add the object if it's checked and not already added
+        tracePlanets[key] &&
+        !tracedObjects.find((item) => item.name === key)
+      ) {
+        tracedObjects.push({
+          name: key,
+          obj: plotObjects.find((item) => item.name === key),
+          pointsArrRef: createRef(),
+        });
+      }
     }
   }
-
-  console.log(tracedObjects);
+  // console.log(
+  //   "tracePlanets",
+  //   tracePlanets,
+  //   "tracedObjects ",
+  //   tracedObjects,
+  //   "plotObjectsReady ",
+  //   plotObjectsReady
+  // );
 
   useFrame(() => {
     if (!trace) return;
 
     //Check and adjust plotPos if the pos is out of bounds
+    //This can be optimized...
+
     if (plotPosRef.current < posRef.current - traceLength * traceStep) {
       plotPosRef.current = posRef.current - traceLength * traceStep;
       tracedObjects.map((tracedObj) => {
@@ -86,19 +104,11 @@ export default function TraceController() {
           3
         );
       });
-
-      // pointsArrRef.current.splice(pointsArrRef.current.length - 3, 3);
     }
 
     while (plotPosRef.current < posRef.current - traceStep) {
       plotPosRef.current = plotPosRef.current + traceStep;
       moveModel(plotObjects, plotPosRef.current);
-      // objMars.pivotRef.current.getWorldPosition(objectPos);
-
-      // if (pointsArrRef.current.length + 3 > traceLength * 3) {
-      //   pointsArrRef.current.splice(0, 3);
-      // }
-      // pointsArrRef.current.push(objectPos.x, objectPos.y, objectPos.z);
 
       tracedObjects.map((tracedObj) => {
         tracedObj.obj.pivotRef.current.getWorldPosition(objectPos);
@@ -119,9 +129,11 @@ export default function TraceController() {
   });
   return (
     <>
-      {Object.keys(tracePlanets).map((key, index) =>
-        tracePlanets[key] ? <TraceLine key={index} name={key} /> : null
-      )}
+      {plotObjectsReady
+        ? Object.keys(tracePlanets).map((key, index) =>
+            tracePlanets[key] ? <TraceLine key={index} name={key} /> : null
+          )
+        : null}
     </>
   );
 }
