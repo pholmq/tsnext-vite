@@ -1,15 +1,28 @@
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useStore, useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 
 export default function TraceLine({ name }) {
-  console.log(name);
+  console.log("Tracel rendered: ", name);
   // const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
   //   useTraceStore();
 
-  const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
-    useTraceStore();
+  const {
+    traceLength,
+    traceStepInput,
+    traceLinewidth,
+    tracedObjects,
+    // pointsArrRef,
+  } = useTraceStore();
+
+  // const tracedObjects = useTraceStore.getState().tracedObjects;
+  const tracedObj = tracedObjects.find((item) => item.name === name);
+  const pointsArrRef = tracedObj.pointsArrRef;
+  if (pointsArrRef.current === null) {
+    pointsArrRef.current = [];
+  }
+  // console.log(tracedObj, pointsArrRef, pointsArrRef);
 
   const traceDots = useStore((s) => s.traceDots);
 
@@ -44,7 +57,7 @@ export default function TraceLine({ name }) {
   }, [traceLength]);
 
   useFrame(() => {
-    console.log(name);
+    // console.log(name);
     float32arr.set(pointsArrRef.current); //bottleneck?
     line2Ref.current.geometry.setPositions(float32arr);
     line2Ref.current.geometry.instanceCount =
@@ -56,7 +69,7 @@ export default function TraceLine({ name }) {
       ref={line2Ref}
       points={[...float32arr]}
       lineWidth={linewOrDotSize}
-      color="red"
+      color={tracedObj.obj.color}
     ></Line>
   );
 }

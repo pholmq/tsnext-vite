@@ -24,8 +24,8 @@ function TSNext() {
         <Stars radius={100000} />
         <AnimationController />
         <SolarSystem />
-        <TraceController />
         <PlotSolarSystem />
+        <TraceController />
         <axesHelper args={[5]} position={[0, 0, 0]} />
         <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
           <tetrahedronGeometry />

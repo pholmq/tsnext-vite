@@ -42,6 +42,9 @@ const ControlPanel = () => {
         },
         "Linewidth/dotsize": {
           value: useTraceStore.getState().traceLinewidth,
+          min: 1,
+          max: 10,
+          step: 1,
           onChange: (v) => useTraceStore.setState({ traceLinewidth: v }),
         },
         "Trace length": {

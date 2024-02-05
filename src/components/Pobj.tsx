@@ -59,6 +59,7 @@ export const Pobj = ({ name, children }: Props) => {
         ...state.plotObjects,
         {
           name: s.name,
+          color: s.color,
           speed: s.speed,
           startPos: s.startPos,
           orbitRef: orbitRef,
