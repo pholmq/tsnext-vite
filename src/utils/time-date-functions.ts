@@ -2,7 +2,7 @@
 const yearLength = 365.2425;
 const earthRotations = 366.2425;
 
-const sDay = 1 / yearLength;
+export const sDay = 1 / yearLength;
 const sYear = sDay * 365;
 const sMonth = sDay * 30;
 const sWeek = sDay * 7;
@@ -218,7 +218,7 @@ export function isNumeric(n: any) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function dateToDays(sDate: string) {
+export function dateToDays(sDate: string) {
   //Calculates the number of days passed since 2000-06-21 for a date. Positive or negative
   //Taken from https://alcor.concordia.ca/~gpkatch/gdate-algorithm.html
   let aDate = sDate.split("-");

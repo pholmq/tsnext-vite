@@ -1,7 +1,7 @@
 // import styles from "./Controls.module.css";
 import { useEffect, useRef, useState } from "react";
 // import { useFrame } from "@react-three/fiber";
-import { button, folder, Leva, useControls } from "leva";
+import { button, buttonGroup, folder, Leva, useControls } from "leva";
 import { usePlotStore, useStore, useTraceStore } from "../store";
 import {
   posToDate,
@@ -14,11 +14,21 @@ import {
   julianDayTimeToPos,
   speedFactOpts,
   speedFactOptions,
+  sDay,
+  dateToDays,
 } from "../utils/time-date-functions";
 import { Stats } from "@react-three/drei";
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
 import { Vector3 } from "three";
 const ControlPanel = () => {
+  const [collapsed, setCollapsed] = useState(true);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setCollapsed(false);
+    }, 0);
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   const { posRef, date, time, speedFact, run: running } = useStore();
 
   const dateRef = useRef();
@@ -46,6 +56,33 @@ const ControlPanel = () => {
       step: 1,
       onChange: (v) => useStore.setState({ speedmultiplier: v }),
     },
+
+    // "Reset (Go to 2000-06-21)": button(() => {}),
+    // "Go to Today": button(() => {}),
+
+    " ": buttonGroup({
+      " >> Reset (Go to 2000-06-21) ": () => {
+        posRef.current = 0;
+        useStore.setState({ date: posToDate(posRef.current) });
+        useStore.setState({ time: posToTime(posRef.current) });
+      },
+      // "  ": () => {},
+      " >> Go to today ": () => {
+        const todayPos =
+          sDay *
+          dateToDays(
+            new Intl.DateTimeFormat("sv-SE", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            }).format(Date.now())
+          );
+        posRef.current = todayPos;
+        useStore.setState({ date: posToDate(posRef.current) });
+        useStore.setState({ time: posToTime(posRef.current) });
+      },
+    }),
+
     Trace: {
       value: useStore.getState().trace,
       onChange: (v) => useStore.setState({ trace: v }),
@@ -220,6 +257,13 @@ const ControlPanel = () => {
 
       <div className="mt-2 overflow-auto">
         <Leva
+          neverHide
+          collapsed={{
+            collapsed,
+            onChange: (value) => {
+              setCollapsed(value);
+            },
+          }}
           fill
           hideCopyButton
           // collapsed
