@@ -12,6 +12,7 @@ import {
   isValidTime,
   isNumeric,
   julianDayTimeToPos,
+  speedFactOpts,
   speedFactOptions,
 } from "../utils/time-date-functions";
 import { Stats } from "@react-three/drei";
@@ -30,6 +31,21 @@ const ControlPanel = () => {
   }, [date, time, running]);
 
   useControls(() => ({
+    "1 second equals": {
+      value: speedFact,
+      options: speedFactOpts,
+
+      onChange: (v) => {
+        useStore.setState({ speedFact: v });
+      },
+    },
+    "Speed multiplier": {
+      value: useStore.getState().speedmultiplier,
+      min: -10,
+      max: 10,
+      step: 1,
+      onChange: (v) => useStore.setState({ speedmultiplier: v }),
+    },
     Trace: {
       value: useStore.getState().trace,
       onChange: (v) => useStore.setState({ trace: v }),
@@ -65,23 +81,34 @@ const ControlPanel = () => {
       { collapsed: true }
     ),
 
-    Orbits: {
-      value: useStore.getState().orbits,
-      onChange: (v) => useStore.setState({ orbits: v }),
-    },
-    "Orbits line width": {
-      value: useStore.getState().orbitsLinewidth,
-      onChange: (v) => useStore.setState({ orbitsLinewidth: v }),
-    },
+    "Orbit settings": folder(
+      {
+        Orbits: {
+          value: useStore.getState().orbits,
+          onChange: (v) => useStore.setState({ orbits: v }),
+        },
+        Linewidth: {
+          value: useStore.getState().orbitsLinewidth,
+          min: 1,
+          max: 10,
+          step: 1,
+          onChange: (v) => useStore.setState({ orbitsLinewidth: v }),
+        },
 
-    Arrows: {
-      value: useStore.getState().arrows,
-      onChange: (v) => useStore.setState({ arrows: v }),
-    },
-    "Arrow size": {
-      value: useStore.getState().arrowScale,
-      onChange: (v) => useStore.setState({ arrowScale: v }),
-    },
+        Arrows: {
+          value: useStore.getState().arrows,
+          onChange: (v) => useStore.setState({ arrows: v }),
+        },
+        "Arrow size": {
+          value: useStore.getState().arrowScale,
+          min: 1,
+          max: 5,
+          step: 1,
+          onChange: (v) => useStore.setState({ arrowScale: v }),
+        },
+      },
+      { collapsed: true }
+    ),
     "Celestial settings": folder({}, { collapsed: true }),
   }));
 
@@ -191,31 +218,16 @@ const ControlPanel = () => {
         />
       </div>
 
-      <div className="flex items-center justify-center m-1">
-        <label className="text-base text-white mr-2 ml-1 flex-1">
-          1 second equals
-        </label>
-        <select
-          className="text-base text-white bg-gray-700 mr-8 rounded p-1"
-          value={speedFact}
-          onChange={(e) => {
-            useStore.setState({ speedFact: Number(e.target.value) });
-          }}
-        >
-          {speedFactOptions.map((option) => (
-            <option value={option.value} key={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
       <div className="mt-2 overflow-auto">
         <Leva
           fill
           hideCopyButton
           // collapsed
-          titleBar={{ drag: false, filter: false, title: "Settings" }}
+          titleBar={{
+            drag: false,
+            filter: false,
+            title: "Open/Close Controls",
+          }}
           theme={{
             colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
           }}

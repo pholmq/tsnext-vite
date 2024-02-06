@@ -9,6 +9,7 @@ const AnimationController = () => {
   const posRef: any = useStore((s) => s.posRef);
   const run = useStore((s) => s.run);
   const speedFact = useStore((s) => s.speedFact);
+  const speedmultiplier = useStore((s) => s.speedmultiplier);
   const date: any = useStore.getState().date;
   const time: any = useStore.getState().time;
   let deltaSum = 0;
@@ -17,7 +18,7 @@ const AnimationController = () => {
   useFrame((state, delta) => {
     if (run) {
       // console.log(deltaSum);
-      posRef.current = posRef.current + delta * speedFact;
+      posRef.current = posRef.current + delta * (speedFact * speedmultiplier);
       deltaSum += delta;
       if (deltaSum > 0.1) {
         //needs to be about 0.1 otherwise framerate drops with a high speed fact

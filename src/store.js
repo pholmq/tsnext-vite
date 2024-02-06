@@ -12,6 +12,8 @@ export const useStore = create((set) => ({
   time: posToTime(0),
   run: false,
   speedFact: getDefaultSpeedFact(),
+  speedmultiplier: 1,
+
   trace: false,
   orbits: true,
   orbitsLinewidth: 2,
