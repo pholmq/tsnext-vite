@@ -39,21 +39,10 @@ export default function TraceController() {
     Mercury: false,
   });
 
-  if (trace) {
-    plotPosRef.current = posRef.current;
-  } else {
-    tracedObjects.map((tracedObj) => {
-      tracedObj.pointsArrRef.current = [];
-    });
-  }
+  if (trace) plotPosRef.current = posRef.current;
 
   if (plotObjectsReady) {
     for (let key in tracePlanets) {
-      // console.log("tracePlanets[key]", tracePlanets[key], "key ", key);
-      // console.log(
-      //   "tracedObjects.find((item) => item.name === key",
-      //   tracedObjects.find((item) => item.name === key)
-      // );
       if (
         //Add the object if it's checked and not already added
         tracePlanets[key] &&
@@ -67,20 +56,12 @@ export default function TraceController() {
       }
     }
   }
-  // console.log(
-  //   "tracePlanets",
-  //   tracePlanets,
-  //   "tracedObjects ",
-  //   tracedObjects,
-  //   "plotObjectsReady ",
-  //   plotObjectsReady
-  // );
 
   useFrame(() => {
     if (!trace) return;
 
     //Check and adjust plotPos if the pos is out of bounds
-    //This can be optimized...
+    //This can prob be better optimized.
 
     if (plotPosRef.current < posRef.current - traceLength * traceStep) {
       plotPosRef.current = posRef.current - traceLength * traceStep;
@@ -123,7 +104,6 @@ export default function TraceController() {
           objectPos.y,
           objectPos.z
         );
-        // console.log(tracedObj.pointsArrRef.current);
       });
     }
   });

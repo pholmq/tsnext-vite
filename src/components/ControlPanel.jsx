@@ -49,10 +49,16 @@ const ControlPanel = () => {
         },
         "Trace length": {
           value: useTraceStore.getState().traceLength,
+          min: 100,
+          max: 10000,
+          step: 100,
           onChange: (v) => useTraceStore.setState({ traceLength: v }),
         },
         "Trace step": {
           value: useTraceStore.getState().traceStepInput,
+          min: 1,
+          max: 10,
+          step: 1,
           onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
         },
       },

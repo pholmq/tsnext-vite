@@ -4,10 +4,6 @@ import { useStore, useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 
 export default function TraceLine({ name }) {
-  // console.log("Tracel rendered: ", name);
-  // const { traceLength, traceStepInput, traceLinewidth, pointsArrRef } =
-  //   useTraceStore();
-
   const {
     traceLength,
     traceStepInput,
@@ -15,18 +11,15 @@ export default function TraceLine({ name }) {
     tracedObjects,
     // pointsArrRef,
   } = useTraceStore();
-
-  // const tracedObjects = useTraceStore.getState().tracedObjects;
   const tracedObj = tracedObjects.find((item) => item.name === name);
   const pointsArrRef = tracedObj.pointsArrRef;
   if (pointsArrRef.current === null) {
     pointsArrRef.current = [];
   }
-  // console.log(tracedObj, pointsArrRef, pointsArrRef);
 
   const traceDots = useStore((s) => s.traceDots);
 
-  //If lineWidth is a negative number the line is dotted
+  //If lineWidth is negative the line becomes dotted
   const linewOrDotSize = traceDots ? -traceLinewidth : traceLinewidth;
 
   let float32arr = new Float32Array(traceLength * 3); //xyz for each point
@@ -57,14 +50,9 @@ export default function TraceLine({ name }) {
   }, [traceLength]);
 
   useFrame(() => {
-    // console.log(name);
-    // console.log("float32arr", float32arr);
-    // console.log("pointsArrRef", pointsArrRef.current);
-    float32arr.set(pointsArrRef.current); //bottleneck?
-    // const pArray = pointsArrRef.current;
-    // float32arr[pArray.length - 3] = pArray[pArray.length - 3];
-    // float32arr[pArray.length - 2] = pArray[pArray.length - 2];
-    // float32arr[pArray.length - 1] = pArray[pArray.length - 1];
+    float32arr.set(pointsArrRef.current); //Bottleneck?
+    //An optimaization might be to have an index for float32arr and only add
+    //new points instead of copying the entire pointsArr every frame
     line2Ref.current.geometry.setPositions(float32arr);
     line2Ref.current.geometry.instanceCount =
       (pointsArrRef.current.length - 1) / 3;
