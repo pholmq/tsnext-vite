@@ -10,47 +10,62 @@ const sHour = sDay / 24;
 const sMinute = sHour / 60;
 const sSecond = sMinute / 60;
 
+// { "1 minute": 1, "1 hour": 10 }
+
+export const speedFactOpts = {
+  "1 second": sSecond,
+  "1 minute": sMinute,
+  "1 hour": sHour,
+  "1 day": sDay,
+  "1 week": sWeek,
+  "1 month": sMonth,
+  "1 year": sYear,
+  "10 years": sYear * 10,
+  "100 years": sYear * 100,
+  "1000 years": sYear * 1000,
+};
+
 export const speedFactOptions = [
   {
     label: "1 second",
-    value: sSecond
+    value: sSecond,
   },
   {
     label: "1 minute",
-    value: sMinute
+    value: sMinute,
   },
   {
     label: "1 hour",
-    value: sHour
+    value: sHour,
   },
   {
     label: "1 day",
-    value: sDay
+    value: sDay,
   },
   {
     label: "1 week",
-    value: sWeek
+    value: sWeek,
   },
   {
     label: "1 month",
-    value: sMonth
+    value: sMonth,
   },
   {
     label: "1 year",
-    value: sYear
+    value: sYear,
   },
   {
     label: "10 years",
-    value: sYear * 10
+    value: sYear * 10,
   },
   {
     label: "100 years",
-    value: sYear * 100
+    value: sYear * 100,
   },
   {
     label: "1000 years",
-    value: sYear * 1000
-  }
+    value: sYear * 1000,
+  },
 
   // '10 years': sYear*10,
   // '100 years': sYear*100,
