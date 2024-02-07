@@ -52,9 +52,10 @@ const ControlPanel = () => {
   useControls(() => ({
     "1 second/step equals": {
       value: speedmultiplier,
+      step: 1,
       onChange: (v) => useStore.setState({ speedmultiplier: v }),
     },
-    _: {
+    "\u{000D}": {
       value: speedFact,
       options: speedFactOpts,
 
@@ -130,8 +131,10 @@ const ControlPanel = () => {
       },
       { collapsed: true }
     ),
+    // Positions: folder({ "\u{0009}": "" }, { collapsed: true }),
+
     Positions: folder(
-      { null: { value: " ", editable: false } },
+      { "\u{0009}": { value: " ", editable: false } },
       { collapsed: true }
     ),
 

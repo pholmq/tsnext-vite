@@ -1,3 +1,64 @@
+import { Vector3, Spherical, Scene } from "three";
+import { useThree } from "@react-three/fiber";
+
+export function getRaDecDistance(name: string, scene: Scene) {
+  //Returns Right Ascension, Declination and Distance for a Cobj
+  // const { scene } = useThree();
+
+  const objectPos = new Vector3();
+  const lookAtDir = new Vector3(0, 0, 1);
+  const csPos = new Vector3();
+  const sphericalPos = new Spherical();
+  const sunPos = new Vector3();
+
+  //Some geometrical gymnastics to get Right Ascension, Declination, distance and elongation
+  scene.getObjectByName(name).getWorldPosition(objectPos);
+  scene.getObjectByName("CelestialSphere").getWorldPosition(csPos);
+  const csLookAtObj = scene.getObjectByName("CSLookAtObj");
+  csLookAtObj.lookAt(objectPos);
+  lookAtDir.applyQuaternion(csLookAtObj.quaternion);
+  lookAtDir.setLength(csPos.distanceTo(objectPos));
+  sphericalPos.setFromVector3(lookAtDir);
+  const ra = radToRa(sphericalPos.theta);
+  const dec = radToDec(sphericalPos.phi);
+
+  //Distance
+  let distKm;
+  let distAU;
+  if (name === "Moon") {
+    // Moon is furher away from Earth in the model than in reality (to be visible)
+    distKm = (((sphericalPos.radius / 100) * 149597871) / 39.2078).toFixed(2);
+    distAU = (sphericalPos.radius / 100 / 39.2078).toFixed(8);
+  } else {
+    distKm = ((sphericalPos.radius / 100) * 149597871).toFixed(2);
+    distAU = (sphericalPos.radius / 100).toFixed(8);
+  }
+
+  //Elongation
+  scene.getObjectByName("Sun").getWorldPosition(sunPos);
+  const earthSunDistance = csPos.distanceTo(sunPos);
+  const earthTargetPlanetDistance = csPos.distanceTo(objectPos);
+  const sunTargetPlanetDistance = sunPos.distanceTo(objectPos);
+  const numerator =
+    Math.pow(earthSunDistance, 2) +
+    Math.pow(earthTargetPlanetDistance, 2) -
+    Math.pow(sunTargetPlanetDistance, 2);
+  const denominator = 2.0 * earthSunDistance * earthTargetPlanetDistance;
+  const elongationRadians = Math.acos(numerator / denominator);
+  const elongation = ((180.0 * elongationRadians) / Math.PI).toFixed(3);
+
+  return {
+    ra: ra,
+    dec: dec,
+    elongation: elongation,
+    distKm: distKm,
+    distAU: distAU,
+    x: objectPos.x,
+    y: objectPos.y,
+    z: objectPos.z,
+  };
+}
+
 export function radToRa(rad) {
   if (rad < 0) {
     rad = rad + Math.PI * 2;
@@ -54,4 +115,3 @@ function leadZero(n: number, plus?: boolean) {
   n = Math.abs(n);
   return n > 9 ? sign + n : sign + "0" + n;
 }
-

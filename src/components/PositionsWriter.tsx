@@ -1,24 +1,39 @@
 //test
-import { createRef, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
-import { useStore, usePlotStore, useTraceStore } from "../store";
-import { Vector3 } from "three";
+import { useThree } from "@react-three/fiber";
 import { useControls, folder } from "leva";
+import { getRaDecDistance } from "../utils/celestial-functions";
+import { useFrameInterval } from "../utils/useFrameInterval";
 
 export default function PositionsWriter() {
-  const trace = useStore((s) => s.trace);
-  const posRef = useStore((s) => s.posRef);
+  const { scene } = useThree();
 
-  const plotObjects = usePlotStore((s) => s.plotObjects);
-  const plotPosRef = useRef(0);
-  const { traceLength, traceStepInput, tracedObjects } = useTraceStore();
-  const traceStep = traceStepInput / 1000;
+  const [{ RA, Dec, Elongation, Km, AU }, setMoon] = useControls(
+    "Positions",
+    () => ({
+      Moon: folder({
+        RA: " ",
+        Dec: " ",
+        Elongation: " ",
+        Km: { value: " ", label: "Kilometers" },
+        AU: " ",
+      }),
+    })
+  );
 
-  // const {Mars} = useControls("Trace planets", {"Mars": false})
-  const tracePlanets = useControls("Positions", {
-    Moon: folder({ RA: 0 }),
-  });
+  useFrameInterval(() => {
+    const { ra, dec, elongation, distKm, distAU } = getRaDecDistance(
+      "Moon",
+      scene
+    );
+    // console.log(getRaDecDistance("Moon", scene));
+    setMoon({
+      RA: ra,
+      Dec: dec,
+      Elongation: elongation,
+      Km: distKm,
+      AU: distAU,
+    });
+  }, 100);
 
-  useFrame(() => {});
-  return <></>;
+  return null;
 }
