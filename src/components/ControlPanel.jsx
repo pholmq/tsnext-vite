@@ -20,7 +20,9 @@ import {
 import { Stats } from "@react-three/drei";
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
 import { Vector3 } from "three";
+
 const ControlPanel = () => {
+  //Leva bugfix https://github.com/pmndrs/leva/issues/456
   const [collapsed, setCollapsed] = useState(true);
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -29,7 +31,14 @@ const ControlPanel = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const { posRef, date, time, speedFact, run: running } = useStore();
+  const {
+    posRef,
+    date,
+    time,
+    speedFact,
+    speedmultiplier,
+    run: running,
+  } = useStore();
 
   const dateRef = useRef();
   const timeRef = useRef();
@@ -41,7 +50,11 @@ const ControlPanel = () => {
   }, [date, time, running]);
 
   useControls(() => ({
-    "1 second equals": {
+    "1 second/step equals": {
+      value: speedmultiplier,
+      onChange: (v) => useStore.setState({ speedmultiplier: v }),
+    },
+    _: {
       value: speedFact,
       options: speedFactOpts,
 
@@ -49,24 +62,18 @@ const ControlPanel = () => {
         useStore.setState({ speedFact: v });
       },
     },
-    "Speed multiplier": {
-      value: useStore.getState().speedmultiplier,
-      min: -10,
-      max: 10,
-      step: 1,
-      onChange: (v) => useStore.setState({ speedmultiplier: v }),
-    },
+    // "Speed multiplier": {
+    //   value: useStore.getState().speedmultiplier,
+    //   min: -10,
+    //   max: 10,
+    //   step: 1,
+    //   onChange: (v) => useStore.setState({ speedmultiplier: v }),
+    // },
 
     // "Reset (Go to 2000-06-21)": button(() => {}),
     // "Go to Today": button(() => {}),
 
     " ": buttonGroup({
-      " >> Reset (Go to 2000-06-21) ": () => {
-        posRef.current = 0;
-        useStore.setState({ date: posToDate(posRef.current) });
-        useStore.setState({ time: posToTime(posRef.current) });
-      },
-      // "  ": () => {},
       " >> Go to today ": () => {
         const todayPos =
           sDay *
@@ -81,6 +88,12 @@ const ControlPanel = () => {
         useStore.setState({ date: posToDate(posRef.current) });
         useStore.setState({ time: posToTime(posRef.current) });
       },
+      " >> Reset (Go to 2000-06-21)  ": () => {
+        posRef.current = 0;
+        useStore.setState({ date: posToDate(posRef.current) });
+        useStore.setState({ time: posToTime(posRef.current) });
+      },
+      // "  ": () => {},
     }),
 
     Trace: {
@@ -115,6 +128,10 @@ const ControlPanel = () => {
           onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
         },
       },
+      { collapsed: true }
+    ),
+    Positions: folder(
+      { null: { value: " ", editable: false } },
       { collapsed: true }
     ),
 
@@ -207,7 +224,7 @@ const ControlPanel = () => {
           <button
             className="bg-gray-700 text-white rounded ml-2 text-2xl p-2 px-4"
             onClick={() => {
-              posRef.current -= speedFact;
+              posRef.current -= speedFact * speedmultiplier;
               useStore.setState({ date: posToDate(posRef.current) });
               useStore.setState({ time: posToTime(posRef.current) });
             }}
@@ -225,7 +242,7 @@ const ControlPanel = () => {
           <button className="bg-gray-700 text-white rounded ml-2 text-2xl p-2 px-4">
             <FaStepForward
               onClick={() => {
-                posRef.current += speedFact;
+                posRef.current += speedFact * speedmultiplier;
                 useStore.setState({ date: posToDate(posRef.current) });
                 useStore.setState({ time: posToTime(posRef.current) });
               }}

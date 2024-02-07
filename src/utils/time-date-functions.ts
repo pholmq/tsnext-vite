@@ -13,59 +13,59 @@ const sSecond = sMinute / 60;
 // { "1 minute": 1, "1 hour": 10 }
 
 export const speedFactOpts = {
-  "1 second": sSecond,
-  "1 minute": sMinute,
-  "1 hour": sHour,
-  "1 day": sDay,
-  "1 week": sWeek,
-  "1 month": sMonth,
-  "1 year": sYear,
-  "10 years": sYear * 10,
-  "100 years": sYear * 100,
-  "1000 years": sYear * 1000,
+  seconds: sSecond,
+  minute: sMinute,
+  hours: sHour,
+  days: sDay,
+  weeks: sWeek,
+  "months (30 days)": sMonth,
+  years: sYear,
+  // "10 years": sYear * 10,
+  // "100 years": sYear * 100,
+  // "1000 years": sYear * 1000,
 };
 
 export const speedFactOptions = [
   {
-    label: "1 second",
+    label: "seconds",
     value: sSecond,
   },
   {
-    label: "1 minute",
+    label: "minutes",
     value: sMinute,
   },
   {
-    label: "1 hour",
+    label: "hours",
     value: sHour,
   },
   {
-    label: "1 day",
+    label: "days",
     value: sDay,
   },
   {
-    label: "1 week",
+    label: "weeks",
     value: sWeek,
   },
   {
-    label: "1 month",
+    label: "months",
     value: sMonth,
   },
   {
-    label: "1 year",
+    label: "years",
     value: sYear,
   },
-  {
-    label: "10 years",
-    value: sYear * 10,
-  },
-  {
-    label: "100 years",
-    value: sYear * 100,
-  },
-  {
-    label: "1000 years",
-    value: sYear * 1000,
-  },
+  // {
+  //   label: "10 years",
+  //   value: sYear * 10,
+  // },
+  // {
+  //   label: "100 years",
+  //   value: sYear * 100,
+  // },
+  // {
+  //   label: "1000 years",
+  //   value: sYear * 1000,
+  // },
 
   // '10 years': sYear*10,
   // '100 years': sYear*100,

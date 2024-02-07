@@ -5,6 +5,7 @@ import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
 import PlotSolarSystem from "./components/PlotSolarSystem";
 import TraceController from "./components/TraceController";
+import PositionsWriter from "./components/PositionsWriter";
 import { Vector3 } from "three";
 import { useStore } from "./store";
 
@@ -30,6 +31,7 @@ function TSNext() {
         <SolarSystem />
         <PlotSolarSystem />
         <TraceController />
+        <PositionsWriter />
         <axesHelper args={[5]} position={[0, 0, 0]} />
         <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
           <tetrahedronGeometry />
