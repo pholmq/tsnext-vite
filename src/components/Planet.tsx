@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { useStore } from "../store";
 import { useTexture } from "@react-three/drei";
 import { CelestialInfo } from "./CelestialInfo";
-import { Trace } from "./Trace";
 
 export function Planet(props: any) {
   const ref: any = useRef();
@@ -13,10 +12,9 @@ export function Planet(props: any) {
 
   const traceOn = useStore((s) => s.trace);
 
-
   return (
     <>
-    {/* <Trace traceOn={traceOn} name={props.name}/> */}
+      {/* <Trace traceOn={traceOn} name={props.name}/> */}
       <CelestialInfo
         hovered={hovered}
         name={props.name}
