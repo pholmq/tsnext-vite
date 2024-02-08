@@ -31,7 +31,9 @@ export const usePlotStore = create((set) => ({
 export const useTraceStore = create((set) => ({
   traceLength: 5000,
   traceStepInput: 5,
+  traceInterval: 100,
   traceLinewidth: 2,
+  traceStartPosRef: createRef(0),
   tracedObjects: [],
   // pointsArrRef: createRef(),
 }));

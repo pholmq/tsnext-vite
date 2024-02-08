@@ -128,6 +128,13 @@ const ControlPanel = () => {
           step: 1,
           onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
         },
+        "Update interval": {
+          value: useTraceStore.getState().traceInterval,
+          min: 1,
+          max: 1000,
+          step: 1,
+          onChange: (v) => useTraceStore.setState({ traceInterval: v }),
+        },
       },
       { collapsed: true }
     ),

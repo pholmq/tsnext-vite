@@ -5,6 +5,7 @@ import { useStore, usePlotStore, useTraceStore } from "../store";
 import { Vector3 } from "three";
 import TraceLine from "./TraceLine";
 import { useControls } from "leva";
+import { useFrameInterval } from "../utils/useFrameInterval";
 
 function moveModel(plotObjects: any, plotPos: any) {
   plotObjects.forEach((pObj) => {
@@ -19,7 +20,13 @@ export default function TraceController() {
 
   const plotObjects = usePlotStore((s) => s.plotObjects);
   const plotPosRef = useRef(0);
-  const { traceLength, traceStepInput, tracedObjects } = useTraceStore();
+  const {
+    traceLength,
+    traceStepInput,
+    traceInterval,
+    traceStartPosRef,
+    tracedObjects,
+  } = useTraceStore();
   const traceStep = traceStepInput / 1000;
 
   const objectPos = new Vector3();
@@ -39,7 +46,19 @@ export default function TraceController() {
     Mercury: false,
   });
 
-  if (trace) plotPosRef.current = posRef.current;
+  plotPosRef.current = traceStartPosRef.current;
+  tracedObjects.map((tracedObj) => {
+    tracedObj.pointsArrRef.current = [];
+  });
+
+  useEffect(() => {
+    if (trace) plotPosRef.current = traceStartPosRef.current = posRef.current;
+    if (!trace) {
+      tracedObjects.map((tracedObj) => {
+        tracedObj.pointsArrRef.current = [];
+      });
+    }
+  }, [trace]);
 
   if (plotObjectsReady) {
     for (let key in tracePlanets) {
@@ -57,7 +76,8 @@ export default function TraceController() {
     }
   }
 
-  useFrame(() => {
+  useFrameInterval(() => {
+    // useFrame(() => {
     if (!trace) return;
 
     //Check and adjust plotPos if the pos is out of bounds
@@ -106,7 +126,8 @@ export default function TraceController() {
         );
       });
     }
-  });
+  }, traceInterval);
+  // });
   return (
     <>
       {plotObjectsReady
