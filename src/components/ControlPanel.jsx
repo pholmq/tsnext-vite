@@ -141,7 +141,12 @@ const ControlPanel = () => {
     // Positions: folder({ "\u{0009}": "" }, { collapsed: true }),
 
     Positions: folder(
-      { "\u{0009}": { value: " ", editable: false } },
+      {
+        "\u{0009}": {
+          value: "You can also hover a planet to see its position",
+          editable: false,
+        },
+      },
       { collapsed: true }
     ),
 

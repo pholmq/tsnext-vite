@@ -1,5 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useLayoutEffect, useRef } from "react";
 import { useStore, useTraceStore } from "../store";
 import { Line } from "@react-three/drei";
 import { useFrameInterval } from "../utils/useFrameInterval";
