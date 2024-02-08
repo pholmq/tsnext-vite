@@ -1,5 +1,11 @@
 import { Canvas } from "@react-three/fiber";
-import { Circle, OrbitControls, Sphere, Stars } from "@react-three/drei";
+import {
+  Circle,
+  OrbitControls,
+  CameraControls,
+  Sphere,
+  Stars,
+} from "@react-three/drei";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
@@ -8,12 +14,24 @@ import TraceController from "./components/TraceController";
 import PositionsWriter from "./components/PositionsWriter";
 import { Vector3 } from "three";
 import { useStore } from "./store";
+import { useLayoutEffect, useRef } from "react";
 
-// import Line from "./components/Line";
-//tstxxx
+function CustomCameraControls() {
+  const cameraControlsRef = useRef<CameraControls>(null);
+
+  useLayoutEffect(() => {
+    cameraControlsRef.current?.rotatePolarTo(Math.PI / 3, true);
+  }, []);
+  return (
+    <CameraControls
+      // enabled={true}
+      ref={cameraControlsRef}
+      maxDistance={500000}
+    />
+  );
+}
+
 function TSNext() {
-  const trace = useStore.getState().trace;
-
   return (
     <>
       <Canvas
@@ -24,7 +42,7 @@ function TSNext() {
           far: 10000000,
         }}
       >
-        <OrbitControls makeDefault enableDamping={false} maxDistance={500000} />
+        <CustomCameraControls />
         <ambientLight intensity={0.5} />
         <Stars radius={100000} />
         <AnimationController />
@@ -47,12 +65,10 @@ function TSNext() {
   );
 }
 
-function App() {
+export default function App() {
   return (
     <div className="App h-screen bg-black">
       <TSNext />
     </div>
   );
 }
-
-export default App;
