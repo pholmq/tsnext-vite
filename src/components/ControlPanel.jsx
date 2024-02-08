@@ -142,8 +142,9 @@ const ControlPanel = () => {
 
     Positions: folder(
       {
-        "\u{0009}": {
-          value: "You can also hover a planet to see its position",
+        tip: {
+          label: "Tip:",
+          value: "You can hover a planet \n to see its position",
           editable: false,
         },
       },

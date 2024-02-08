@@ -1,11 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import {
-  Circle,
-  OrbitControls,
-  CameraControls,
-  Sphere,
-  Stars,
-} from "@react-three/drei";
+import { CameraControls, Sphere, Stars } from "@react-three/drei";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
@@ -13,14 +7,15 @@ import PlotSolarSystem from "./components/PlotSolarSystem";
 import TraceController from "./components/TraceController";
 import PositionsWriter from "./components/PositionsWriter";
 import { Vector3 } from "three";
-import { useStore } from "./store";
 import { useLayoutEffect, useRef } from "react";
+import Draggable from "react-draggable";
 
 function CustomCameraControls() {
   const cameraControlsRef = useRef<CameraControls>(null);
 
   useLayoutEffect(() => {
-    cameraControlsRef.current?.rotatePolarTo(Math.PI / 3, true);
+    cameraControlsRef.current.smoothTime = 2;
+    cameraControlsRef.current.rotatePolarTo(Math.PI / 3, true);
   }, []);
   return (
     <CameraControls
@@ -60,7 +55,9 @@ function TSNext() {
           </Sphere>
         </mesh>
       </Canvas>
+      {/* <Draggable> Draggable not working. Time to rewrite the controlpanel.. */}
       <ControlPanel />
+      {/* </Draggable> */}
     </>
   );
 }
