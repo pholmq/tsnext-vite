@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber";
-import { CameraControls, Sphere, Stars } from "@react-three/drei";
+import { Sphere, Stars } from "@react-three/drei";
+import CustomCameraControls from "./components/CustomCameraControls";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import ControlPanel from "./components/ControlPanel";
@@ -7,24 +8,7 @@ import PlotSolarSystem from "./components/PlotSolarSystem";
 import TraceController from "./components/TraceController";
 import PositionsWriter from "./components/PositionsWriter";
 import { Vector3 } from "three";
-import { useLayoutEffect, useRef } from "react";
 import Draggable from "react-draggable";
-
-function CustomCameraControls() {
-  const cameraControlsRef = useRef<CameraControls>(null);
-
-  useLayoutEffect(() => {
-    cameraControlsRef.current.smoothTime = 2;
-    cameraControlsRef.current.rotatePolarTo(Math.PI / 3, true);
-  }, []);
-  return (
-    <CameraControls
-      // enabled={true}
-      ref={cameraControlsRef}
-      maxDistance={500000}
-    />
-  );
-}
 
 function TSNext() {
   return (

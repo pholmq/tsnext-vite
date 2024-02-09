@@ -50,7 +50,7 @@ const ControlPanel = () => {
   }, [date, time, running]);
 
   useControls(() => ({
-    "1 second/step equals": {
+    "1 sec/step equals": {
       value: speedmultiplier,
       step: 1,
       onChange: (v) => useStore.setState({ speedmultiplier: v }),
@@ -147,6 +147,32 @@ const ControlPanel = () => {
           value: "You can hover a planet \n to see its position",
           editable: false,
         },
+      },
+      { collapsed: true }
+    ),
+    Camera: folder(
+      {
+        "Look at": {
+          value: useStore.getState().cameraTarget,
+          options: {
+            Earth: "Earth",
+            "System Center": "SystemCenter",
+            Sun: "Sun",
+            Mars: "Mars",
+            Venus: "Venus",
+          },
+          onChange: (v) => useStore.setState({ cameraTarget: v }),
+        },
+        // Follow: {
+        //   value: useStore.getState().cameraFollow,
+        //   onChange: (v) => useStore.setState({ cameraFollow: v }),
+        // },
+
+        // "Camera type": {
+        //   value: useStore.getState().activeCamera,
+        //   options: { Orbit: "orbit", Fly: "fly" },
+        //   onChange: (v) => useStore.setState({ activeCamera: v }),
+        // },
       },
       { collapsed: true }
     ),
@@ -298,7 +324,6 @@ const ControlPanel = () => {
             },
           }}
           fill
-          hideCopyButton
           // collapsed
           titleBar={{
             drag: false,

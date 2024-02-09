@@ -13,7 +13,9 @@ export const useStore = create((set) => ({
   run: false,
   speedFact: getDefaultSpeedFact(),
   speedmultiplier: 1,
-
+  activeCamera: "orbit",
+  cameraTarget: "Earth",
+  cameraFollow: false,
   trace: false,
   orbits: true,
   orbitsLinewidth: 2,

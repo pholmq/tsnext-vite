@@ -7,8 +7,6 @@ import { Html } from "@react-three/drei";
 import PlanetCamera from "./PlanetCamera";
 import { CelestialSphere } from "./CelestialSphere";
 
-
-
 export function Earth(props: any) {
   // console.log(props)
 
@@ -19,7 +17,7 @@ export function Earth(props: any) {
   const [cloudsMap, colorMap, bumpMap] = useTexture([
     "/textures/2k_earth_clouds.jpg",
     "/textures/8k_earth_daymap.jpg",
-    "/textures/EarthBumpmap1024x512.png"
+    "/textures/EarthBumpmap1024x512.png",
   ]);
 
   const [hovered, setHover] = useState(false);
@@ -28,13 +26,13 @@ export function Earth(props: any) {
     // earthRef.current.rotation.y -= 0.0005;
     // obj.planetObj.rotation.y = obj.rotationSpeed * pos
     earthRef.current.rotation.y = props.rotationSpeed * posRef.current;
-    cloudsRef.current.rotation.y -= 0.0004;
+    cloudsRef.current.rotation.y -= 0.0001;
   });
   return (
     <>
       <CelestialSphere tilt={props.tilt} tiltb={props.tiltb} visible={false} />
       {hovered && (
-        <Html position={[0, 0, 0]} style={{ pointerEvents: 'none' }}>
+        <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
           <div className="text-white text-center select-none">Earth</div>
         </Html>
       )}
@@ -45,7 +43,7 @@ export function Earth(props: any) {
         rotation={[
           props.tiltb * (Math.PI / 180),
           0,
-          props.tilt * (Math.PI / 180)
+          props.tilt * (Math.PI / 180),
         ]}
         onPointerOver={(e) => setHover(true)}
         onPointerOut={(e) => setHover(false)}
@@ -72,7 +70,7 @@ export function Earth(props: any) {
             // side={DoubleSide}
           />
         </mesh>
-        <PlanetCamera />
+        {/* <PlanetCamera /> */}
       </mesh>
 
       {/* <Sphere
