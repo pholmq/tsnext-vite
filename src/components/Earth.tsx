@@ -62,7 +62,7 @@ export function Earth(props: any) {
               transparent={true}
             />
           </mesh>
-          <CelestialSphere visible={true} />
+          <CelestialSphere visible={false} />
           {hovered && (
             <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
               <div className="text-white text-center select-none">Earth</div>
