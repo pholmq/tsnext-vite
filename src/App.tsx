@@ -15,6 +15,7 @@ function TSNext() {
     <>
       <Canvas
         camera={{
+          name: "Camera",
           fov: 15,
           position: new Vector3(0, 3000, 0),
           near: 0.1,

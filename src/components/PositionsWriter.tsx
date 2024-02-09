@@ -5,7 +5,7 @@ import { getRaDecDistance } from "../utils/celestial-functions";
 import { useFrameInterval } from "../utils/useFrameInterval";
 
 function WritePosition({ name }) {
-  const { scene } = useThree();
+  const { scene, camera } = useThree();
   const [{ RA, Dec, Elongation, Km, AU }, set] = useControls(
     "Positions",
     () => ({
@@ -25,7 +25,8 @@ function WritePosition({ name }) {
   useFrameInterval(() => {
     const { ra, dec, elongation, distKm, distAU } = getRaDecDistance(
       name,
-      scene
+      scene,
+      camera
     );
 
     set({
@@ -43,6 +44,7 @@ function WritePosition({ name }) {
 export default function PositionsWriter() {
   return (
     <>
+      <WritePosition name="Camera" />
       <WritePosition name="Moon" />
       <WritePosition name="Sun" />
       <WritePosition name="Mars" />

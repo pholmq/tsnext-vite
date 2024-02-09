@@ -4,10 +4,11 @@ import { useStore } from "../store";
 import { useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { useFrameInterval } from "../utils/useFrameInterval";
+import { folder, useControls } from "leva";
 
 const OrbitCamera = () => {
   const cameraTarget = useStore((s) => s.cameraTarget);
-  const cameraFollow = useStore((s) => s.cameraFollow);
+  //   const cameraFollow = useStore((s) => s.cameraFollow);
   const target = new Vector3();
   const { scene } = useThree();
   const cameraControlsRef = useRef<CameraControls>(null);
@@ -25,12 +26,12 @@ const OrbitCamera = () => {
     cameraControlsRef.current.rotatePolarTo(Math.PI / 3, true);
   }, []);
 
-  useFrameInterval(() => {
-    if (cameraFollow) {
-      scene.getObjectByName(cameraTarget).getWorldPosition(target);
-      cameraControlsRef.current.setTarget(target.x, target.y, target.z, false);
-    }
-  }, 1);
+  // useFrameInterval(() => {
+  //   if (cameraFollow) {
+  //     scene.getObjectByName(cameraTarget).getWorldPosition(target);
+  //     cameraControlsRef.current.setTarget(target.x, target.y, target.z, false);
+  //   }
+  // }, 1);
 
   return <CameraControls ref={cameraControlsRef} maxDistance={500000} />;
 };

@@ -1,7 +1,7 @@
-import { Vector3, Spherical, Scene } from "three";
+import { Vector3, Spherical, Scene, Camera } from "three";
 import { useThree } from "@react-three/fiber";
 
-export function getRaDecDistance(name: string, scene: Scene) {
+export function getRaDecDistance(name: string, scene: Scene, camera: Camera) {
   //Returns Right Ascension, Declination and Distance for a Cobj
   // const { scene } = useThree();
 
@@ -12,7 +12,9 @@ export function getRaDecDistance(name: string, scene: Scene) {
   const sunPos = new Vector3();
 
   //Some geometrical gymnastics to get Right Ascension, Declination, distance and elongation
-  scene.getObjectByName(name).getWorldPosition(objectPos);
+  name === "Camera"
+    ? objectPos.set(camera.position.x, camera.position.y, camera.position.z)
+    : scene.getObjectByName(name).getWorldPosition(objectPos);
   scene.getObjectByName("CelestialSphere").getWorldPosition(csPos);
   const csLookAtObj = scene.getObjectByName("CSLookAtObj");
   csLookAtObj.lookAt(objectPos);
