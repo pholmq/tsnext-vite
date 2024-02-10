@@ -1,6 +1,7 @@
 import { useRef, useEffect, useLayoutEffect } from "react";
 
 import celestialSettings from "../settings/celestial-settings.json";
+
 import miscSettings from "../settings/misc-settings.json";
 import { usePlotStore, useTraceStore } from "../store";
 
@@ -36,15 +37,20 @@ type Settings = {
 
 export const Pobj = ({ name, children }: Props) => {
   //Pobject is used with PlotSolarSystem to plot planet positions
-  const cName: string = name;
-  //REMINDER to self: DONT FORGET PLANET TILT OF EARTH tilt and tiltb
-  // Cobj = Celestial Object
 
   //Get the settings for this object and merge
-  const cSettings: any =
-    celestialSettings[name as keyof typeof celestialSettings];
-  const aSettings: any = miscSettings[name as keyof typeof miscSettings];
-  const s: Settings = { ...cSettings, ...aSettings };
+  // const i = celestialSettings.findIndex((p) => p.name === name);
+  // const cSettings = celestialSettings[i];
+  const cSettings =
+    celestialSettings[celestialSettings.findIndex((p) => p.name === name)];
+
+  // const cSettings: any =
+  //   celestialSettingsOld[name as keyof typeof celestialSettingsOld];
+  // const aSettings: any = miscSettings[name as keyof typeof miscSettings];
+  const aSettings =
+    miscSettings[celestialSettings.findIndex((p) => p.name === name)];
+
+  const s = { ...cSettings, ...aSettings };
 
   const containerRef: any = useRef();
   const pivotRef: any = useRef();

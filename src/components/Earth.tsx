@@ -9,8 +9,6 @@ import { CelestialSphere } from "./CelestialSphere";
 import { Object3D } from "three";
 
 export function Earth(props: any) {
-  // console.log(props)
-
   const earthRef: any = useRef();
   const cloudsRef: any = useRef();
   const posRef: any = useStore((state) => state.posRef);
@@ -22,18 +20,10 @@ export function Earth(props: any) {
   ]);
 
   const [hovered, setHover] = useState(false);
-  // const a = new Object3D();
-
-  // a.rotateY(5);
 
   useFrame(() => {
-    // earthRef.current.rotation.y -= 0.005;
-    // obj.planetObj.rotation.y = obj.rotationSpeed * pos
     earthRef.current.rotation.y = props.rotationSpeed * posRef.current;
-    // console.log(earthRef.current);
-    // earthRef.current.rotateY = props.rotationSpeed * posRef.current;
-    // earthRef.current.rotateY(props.rotationSpeed * posRef.current);
-    // cloudsRef.current.rotation.y -= 0.0001;
+    cloudsRef.current.rotation.y -= 0.0001;
   });
   return (
     <>

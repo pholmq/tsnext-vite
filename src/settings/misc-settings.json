@@ -1,11 +1,13 @@
-{
-  "SystemCenter": {
+[
+  {
+    "name": "SystemCenter",
     "color": "grey",
     "type": "deferent",
     "visible": true,
     "axesHelper": false
   },
-  "Earth": {
+  {
+    "name": "Earth",
     "earth": true,
     "color": "skyblue",
     "visible": true,
@@ -15,19 +17,22 @@
     "texture": "/textures/8k_earth_daymap.jpg",
     "unicodeSymbol": "&#x1F728;"
   },
-  "MoonDefA": {
+  {
+    "name": "Moon deferent A",
     "color": "gray",
     "type": "deferent",
     "visible": false,
     "axesHelper": false
   },
-  "MoonDefB": {
+  {
+    "name": "Moon deferent B",
     "color": "gray",
     "type": "deferent",
     "visible": false,
     "axesHelper": false
   },
-  "Moon": {
+  {
+    "name": "Moon",
     "color": "gray",
     "type": "planet",
     "visible": true,
@@ -37,12 +42,14 @@
     "unicodeSymbol": "&#x263D;",
     "traceable": true
   },
-  "SunDefA": {
+  {
+    "name": "Sun deferent",
     "color": "yellow",
     "type": "deferent",
     "visible": false
   },
-  "Sun": {
+  {
+    "name": "Sun",
     "color": "yellow",
     "type": "planet",
     "visible": true,
@@ -55,17 +62,21 @@
     "unicodeSymbol": "&#x2609;",
     "traceable": true
   },
-  "MercuryDefA": {
+  {
+    "name": "Mercury def A",
     "color": "gray",
     "type": "deferent",
     "visible": false
   },
-  "MercuryDefB": {
+  {
+    "name": "Mercury def B",
     "color": "gray",
     "type": "deferent",
     "visible": false
   },
-  "Mercury": {
+  {
+    "name": "Mercury",
+
     "color": "gray",
     "type": "planet",
     "visible": true,
@@ -75,17 +86,20 @@
     "unicodeSymbol": "&#x263F;",
     "traceable": true
   },
-  "VenusDefA": {
+  {
+    "name": "Venus deferent A",
     "color": "orange",
     "type": "deferent",
     "visible": false
   },
-  "VenusDefB": {
+  {
+    "name": "Venus deferent B",
     "color": "orange",
     "type": "deferent",
     "visible": false
   },
-  "Venus": {
+  {
+    "name": "Venus",
     "color": "orange",
     "type": "planet",
     "visible": true,
@@ -95,17 +109,20 @@
     "unicodeSymbol": "&#x2640;",
     "traceable": true
   },
-  "MarsDefE": {
+  {
+    "name": "Mars E deferent",
     "color": "red",
     "type": "deferent",
     "visible": false
   },
-  "MarsDefS": {
+  {
+    "name": "Mars S deferent",
     "color": "red",
     "type": "deferent",
     "visible": false
   },
-  "Mars": {
+  {
+    "name": "Mars",
     "color": "red",
     "type": "planet",
     "visible": true,
@@ -116,17 +133,21 @@
     "unicodeSymbol": "&#x2642;",
     "traceable": true
   },
-  "Phobos": {
+  {
+    "name": "Phobos",
     "type": "planet"
   },
-  "Deimos": {
+  {
+    "name": "Deimos",
     "type": "planet"
   },
-  "JupiterDef": {
+  {
+    "name": "Jupiter deferent",
     "type": "deferent",
     "visible": false
   },
-  "Jupiter": {
+  {
+    "name": "Jupiter",
     "color": "grey",
     "type": "planet",
     "visible": true,
@@ -134,11 +155,13 @@
     "unicodeSymbol": "&#x2643;",
     "traceable": true
   },
-  "SaturnDef": {
+  {
+    "name": "Saturn deferent",
     "type": "deferent",
     "visible": false
   },
-  "Saturn": {
+  {
+    "name": "Saturn",
     "color": "grey",
     "type": "planet",
     "visible": true,
@@ -147,4 +170,4 @@
     "unicodeSymbol": "&#x2644;",
     "traceable": true
   }
-}
+]

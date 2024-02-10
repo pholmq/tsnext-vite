@@ -45,6 +45,7 @@ const ControlPanel = () => {
   const julianDayRef = useRef();
 
   useEffect(() => {
+    // console.log("iran");
     dateRef.current.value = date;
     timeRef.current.value = time;
   }, [date, time, running]);

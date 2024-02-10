@@ -1,7 +1,6 @@
 import { Cobj } from "./Cobj";
 // import { useThree } from "@react-three/fiber";
 
-
 const SolarSystem = () => {
   // const { scene } = useThree();
   // const meshObjects = scene.children.filter(child => child.type === 'Mesh');
@@ -11,34 +10,37 @@ const SolarSystem = () => {
     <group>
       <Cobj name="SystemCenter">
         <Cobj name="Earth">
-          <Cobj name="MoonDefA">
-            <Cobj name="MoonDefB">
+          <Cobj name="Moon deferent A">
+            <Cobj name="Moon deferent B">
               <Cobj name="Moon" />
             </Cobj>
           </Cobj>
-          <Cobj name="SunDefA">
+          <Cobj name="Sun deferent">
             <Cobj name="Sun">
-              <Cobj name="JupiterDef">
+              <Cobj name="Jupiter deferent">
                 <Cobj name="Jupiter" />
               </Cobj>
-              <Cobj name="SaturnDef">
+              <Cobj name="Saturn deferent">
                 <Cobj name="Saturn" />
               </Cobj>
             </Cobj>
           </Cobj>
-          <Cobj name="VenusDefA">
-            <Cobj name="VenusDefB">
+          <Cobj name="Venus deferent A">
+            <Cobj name="Venus deferent B">
               <Cobj name="Venus" />
             </Cobj>
           </Cobj>
-          <Cobj name="MercuryDefA">
-            <Cobj name="MercuryDefB">
+          <Cobj name="Mercury def A">
+            <Cobj name="Mercury def B">
               <Cobj name="Mercury" />
             </Cobj>
           </Cobj>
-          <Cobj name="MarsDefE">
-            <Cobj name="MarsDefS">
-              <Cobj name="Mars" />
+          <Cobj name="Mars E deferent">
+            <Cobj name="Mars S deferent">
+              <Cobj name="Mars">
+                {/* <Cobj name="Phobos" />
+                <Cobj name="Deimos" /> */}
+              </Cobj>
             </Cobj>
           </Cobj>
         </Cobj>

@@ -40,16 +40,12 @@ type Settings = {
 };
 
 export const Cobj = ({ name, children }: Props) => {
-  //REMINDER to self: DONT FORGET PLANET TILT OF EARTH tilt and tiltb
-  // Cobj = Celestial Object
-  //console.log(name + " rendered");
-
-  //Get the settings for this object and merge
-  const cSettings: any =
-    celestialSettings[name as keyof typeof celestialSettings];
-  const aSettings: any = miscSettings[name as keyof typeof miscSettings];
-  //   const { [name]: aSettings } = miscSettings;
-  const s: Settings = { ...cSettings, ...aSettings };
+  const cSettings =
+    celestialSettings[celestialSettings.findIndex((p) => p.name === name)];
+  const aSettings =
+    miscSettings[celestialSettings.findIndex((p) => p.name === name)];
+  const s = { ...cSettings, ...aSettings };
+  // console.log(name, ": ", s);
 
   const containerRef: any = useRef();
   const pivotRef: any = useRef();

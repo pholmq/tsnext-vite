@@ -1,45 +1,46 @@
-
 import { Pobj } from "./Pobj";
 
 const PlotSolarSystem = () => {
-  
-    return (
-      <group>
-        <Pobj name="SystemCenter">
-          <Pobj name="Earth">
-            <Pobj name="MoonDefA">
-              <Pobj name="MoonDefB">
-                <Pobj name="Moon" />
+  return (
+    <group>
+      <Pobj name="SystemCenter">
+        <Pobj name="Earth">
+          <Pobj name="Moon deferent A">
+            <Pobj name="Moon deferent B">
+              <Pobj name="Moon" />
+            </Pobj>
+          </Pobj>
+          <Pobj name="Sun deferent">
+            <Pobj name="Sun">
+              <Pobj name="Jupiter deferent">
+                <Pobj name="Jupiter" />
+              </Pobj>
+              <Pobj name="Saturn deferent">
+                <Pobj name="Saturn" />
               </Pobj>
             </Pobj>
-            <Pobj name="SunDefA">
-              <Pobj name="Sun">
-                <Pobj name="JupiterDef">
-                  <Pobj name="Jupiter" />
-                </Pobj>
-                <Pobj name="SaturnDef">
-                  <Pobj name="Saturn" />
-                </Pobj>
-              </Pobj>
+          </Pobj>
+          <Pobj name="Venus deferent A">
+            <Pobj name="Venus deferent B">
+              <Pobj name="Venus" />
             </Pobj>
-            <Pobj name="VenusDefA">
-              <Pobj name="VenusDefB">
-                <Pobj name="Venus" />
-              </Pobj>
+          </Pobj>
+          <Pobj name="Mercury def A">
+            <Pobj name="Mercury def B">
+              <Pobj name="Mercury" />
             </Pobj>
-            <Pobj name="MercuryDefA">
-              <Pobj name="MercuryDefB">
-                <Pobj name="Mercury" />
-              </Pobj>
-            </Pobj>
-            <Pobj name="MarsDefE">
-              <Pobj name="MarsDefS">
-                <Pobj name="Mars" />
+          </Pobj>
+          <Pobj name="Mars E deferent">
+            <Pobj name="Mars S deferent">
+              <Pobj name="Mars">
+                <Pobj name="Phobos" />
+                <Pobj name="Deimos" />
               </Pobj>
             </Pobj>
           </Pobj>
         </Pobj>
-      </group>
-    );
-  };
-  export default PlotSolarSystem
+      </Pobj>
+    </group>
+  );
+};
+export default PlotSolarSystem;

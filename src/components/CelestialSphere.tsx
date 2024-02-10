@@ -5,8 +5,8 @@ type Props = {
 export function CelestialSphere({ visible }) {
   return (
     <>
-      <group>
-        <mesh name="CelestialSphere" visible={visible}>
+      <group visible={visible}>
+        <mesh name="CelestialSphere">
           <sphereGeometry args={[10, 64, 64]} />
           <meshBasicMaterial color="white" opacity={0.5} transparent />
         </mesh>
