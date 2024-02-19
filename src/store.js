@@ -7,7 +7,7 @@ import {
 } from "./utils/time-date-functions";
 
 export const useStore = create((set) => ({
-  posRef: createRef(),
+  posRef: createRef(0),
   date: posToDate(0),
   time: posToTime(0),
   run: false,

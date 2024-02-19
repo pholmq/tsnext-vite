@@ -9,6 +9,7 @@ import TraceController from "./components/TraceController";
 import PositionsWriter from "./components/PositionsWriter";
 import { Vector3 } from "three";
 import Draggable from "react-draggable";
+import { Controls } from "./components/Controls";
 
 function TSNext() {
   return (
@@ -29,7 +30,7 @@ function TSNext() {
         <SolarSystem />
         <PlotSolarSystem />
         <TraceController />
-        <PositionsWriter />
+        {/* <PositionsWriter /> */}
         <axesHelper args={[5]} position={[0, 0, 0]} />
         <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
           <tetrahedronGeometry />
@@ -41,7 +42,8 @@ function TSNext() {
         </mesh>
       </Canvas>
       {/* <Draggable> Draggable not working. Time to rewrite the controlpanel.. */}
-      <ControlPanel />
+      {/* <ControlPanel /> */}
+      <Controls />
       {/* </Draggable> */}
     </>
   );

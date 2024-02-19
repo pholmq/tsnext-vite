@@ -19,16 +19,16 @@ const AnimationController = () => {
     if (run) {
       // console.log(deltaSum);
       posRef.current = posRef.current + delta * (speedFact * speedmultiplier);
-      deltaSum += delta;
-      if (deltaSum > 0.1) {
-        //needs to be about 0.1 otherwise framerate drops with a high speed fact
-        useStore.setState({ date: posToDate(posRef.current) });
-        if (speedFact < 0.002) {
-          //quickndirty speed fact check since time being updated looks ugly
-          useStore.setState({ time: posToTime(posRef.current) });
-        }
-        deltaSum = 0;
-      }
+      // deltaSum += delta;
+      // if (deltaSum > 0.1) {
+      //   //needs to be about 0.1 otherwise framerate drops with a high speed fact
+      //   useStore.setState({ date: posToDate(posRef.current) });
+      //   if (speedFact < 0.002) {
+      //     //quickndirty speed fact check since time being updated looks ugly
+      //     useStore.setState({ time: posToTime(posRef.current) });
+      //   }
+      //   deltaSum = 0;
+      // }
     }
   });
   return null;
