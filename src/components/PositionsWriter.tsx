@@ -3,9 +3,15 @@ import { useThree } from "@react-three/fiber";
 import { useControls, folder } from "leva";
 import { getRaDecDistance } from "../utils/celestial-functions";
 import { useFrameInterval } from "../utils/useFrameInterval";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { useStore, useTraceStore } from "../store";
 
 function WritePosition({ name }) {
   const { scene, camera } = useThree();
+  const intervalRef = useRef(0);
+  const run = useStore((s) => s.run);
+  const runPosWriter = useStore((s) => s.runPosWriter);
+
   const [{ RA, Dec, Elongation, Km, AU }, set] = useControls(
     "Positions",
     () => ({
@@ -22,7 +28,7 @@ function WritePosition({ name }) {
     })
   );
 
-  useFrameInterval(() => {
+  function setPos() {
     const { ra, dec, elongation, distKm, distAU } = getRaDecDistance(
       name,
       scene,
@@ -36,7 +42,26 @@ function WritePosition({ name }) {
       Km: distKm,
       AU: distAU,
     });
-  }, 200);
+  }
+
+  // if (scene.ready) setPos();
+
+  useEffect(() => {
+    // console.log(runPosWriter);
+    setPos();
+  }, [runPosWriter]);
+
+  useEffect(() => {
+    // console.log("sdff");
+    setPos();
+    if (run) {
+      intervalRef.current = setInterval(() => {
+        setPos();
+      }, 1000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+  }, [run]);
 
   return null;
 }

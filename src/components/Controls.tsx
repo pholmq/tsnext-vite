@@ -197,6 +197,7 @@ export const Controls = () => {
       dateRef.current.value,
       posToTime(posRef.current)
     );
+    useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
   function timeKeyDown(e) {
@@ -212,6 +213,7 @@ export const Controls = () => {
       posToDate(posRef.current),
       timeRef.current.value
     );
+    useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
   return (
     <>
@@ -239,6 +241,7 @@ export const Controls = () => {
                 posRef.current = 0;
                 dateRef.current.value = posToDate(posRef.current);
                 timeRef.current.value = posToTime(posRef.current);
+                useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
               }}
             >
               Reset
@@ -258,6 +261,7 @@ export const Controls = () => {
                 posRef.current = todayPos;
                 dateRef.current.value = posToDate(posRef.current);
                 timeRef.current.value = posToTime(posRef.current);
+                useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
               }}
             >
               Today
@@ -268,6 +272,7 @@ export const Controls = () => {
                 posRef.current -= speedFact * speedmultiplier;
                 dateRef.current.value = posToDate(posRef.current);
                 timeRef.current.value = posToTime(posRef.current);
+                useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
               }}
             >
               <FaStepBackward />
@@ -286,6 +291,7 @@ export const Controls = () => {
                   posRef.current += speedFact * speedmultiplier;
                   dateRef.current.value = posToDate(posRef.current);
                   timeRef.current.value = posToTime(posRef.current);
+                  useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
                 }}
               />
             </button>

@@ -30,7 +30,7 @@ function TSNext() {
         <SolarSystem />
         <PlotSolarSystem />
         <TraceController />
-        {/* <PositionsWriter /> */}
+        <PositionsWriter />
         <axesHelper args={[5]} position={[0, 0, 0]} />
         <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
           <tetrahedronGeometry />
@@ -41,10 +41,7 @@ function TSNext() {
           </Sphere>
         </mesh>
       </Canvas>
-      {/* <Draggable> Draggable not working. Time to rewrite the controlpanel.. */}
-      {/* <ControlPanel /> */}
       <Controls />
-      {/* </Draggable> */}
     </>
   );
 }
