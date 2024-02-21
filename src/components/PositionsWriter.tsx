@@ -47,8 +47,12 @@ function WritePosition({ name }) {
   // if (scene.ready) setPos();
 
   useEffect(() => {
-    // console.log(runPosWriter);
-    setPos();
+    const timeout = setTimeout(() => {
+      //Bugfix. We need to wait a little so that the
+      //three object actually has moved
+      setPos();
+    }, 100);
+    return () => clearTimeout(timeout);
   }, [runPosWriter]);
 
   useEffect(() => {
