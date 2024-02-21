@@ -1,6 +1,13 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useStore, useTraceStore } from "../store";
-import { FaPlay, FaPause, FaStepBackward, FaStepForward } from "react-icons/fa";
+import {
+  FaPlay,
+  FaPause,
+  FaStepBackward,
+  FaStepForward,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 import {
   posToDate,
   posToTime,
@@ -23,6 +30,8 @@ export const Controls = () => {
   const posRef = useStore((s) => s.posRef);
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier = useStore((s) => s.speedmultiplier);
+  const [showMenu, setShowMenu] = useState(true);
+
   const dateRef = useRef(null);
   const timeRef = useRef(null);
 
@@ -30,24 +39,24 @@ export const Controls = () => {
   // console.log("Controls render");
 
   useLayoutEffect(() => {
-    // console.log("Controls uselayout render");
+    // console.log("Controls uselayout rendered");
     dateRef.current.value = posToDate(posRef.current);
     timeRef.current.value = posToTime(posRef.current);
-  }, [run]);
 
-  if (run) {
-    intervalRef.current = setInterval(() => {
-      //   console.log(useStore.getState().posRef.current);
-      if (document.activeElement !== dateRef.current) {
-        dateRef.current.value = posToDate(posRef.current);
-      }
-      if (document.activeElement !== timeRef.current) {
-        timeRef.current.value = posToTime(posRef.current);
-      }
-    }, 1000);
-  } else {
-    clearInterval(intervalRef.current);
-  }
+    if (run) {
+      intervalRef.current = setInterval(() => {
+        //   console.log(useStore.getState().posRef.current);
+        if (document.activeElement !== dateRef.current) {
+          dateRef.current.value = posToDate(posRef.current);
+        }
+        if (document.activeElement !== timeRef.current) {
+          timeRef.current.value = posToTime(posRef.current);
+        }
+      }, 1000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+  }, [run]);
 
   useControls(() => ({
     "1 sec/step equals": {
@@ -63,39 +72,6 @@ export const Controls = () => {
         useStore.setState({ speedFact: v });
       },
     },
-    // "Speed multiplier": {
-    //   value: useStore.getState().speedmultiplier,
-    //   min: -10,
-    //   max: 10,
-    //   step: 1,
-    //   onChange: (v) => useStore.setState({ speedmultiplier: v }),
-    // },
-
-    // "Reset (Go to 2000-06-21)": button(() => {}),
-    // "Go to Today": button(() => {}),
-
-    // " ": buttonGroup({
-    //   " >> Go to today ": () => {
-    //     const todayPos =
-    //       sDay *
-    //       dateToDays(
-    //         new Intl.DateTimeFormat("sv-SE", {
-    //           year: "numeric",
-    //           month: "2-digit",
-    //           day: "2-digit",
-    //         }).format(Date.now())
-    //       );
-    //     posRef.current = todayPos;
-    //     useStore.setState({ date: posToDate(posRef.current) });
-    //     useStore.setState({ time: posToTime(posRef.current) });
-    //   },
-    //   " >> Reset (Go to 2000-06-21)  ": () => {
-    //     posRef.current = 0;
-    //     useStore.setState({ date: posToDate(posRef.current) });
-    //     useStore.setState({ time: posToTime(posRef.current) });
-    //   },
-    //   // "  ": () => {},
-    // }),
 
     Trace: {
       value: useStore.getState().trace,
@@ -239,11 +215,22 @@ export const Controls = () => {
   }
   return (
     <>
-      {/* <Stats /> */}
+      {/* <Stats />z */}
+
       <div className="flex flex-col max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none">
-        <h2 className=" font-cambria text-white text-4xl text-center italic font-bold">
-          The TYCHOSIUM
-        </h2>
+        <div className="flex ">
+          <button
+            className=" text-white px-4 py-2"
+            onClick={() => {
+              setShowMenu(!showMenu);
+            }}
+          >
+            {showMenu ? <FaTimes /> : <FaBars />}
+          </button>
+          <h2 className=" font-cambria text-white text-3xl text-center italic font-bold">
+            The TYCHOSIUM
+          </h2>
+        </div>
         <div>
           <div className="flex justify-end m-1 mr-1">
             <button
@@ -304,7 +291,6 @@ export const Controls = () => {
             </button>
           </div>
         </div>
-
         <div className="flex items-center justify-center m-1">
           <label className="text-base text-white mr-2 ml-1 flex-1">Date:</label>
           <input
@@ -323,90 +309,24 @@ export const Controls = () => {
             onKeyDown={timeKeyDown}
           />
         </div>
-
-        <div className="mt-2 overflow-auto">
-          <Leva
-            neverHide
-            fill
-            titleBar={false}
-            // titleBar={{
-            //   drag: false,
-            //   filter: false,
-            //   title: "Open/Close Controls",
-            // }}
-            theme={{
-              colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
-            }}
-          />
-        </div>
-      </div>
-
-      {/*
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-          }}
-        ></div>
-        <div>
-          <button
-            onClick={() => {
-              posRef.current -= speedFact * speedmultiplier;
-              dateRef.current.value = posToDate(posRef.current);
-              timeRef.current.value = posToTime(posRef.current);
-            }}
-          >
-            <FaStepBackward />
-          </button>
-
-          <button
-            onClick={() => {
-              useStore.setState((state) => ({ run: !state.run }));
-            }}
-          >
-            {run ? <FaPause /> : <FaPlay />}
-          </button>
-          <button>
-            <FaStepForward
-              onClick={() => {
-                posRef.current += speedFact * speedmultiplier;
-                dateRef.current.value = posToDate(posRef.current);
-                timeRef.current.value = posToTime(posRef.current);
+        {showMenu ? (
+          <div className="mt-2 overflow-auto">
+            <Leva
+              neverHide
+              fill
+              titleBar={false}
+              // titleBar={{
+              //   drag: false,
+              //   filter: false,
+              //   title: "Open/Close Controls",
+              // }}
+              theme={{
+                colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
               }}
             />
-          </button>
-        </div>
-        <div>
-          <label> Date: </label>
-          <input ref={dateRef} onKeyDown={dateKeyDown} />
-        </div>
-        <div>
-          <label>Time (UTC):</label>
-          <input ref={timeRef} onKeyDown={timeKeyDown} />
-        </div>
+          </div>
+        ) : null}
       </div>
-      <div
-        style={{
-          position: "absolute",
-          top: 150,
-          left: 10,
-        }}
-      >
-        <Leva
-          neverHide
-          fill
-          titleBar={{
-            filter: false,
-            title: "Open/Close Controls",
-            drag: false,
-          }}
-          theme={{
-            colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
-          }}
-        />
-      </div>
-
-        */}
     </>
   );
 };
