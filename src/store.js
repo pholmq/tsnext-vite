@@ -8,8 +8,8 @@ import {
 
 export const useStore = create((set) => ({
   posRef: createRef(0),
-  date: posToDate(0),
-  time: posToTime(0),
+  // date: posToDate(0),
+  // time: posToTime(0),
   run: false,
   speedFact: getDefaultSpeedFact(),
   speedmultiplier: 1,
@@ -32,8 +32,8 @@ export const usePlotStore = create((set) => ({
 
 export const useTraceStore = create((set) => ({
   traceLength: 5000,
-  traceStepInput: 5,
-  traceInterval: 100,
+  traceStepInput: 2,
+  traceInterval: 10,
   traceLinewidth: 2,
   traceStartPosRef: createRef(0),
   tracedObjects: [],

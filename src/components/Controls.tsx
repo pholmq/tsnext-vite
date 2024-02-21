@@ -15,8 +15,8 @@ import {
   sDay,
   dateToDays,
 } from "../utils/time-date-functions";
-import { Stats } from "@react-three/drei";
-import { buttonGroup, folder, useControls } from "leva";
+import { PerformanceMonitor, Stats } from "@react-three/drei";
+import { Leva, buttonGroup, folder, useControls } from "leva";
 
 export const Controls = () => {
   const run = useStore((s) => s.run);
@@ -74,28 +74,28 @@ export const Controls = () => {
     // "Reset (Go to 2000-06-21)": button(() => {}),
     // "Go to Today": button(() => {}),
 
-    " ": buttonGroup({
-      " >> Go to today ": () => {
-        const todayPos =
-          sDay *
-          dateToDays(
-            new Intl.DateTimeFormat("sv-SE", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            }).format(Date.now())
-          );
-        posRef.current = todayPos;
-        useStore.setState({ date: posToDate(posRef.current) });
-        useStore.setState({ time: posToTime(posRef.current) });
-      },
-      " >> Reset (Go to 2000-06-21)  ": () => {
-        posRef.current = 0;
-        useStore.setState({ date: posToDate(posRef.current) });
-        useStore.setState({ time: posToTime(posRef.current) });
-      },
-      // "  ": () => {},
-    }),
+    // " ": buttonGroup({
+    //   " >> Go to today ": () => {
+    //     const todayPos =
+    //       sDay *
+    //       dateToDays(
+    //         new Intl.DateTimeFormat("sv-SE", {
+    //           year: "numeric",
+    //           month: "2-digit",
+    //           day: "2-digit",
+    //         }).format(Date.now())
+    //       );
+    //     posRef.current = todayPos;
+    //     useStore.setState({ date: posToDate(posRef.current) });
+    //     useStore.setState({ time: posToTime(posRef.current) });
+    //   },
+    //   " >> Reset (Go to 2000-06-21)  ": () => {
+    //     posRef.current = 0;
+    //     useStore.setState({ date: posToDate(posRef.current) });
+    //     useStore.setState({ time: posToTime(posRef.current) });
+    //   },
+    //   // "  ": () => {},
+    // }),
 
     Trace: {
       value: useStore.getState().trace,
@@ -238,50 +238,175 @@ export const Controls = () => {
     );
   }
   return (
-    <div
-      style={{
-        color: "white",
-        position: "absolute",
-        top: 0,
-        right: 100,
-      }}
-    >
-      <Stats />
+    <>
+      {/* <Stats /> */}
+      <div className="flex flex-col max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none">
+        <h2 className=" font-cambria text-white text-4xl text-center italic font-bold">
+          The TYCHOSIUM
+        </h2>
+        <div>
+          <div className="flex justify-end m-1 mr-1">
+            <button
+              className="bg-gray-700 text-white rounded ml-2 px-4"
+              onClick={() => {
+                posRef.current = 0;
+                dateRef.current.value = posToDate(posRef.current);
+                timeRef.current.value = posToTime(posRef.current);
+              }}
+            >
+              Reset
+            </button>
+            <button
+              className="bg-gray-700 text-white rounded ml-2 px-4"
+              onClick={() => {
+                const todayPos =
+                  sDay *
+                  dateToDays(
+                    new Intl.DateTimeFormat("sv-SE", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    }).format(Date.now())
+                  );
+                posRef.current = todayPos;
+                dateRef.current.value = posToDate(posRef.current);
+                timeRef.current.value = posToTime(posRef.current);
+              }}
+            >
+              Today
+            </button>
+            <button
+              className="bg-gray-700 text-white rounded ml-2 px-4"
+              onClick={() => {
+                posRef.current -= speedFact * speedmultiplier;
+                dateRef.current.value = posToDate(posRef.current);
+                timeRef.current.value = posToTime(posRef.current);
+              }}
+            >
+              <FaStepBackward />
+            </button>
+            <button
+              className="bg-gray-700 text-white rounded ml-2 px-4"
+              onClick={() => {
+                useStore.setState((state) => ({ run: !state.run }));
+              }}
+            >
+              {run ? <FaPause /> : <FaPlay />}
+            </button>
+            <button className="bg-gray-700 text-white rounded ml-2 px-4">
+              <FaStepForward
+                onClick={() => {
+                  posRef.current += speedFact * speedmultiplier;
+                  dateRef.current.value = posToDate(posRef.current);
+                  timeRef.current.value = posToTime(posRef.current);
+                }}
+              />
+            </button>
+          </div>
+        </div>
 
-      <button
-        onClick={() => {
-          posRef.current -= speedFact * speedmultiplier;
-          dateRef.current.value = posToDate(posRef.current);
-          timeRef.current.value = posToTime(posRef.current);
+        <div className="flex items-center justify-center m-1">
+          <label className="text-base text-white mr-2 ml-1 flex-1">Date:</label>
+          <input
+            className="text-base text-white bg-gray-700 rounded p-1"
+            ref={dateRef}
+            onKeyDown={dateKeyDown}
+          />
+        </div>
+        <div className="flex items-center justify-center m-1">
+          <label className="text-base text-white mr-2 ml-1 flex-1">
+            Time (UTC):
+          </label>
+          <input
+            className="text-base text-white bg-gray-700 rounded p-1"
+            ref={timeRef}
+            onKeyDown={timeKeyDown}
+          />
+        </div>
+
+        <div className="mt-2 overflow-auto">
+          <Leva
+            neverHide
+            fill
+            titleBar={false}
+            // titleBar={{
+            //   drag: false,
+            //   filter: false,
+            //   title: "Open/Close Controls",
+            // }}
+            theme={{
+              colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
+            }}
+          />
+        </div>
+      </div>
+
+      {/*
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        ></div>
+        <div>
+          <button
+            onClick={() => {
+              posRef.current -= speedFact * speedmultiplier;
+              dateRef.current.value = posToDate(posRef.current);
+              timeRef.current.value = posToTime(posRef.current);
+            }}
+          >
+            <FaStepBackward />
+          </button>
+
+          <button
+            onClick={() => {
+              useStore.setState((state) => ({ run: !state.run }));
+            }}
+          >
+            {run ? <FaPause /> : <FaPlay />}
+          </button>
+          <button>
+            <FaStepForward
+              onClick={() => {
+                posRef.current += speedFact * speedmultiplier;
+                dateRef.current.value = posToDate(posRef.current);
+                timeRef.current.value = posToTime(posRef.current);
+              }}
+            />
+          </button>
+        </div>
+        <div>
+          <label> Date: </label>
+          <input ref={dateRef} onKeyDown={dateKeyDown} />
+        </div>
+        <div>
+          <label>Time (UTC):</label>
+          <input ref={timeRef} onKeyDown={timeKeyDown} />
+        </div>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          top: 150,
+          left: 10,
         }}
       >
-        <FaStepBackward />
-      </button>
-
-      <button
-        onClick={() => {
-          useStore.setState((state) => ({ run: !state.run }));
-        }}
-      >
-        {run ? <FaPause /> : <FaPlay />}
-      </button>
-      <button>
-        <FaStepForward
-          onClick={() => {
-            posRef.current += speedFact * speedmultiplier;
-            dateRef.current.value = posToDate(posRef.current);
-            timeRef.current.value = posToTime(posRef.current);
+        <Leva
+          neverHide
+          fill
+          titleBar={{
+            filter: false,
+            title: "Open/Close Controls",
+            drag: false,
+          }}
+          theme={{
+            colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
           }}
         />
-      </button>
-      <div>
-        <label> Date: </label>
-        <input ref={dateRef} onKeyDown={dateKeyDown} />
       </div>
-      <div>
-        <label>Time (UTC):</label>
-        <input ref={timeRef} onKeyDown={timeKeyDown} />
-      </div>
-    </div>
+
+        */}
+    </>
   );
 };
