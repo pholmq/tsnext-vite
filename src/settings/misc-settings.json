@@ -177,7 +177,7 @@
   },
   {
     "name": "Uranus",
-    "color": "#d2f9fa",
+    "color": "grey",
     "type": "planet",
     "visible": true,
     "planet": true,

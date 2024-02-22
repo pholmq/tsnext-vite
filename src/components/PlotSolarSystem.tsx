@@ -18,6 +18,12 @@ const PlotSolarSystem = () => {
               <Pobj name="Saturn deferent">
                 <Pobj name="Saturn" />
               </Pobj>
+              <Pobj name="Uranus deferent">
+                <Pobj name="Uranus" />
+              </Pobj>
+              <Pobj name="Neptune deferent">
+                <Pobj name="Neptune" />
+              </Pobj>
             </Pobj>
           </Pobj>
           <Pobj name="Venus deferent A">

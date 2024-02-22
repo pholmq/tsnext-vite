@@ -91,11 +91,8 @@ export const Pobj = ({ name, children }: Props) => {
         name="Container"
         ref={containerRef}
         position={[s.orbitCentera, s.orbitCenterc, s.orbitCenterb]}
-        rotation={[
-          s.orbitTilta * (Math.PI / 180),
-          -containerPos * (Math.PI / 180),
-          s.orbitTiltb * (Math.PI / 180),
-        ]}
+        rotation-x={s.orbitTilta * (Math.PI / 180)}
+        rotation-z={s.orbitTiltb * (Math.PI / 180)}
       >
         <group name="Orbit" ref={orbitRef}>
           <group name="Pivot" ref={pivotRef} position={[s.orbitRadius, 0, 0]}>

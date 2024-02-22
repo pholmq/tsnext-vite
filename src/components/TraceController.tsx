@@ -44,6 +44,10 @@ export default function TraceController() {
     Mars: true,
     Venus: false,
     Mercury: false,
+    Jupiter: false,
+    Saturn: false,
+    Uranus: false,
+    Neptune: false,
   });
 
   plotPosRef.current = traceStartPosRef.current;
