@@ -169,5 +169,35 @@
     "texture": "/textures/planets/2k_saturn.jpg",
     "unicodeSymbol": "&#x2644;",
     "traceable": true
+  },
+  {
+    "name": "Uranus deferent",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Uranus",
+    "color": "#d2f9fa",
+    "type": "planet",
+    "visible": true,
+    "planet": true,
+    "texture": "/textures/planets/2k_uranus.jpg",
+    "unicodeSymbol": "&#x2645;",
+    "traceable": true
+  },
+  {
+    "name": "Neptune deferent",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Neptune",
+    "color": "#5E93F1",
+    "type": "planet",
+    "visible": true,
+    "planet": true,
+    "texture": "/textures/planets/2k_neptune.jpg",
+    "unicodeSymbol": "&#x2646;",
+    "traceable": true
   }
 ]

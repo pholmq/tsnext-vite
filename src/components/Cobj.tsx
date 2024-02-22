@@ -139,11 +139,6 @@ export const Cobj = ({ name, children }: Props) => {
         name="Container"
         ref={containerRef}
         position={[orbitCentera, orbitCenterc, orbitCenterb]}
-        rotation={[
-          orbitTilta * (Math.PI / 180),
-          -containerPos * (Math.PI / 180),
-          orbitTiltb * (Math.PI / 180),
-        ]}
       >
         {s.orbitRadius ? (
           <group rotation-x={-Math.PI / 2} visible={s.visible}>

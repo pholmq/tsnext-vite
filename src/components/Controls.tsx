@@ -7,6 +7,9 @@ import {
   FaStepForward,
   FaBars,
   FaTimes,
+  FaPlus,
+  FaMinus,
+  FaInfo,
 } from "react-icons/fa";
 import {
   posToDate,
@@ -222,16 +225,28 @@ export const Controls = () => {
       <div className="flex flex-col max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none">
         <div className="flex ">
           <button
-            className=" text-white px-4 py-2"
+            className=" text-white px-1 py-2"
             onClick={() => {
               setShowMenu(!showMenu);
             }}
           >
             {showMenu ? <FaTimes /> : <FaBars />}
           </button>
+          {/* <button className=" text-white px-1 py-2" onClick={() => {}}>
+            <FaMinus />
+          </button>
+          <button className=" text-white px-1 py-2" onClick={() => {}}>
+            <FaPlus />
+          </button> */}
           <h2 className=" font-cambria text-white text-3xl text-center italic font-bold">
             The TYCHOSIUM
           </h2>
+          {/* <button
+            className=" bg-gray-700 rounded text-white px-1 py-2"
+            onClick={() => {}}
+          >
+            <FaInfo />
+          </button> */}
         </div>
         <div>
           <div className="flex justify-end m-1 mr-1">
