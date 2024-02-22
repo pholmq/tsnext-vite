@@ -43,12 +43,15 @@ export const Controls = () => {
 
   useLayoutEffect(() => {
     // console.log("Controls uselayout rendered");
-    dateRef.current.value = posToDate(posRef.current);
-    timeRef.current.value = posToTime(posRef.current);
+    const timeout = setTimeout(() => {
+      //We need to wait a little so that the
+      //posref is updated
+      dateRef.current.value = posToDate(posRef.current);
+      timeRef.current.value = posToTime(posRef.current);
+    }, 100);
 
     if (run) {
       intervalRef.current = setInterval(() => {
-        //   console.log(useStore.getState().posRef.current);
         if (document.activeElement !== dateRef.current) {
           dateRef.current.value = posToDate(posRef.current);
         }
@@ -59,6 +62,7 @@ export const Controls = () => {
     } else {
       clearInterval(intervalRef.current);
     }
+    return () => clearTimeout(timeout);
   }, [run]);
 
   useControls(() => ({
@@ -82,11 +86,11 @@ export const Controls = () => {
     },
     "Trace settings": folder(
       {
-        Dots: {
+        "Dotted line": {
           value: useStore.getState().traceDots,
           onChange: (v) => useStore.setState({ traceDots: v }),
         },
-        "Linewidth/dotsize": {
+        Linewidth: {
           value: useTraceStore.getState().traceLinewidth,
           min: 1,
           max: 10,
@@ -200,6 +204,8 @@ export const Controls = () => {
       dateRef.current.value,
       posToTime(posRef.current)
     );
+    dateRef.current.value = posToDate(posRef.current);
+    timeRef.current.value = posToTime(posRef.current);
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
@@ -216,13 +222,24 @@ export const Controls = () => {
       posToDate(posRef.current),
       timeRef.current.value
     );
+    dateRef.current.value = posToDate(posRef.current);
+    timeRef.current.value = posToTime(posRef.current);
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
+
+  function changeScale(newScale) {
+    let div = document.getElementById("controls");
+    div.style.transform = "scale(" + 0.5 + "," + 0.5 + ")";
+  }
+
   return (
     <>
       {/* <Stats />z */}
 
-      <div className="flex flex-col max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none">
+      <div
+        id="controls"
+        className="flex flex-col max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none"
+      >
         <div className="flex ">
           <button
             className=" text-white px-1 py-2"
@@ -232,7 +249,12 @@ export const Controls = () => {
           >
             {showMenu ? <FaTimes /> : <FaBars />}
           </button>
-          {/* <button className=" text-white px-1 py-2" onClick={() => {}}>
+          {/* <button
+            className=" text-white px-1 py-2"
+            onClick={() => {
+              changeScale(0.1);
+            }}
+          >
             <FaMinus />
           </button>
           <button className=" text-white px-1 py-2" onClick={() => {}}>

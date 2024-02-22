@@ -48,7 +48,7 @@ function WritePosition({ name }) {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      //Bugfix. We need to wait a little so that the
+      //We need to wait a little so that the
       //three object actually has moved
       setPos();
     }, 100);

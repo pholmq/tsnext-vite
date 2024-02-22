@@ -33,7 +33,7 @@
   },
   {
     "name": "Moon",
-    "color": "gray",
+    "color": "#8b8b8b",
     "type": "planet",
     "visible": true,
     "axesHelper": false,
