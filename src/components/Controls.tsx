@@ -146,10 +146,10 @@ export const Controls = () => {
           },
           onChange: (v) => useStore.setState({ cameraTarget: v }),
         },
-        // Follow: {
-        //   value: useStore.getState().cameraFollow,
-        //   onChange: (v) => useStore.setState({ cameraFollow: v }),
-        // },
+        Follow: {
+          value: useStore.getState().cameraFollow,
+          onChange: (v) => useStore.setState({ cameraFollow: v }),
+        },
 
         // "Camera type": {
         //   value: useStore.getState().activeCamera,
