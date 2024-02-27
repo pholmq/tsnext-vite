@@ -15,6 +15,7 @@ const OrbitCamera = () => {
   const cameraControlsRef = useRef<CameraControls>(null);
   const targetObjRef = useRef(null);
   useLayoutEffect(() => {
+    // cameraControlsRef.current.smoothTime = 0.01;
     if (cameraTarget === "SystemCenter") {
       cameraControlsRef.current.setTarget(0, 0, 0);
     } else {

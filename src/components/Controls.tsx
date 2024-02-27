@@ -90,7 +90,7 @@ export const Controls = () => {
           value: useStore.getState().traceDots,
           onChange: (v) => useStore.setState({ traceDots: v }),
         },
-        Linewidth: {
+        "Line width": {
           value: useTraceStore.getState().traceLinewidth,
           min: 1,
           max: 10,
