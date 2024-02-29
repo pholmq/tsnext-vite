@@ -127,7 +127,8 @@ export const Controls = () => {
       {
         tip: {
           label: "Tip:",
-          value: "You can hover a planet \n to see its position",
+          value:
+            "You can right click a planet to copy its position to the clipboard",
           editable: false,
         },
       },

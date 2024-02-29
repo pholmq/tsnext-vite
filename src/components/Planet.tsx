@@ -9,6 +9,7 @@ export function Planet(props: any) {
   const [planetTexture] = useTexture([props.texture]);
 
   const [hovered, setHover] = useState(false);
+  const [contextMenu, setContextMenu] = useState(false);
 
   const traceOn = useStore((s) => s.trace);
 
@@ -16,6 +17,7 @@ export function Planet(props: any) {
     <>
       <PosWriter
         hovered={hovered}
+        contextMenu={contextMenu}
         name={props.name}
         symbol={props.unicodeSymbol}
       />
@@ -30,6 +32,11 @@ export function Planet(props: any) {
         onPointerOut={(e) => {
           e.stopPropagation();
           setHover(false);
+          setContextMenu(false);
+        }}
+        onContextMenu={(e) => {
+          e.stopPropagation();
+          setContextMenu(true);
         }}
       >
         <sphereGeometry args={[props.size, 128, 128]} />

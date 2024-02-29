@@ -4,13 +4,14 @@ import { useRef } from "react";
 import { getRaDecDistance } from "../utils/celestial-functions";
 import { useThree } from "@react-three/fiber";
 import { useStore } from "../store";
+import { posToDate, posToTime } from "../utils/time-date-functions";
 
-export function PosWriter({ hovered, name, symbol = "*" }) {
+export function PosWriter({ hovered, contextMenu, name, symbol = "*" }) {
   const labelRef = useRef(null);
   const intervalRef = useRef(null);
   const { scene, camera } = useThree();
   const run = useStore((s) => s.run);
-  const runPosWriter = useStore((s) => s.runPosWriter);
+  const posRef = useStore((s) => s.posRef);
 
   function updateLabel() {
     if (!labelRef.current) return;
@@ -56,6 +57,13 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
     }
   }
 
+  if (contextMenu) {
+    let text = labelRef.current.innerText;
+    text += "\n" + "Date: " + posToDate(posRef.current);
+    text += "\n" + "Time: " + posToTime(posRef.current);
+    navigator.clipboard.writeText(text);
+  }
+
   return (
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
       <div
@@ -63,7 +71,7 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
         className="text-white text-opacity-100 bg-gray-900 
         bg-opacity-50 rounded-md select-none"
       >
-        <label ref={labelRef}>
+        <label id="posLabel" ref={labelRef}>
           RA:&nbsp;XXhXXmXXs Dec:&nbsp;+XX°XX&apos;XX&quot;
         </label>
       </div>
