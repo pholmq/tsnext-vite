@@ -21,6 +21,8 @@ export const useStore = create((set) => ({
   arrowScale: 1,
   traceDots: false,
   runPosWriter: false, //Ugly hack. We flip this in controls to get WritePositions to update
+  // posWriterRef: createRef({}), //a ref obj that holds the PosWriters data
+  // posWriterPlanets: {},
 }));
 
 export const usePlotStore = create((set) => ({

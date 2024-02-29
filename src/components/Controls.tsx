@@ -352,23 +352,17 @@ export const Controls = () => {
             onKeyDown={timeKeyDown}
           />
         </div>
-        {showMenu ? (
-          <div className="mt-2 overflow-auto">
-            <Leva
-              neverHide
-              fill
-              titleBar={false}
-              // titleBar={{
-              //   drag: false,
-              //   filter: false,
-              //   title: "Open/Close Controls",
-              // }}
-              theme={{
-                colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
-              }}
-            />
-          </div>
-        ) : null}
+        <div hidden={!showMenu} className="mt-2 overflow-auto">
+          <Leva
+            neverHide
+            fill
+            titleBar={false}
+            theme={{
+              colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
+            }}
+          />
+        </div>
+        {/* ) : null} */}
       </div>
     </>
   );
