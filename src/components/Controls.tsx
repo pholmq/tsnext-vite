@@ -131,8 +131,7 @@ export const Controls = () => {
         // }),
         tip: {
           label: "Tip:",
-          value:
-            "You can right click a planet to copy its position to the clipboard",
+          value: "You can hover a planet to see its position",
           editable: false,
         },
       },
