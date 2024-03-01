@@ -13,6 +13,8 @@ export function Planet(props: any) {
 
   const traceOn = useStore((s) => s.trace);
 
+  // console.log(planetTexture);
+
   return (
     <>
       <PosWriter
@@ -41,6 +43,7 @@ export function Planet(props: any) {
       >
         <sphereGeometry args={[props.size, 128, 128]} />
         <meshStandardMaterial map={planetTexture} />
+        {/* <meshStandardMaterial color={props.color} /> */}
         {props.light ? <pointLight intensity={3} /> : null}
       </mesh>
     </>

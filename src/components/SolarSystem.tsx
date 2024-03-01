@@ -49,6 +49,9 @@ const SolarSystem = () => {
               </Cobj>
             </Cobj>
           </Cobj>
+          {/* <Cobj name="Halleys deferent">
+            <Cobj name="Halleys"></Cobj>
+          </Cobj> */}
         </Cobj>
       </Cobj>
     </group>

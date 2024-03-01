@@ -199,5 +199,20 @@
     "texture": "/textures/planets/2k_neptune.jpg",
     "unicodeSymbol": "&#x2646;",
     "traceable": true
+  },
+  {
+    "name": "Halleys deferent",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Halleys",
+    "color": "#00FF00",
+    "type": "planet",
+    "visible": true,
+    "planet": true,
+    "texture": "",
+    "unicodeSymbol": "",
+    "traceable": true
   }
 ]

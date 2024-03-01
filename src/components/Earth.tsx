@@ -34,7 +34,7 @@ export function Earth(props: any) {
           props.tilt * (Math.PI / 180),
         ]}
       >
-        <CelestialSphere visible={true} />
+        <CelestialSphere visible={false} />
         <mesh
           name="Earth"
           ref={earthRef}
