@@ -1,9 +1,7 @@
 import { Vector3, Spherical, Scene, Camera } from "three";
-import { useThree } from "@react-three/fiber";
-
+export function getAllPositions() {}
 export function getRaDecDistance(name: string, scene: Scene, camera: Camera) {
-  //Returns Right Ascension, Declination and Distance for a Cobj
-  // const { scene } = useThree();
+  //Returns Right Ascension, Declination and Distance for an object
 
   const objectPos = new Vector3();
   const lookAtDir = new Vector3(0, 0, 1);

@@ -45,43 +45,10 @@ export const Cobj = ({ name, children }: Props) => {
   const aSettings =
     miscSettings[celestialSettings.findIndex((p) => p.name === name)];
   const s = { ...cSettings, ...aSettings };
-  // console.log(name, ": ", s);
 
   const containerRef: any = useRef();
   const pivotRef: any = useRef();
   const orbitRef: any = useRef();
-
-  function printPositions() {
-    const worldPosVec = new Vector3();
-    const worldDirVec = new Vector3();
-
-    containerRef.current.getWorldPosition(worldPosVec);
-    containerRef.current.getWorldDirection(worldDirVec);
-    console.log(`${name} group
-    World position
-    x : ${worldPosVec.x}
-    y : ${worldPosVec.y}
-    z : ${worldPosVec.z}
-    World direction
-    x : ${worldDirVec.x}
-    y : ${worldDirVec.y}
-    z : ${worldDirVec.z}
-    `);
-    pivotRef.current.getWorldPosition(worldPosVec);
-    pivotRef.current.getWorldDirection(worldDirVec);
-    console.log(`${name} Sphere
-    World position
-    x : ${worldPosVec.x}
-    y : ${worldPosVec.y}
-    z : ${worldPosVec.z}
-    World direction
-    x : ${worldDirVec.x}
-    y : ${worldDirVec.y}
-    z : ${worldDirVec.z}
-    `);
-  }
-
-  //  useControls(s.orbitRadius)
   const {
     startPos,
     speed,

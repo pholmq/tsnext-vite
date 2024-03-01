@@ -9,6 +9,7 @@ import TraceController from "./components/TraceController";
 import { Vector3 } from "three";
 import Draggable from "react-draggable";
 import { Controls } from "./components/Controls";
+import { CopyPosToClipb } from "./components/CopyPosToClipb";
 
 function TSNext() {
   return (
@@ -29,6 +30,7 @@ function TSNext() {
         <SolarSystem />
         <PlotSolarSystem />
         <TraceController />
+        <CopyPosToClipb />
         <axesHelper args={[5]} position={[0, 0, 0]} />
         <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
           <tetrahedronGeometry />

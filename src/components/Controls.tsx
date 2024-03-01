@@ -26,7 +26,8 @@ import {
   dateToDays,
 } from "../utils/time-date-functions";
 import { PerformanceMonitor, Stats } from "@react-three/drei";
-import { Leva, buttonGroup, folder, useControls } from "leva";
+import { Leva, button, buttonGroup, folder, useControls } from "leva";
+import { getAllPositions } from "../utils/celestial-functions";
 
 export const Controls = () => {
   const run = useStore((s) => s.run);
@@ -121,10 +122,13 @@ export const Controls = () => {
       },
       { collapsed: true }
     ),
-    // Positions: folder({ "\u{0009}": "" }, { collapsed: true }),
 
     Positions: folder(
       {
+        // "Copy all positions to the clipboard": button(() => {
+        //   getAllPositions()
+        //   alert("!");
+        // }),
         tip: {
           label: "Tip:",
           value:

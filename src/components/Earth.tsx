@@ -34,6 +34,7 @@ export function Earth(props: any) {
           props.tilt * (Math.PI / 180),
         ]}
       >
+        <CelestialSphere visible={true} />
         <mesh
           name="Earth"
           ref={earthRef}
@@ -52,7 +53,6 @@ export function Earth(props: any) {
               transparent={true}
             />
           </mesh>
-          <CelestialSphere visible={false} />
           {hovered && (
             <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
               <div className="text-white text-center select-none">Earth</div>

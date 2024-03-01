@@ -12,11 +12,10 @@ export function PosWriter({ hovered, contextMenu, name, symbol = "*" }) {
   const { scene, camera } = useThree();
   const run = useStore((s) => s.run);
   const posRef = useStore((s) => s.posRef);
-
   function updateLabel() {
     if (!labelRef.current) return;
 
-    const { ra, dec, elongation, distKm, distAU } = getRaDecDistance(
+    const { ra, dec, elongation, distKm, distAU, x, y, z } = getRaDecDistance(
       name,
       scene,
       camera
@@ -36,6 +35,12 @@ export function PosWriter({ hovered, contextMenu, name, symbol = "*" }) {
       distAU +
       "<br/>Elongation:&nbsp;" +
       elongation +
+      "<br/>X:&nbsp;" +
+      x +
+      "<br/>Y:&nbsp;" +
+      y +
+      "<br/>Z:&nbsp;" +
+      z +
       "\xB0";
   }
   const { [name]: on } = useControls("Positions", {
