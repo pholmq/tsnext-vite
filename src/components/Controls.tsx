@@ -163,6 +163,17 @@ export const Controls = () => {
       },
       { collapsed: true }
     ),
+    Planets: folder(
+      {
+        "Planet sizes": {
+          value: 1,
+          min: -5,
+          max: 5,
+          step: 1,
+        },
+      },
+      { collapsed: true }
+    ),
 
     "Orbit settings": folder(
       {

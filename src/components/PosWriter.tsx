@@ -1,6 +1,6 @@
 import { Html } from "@react-three/drei";
 import { useControls } from "leva";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { getRaDecDistance } from "../utils/celestial-functions";
 import { useThree } from "@react-three/fiber";
 import { useStore } from "../store";
@@ -12,6 +12,7 @@ export function PosWriter({ hovered, contextMenu, name, symbol = "*" }) {
   const { scene, camera } = useThree();
   const run = useStore((s) => s.run);
   const posRef = useStore((s) => s.posRef);
+  const runPosWriter = useStore((s) => s.runPosWriter);
   function updateLabel() {
     if (!labelRef.current) return;
 
@@ -49,9 +50,13 @@ export function PosWriter({ hovered, contextMenu, name, symbol = "*" }) {
     },
   });
 
-  clearInterval(intervalRef.current);
+  useEffect(() => {
+    updateLabel();
+  }, [runPosWriter]);
 
+  clearInterval(intervalRef.current);
   updateLabel();
+
   if (run) {
     if (hovered || on) {
       intervalRef.current = setInterval(() => {

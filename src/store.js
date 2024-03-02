@@ -20,7 +20,7 @@ export const useStore = create((set) => ({
   arrows: false,
   arrowScale: 1,
   traceDots: false,
-  runPosWriter: false, //Ugly hack. We flip this in controls to get WritePositions to update
+  runPosWriter: false, //We flip this in controls to get PosWriter to update
   // posWriterRef: createRef({}), //a ref obj that holds the PosWriters data
   // posWriterPlanets: {},
 }));

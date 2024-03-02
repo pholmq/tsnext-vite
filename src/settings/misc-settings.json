@@ -209,7 +209,7 @@
     "name": "Halleys",
     "color": "#00FF00",
     "type": "planet",
-    "visible": true,
+    "visible": false,
     "planet": true,
     "texture": "",
     "unicodeSymbol": "",

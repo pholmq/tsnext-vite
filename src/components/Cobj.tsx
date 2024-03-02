@@ -9,6 +9,7 @@ import { Vector3 } from "three";
 import { Orbit } from "./Orbit";
 import { Planet } from "./Planet";
 import { Earth } from "./Earth";
+import { Pobj } from "./Pobj";
 
 type Props = {
   name: string;
@@ -99,6 +100,7 @@ export const Cobj = ({ name, children }: Props) => {
 
   return (
     <>
+      {/* <Pobj name={name}></Pobj> */}
       <group
         name="Container"
         ref={containerRef}

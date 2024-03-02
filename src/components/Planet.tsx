@@ -2,19 +2,27 @@ import { useRef, useState } from "react";
 import { useStore } from "../store";
 import { useTexture } from "@react-three/drei";
 import { PosWriter } from "./PosWriter";
+import { useControls } from "leva";
+
+function PlanetTexture({ texture }) {
+  const [planetTexture] = useTexture([texture]);
+  return <meshStandardMaterial map={planetTexture} />;
+}
 
 export function Planet(props: any) {
   const ref: any = useRef();
   const posRef: any = useRef();
-  const [planetTexture] = useTexture([props.texture]);
+  // const [planetTexture] = useTexture([props.texture]);
 
   const [hovered, setHover] = useState(false);
   const [contextMenu, setContextMenu] = useState(false);
 
   const traceOn = useStore((s) => s.trace);
 
-  // console.log(planetTexture);
-
+  const x = useControls("Planets", {
+    [props.name]: props.visible,
+  });
+  console.log(x);
   return (
     <>
       <PosWriter
@@ -42,8 +50,12 @@ export function Planet(props: any) {
         }}
       >
         <sphereGeometry args={[props.size, 128, 128]} />
-        <meshStandardMaterial map={planetTexture} />
-        {/* <meshStandardMaterial color={props.color} /> */}
+        {/* <meshStandardMaterial map={planetTexture} /> */}
+        {props.texture !== "" ? (
+          <PlanetTexture color={props.color} texture={props.texture} />
+        ) : (
+          <meshStandardMaterial color={props.color} />
+        )}
         {props.light ? <pointLight intensity={3} /> : null}
       </mesh>
     </>

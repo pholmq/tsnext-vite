@@ -44,9 +44,6 @@ export const Pobj = ({ name, children }: Props) => {
   const cSettings =
     celestialSettings[celestialSettings.findIndex((p) => p.name === name)];
 
-  // const cSettings: any =
-  //   celestialSettingsOld[name as keyof typeof celestialSettingsOld];
-  // const aSettings: any = miscSettings[name as keyof typeof miscSettings];
   const aSettings =
     miscSettings[celestialSettings.findIndex((p) => p.name === name)];
 
@@ -73,15 +70,6 @@ export const Pobj = ({ name, children }: Props) => {
         },
       ],
     }));
-    // if (s.traceable) {
-    //   useTraceStore.setState((state) => ({
-    //     traceableObjects: {
-    //       ...state.traceableObjects,
-    //       name: s.name,
-    //     },
-    //   }));
-    //   console.log(useTraceStore.getState().traceableObjects);
-    // }
   }, []);
 
   return (
