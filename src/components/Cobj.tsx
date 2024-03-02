@@ -50,6 +50,17 @@ export const Cobj = ({ name, children }: Props) => {
   const containerRef: any = useRef();
   const pivotRef: any = useRef();
   const orbitRef: any = useRef();
+
+  // let visible = s.visible;
+
+  if (s.type === "planet") {
+    const { [s.name]: showHide } = useControls("Planets", {
+      [s.name]: s.visible,
+    });
+    s.visible = showHide;
+    // console.log(s.name, ": ", visible);
+  }
+
   const {
     startPos,
     speed,

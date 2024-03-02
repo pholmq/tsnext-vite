@@ -47,8 +47,8 @@ const SolarSystem = () => {
           <Cobj name="Mars E deferent">
             <Cobj name="Mars S deferent">
               <Cobj name="Mars">
-                {/* <Cobj name="Phobos" />
-                <Cobj name="Deimos" /> */}
+                <Cobj name="Phobos" />
+                <Cobj name="Deimos" />
               </Cobj>
             </Cobj>
           </Cobj>

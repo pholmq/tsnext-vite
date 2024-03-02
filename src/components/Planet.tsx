@@ -19,10 +19,6 @@ export function Planet(props: any) {
 
   const traceOn = useStore((s) => s.trace);
 
-  const x = useControls("Planets", {
-    [props.name]: props.visible,
-  });
-  console.log(x);
   return (
     <>
       <PosWriter
@@ -33,6 +29,7 @@ export function Planet(props: any) {
       />
       <mesh
         name={props.name}
+        visible={props.visible}
         ref={ref}
         scale={1}
         onPointerOver={(e) => {
@@ -52,7 +49,7 @@ export function Planet(props: any) {
         <sphereGeometry args={[props.size, 128, 128]} />
         {/* <meshStandardMaterial map={planetTexture} /> */}
         {props.texture !== "" ? (
-          <PlanetTexture color={props.color} texture={props.texture} />
+          <PlanetTexture texture={props.texture} />
         ) : (
           <meshStandardMaterial color={props.color} />
         )}

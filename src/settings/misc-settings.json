@@ -135,11 +135,23 @@
   },
   {
     "name": "Phobos",
-    "type": "planet"
+    "type": "planet",
+    "color": "grey",
+    "visible": false,
+    "planet": true,
+    "texture": "",
+    "unicodeSymbol": "",
+    "traceable": true
   },
   {
     "name": "Deimos",
-    "type": "planet"
+    "type": "planet",
+    "color": "grey",
+    "visible": false,
+    "planet": true,
+    "texture": "",
+    "unicodeSymbol": "",
+    "traceable": true
   },
   {
     "name": "Jupiter deferent",
