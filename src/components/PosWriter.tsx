@@ -6,7 +6,7 @@ import { useThree } from "@react-three/fiber";
 import { useStore } from "../store";
 import { posToDate, posToTime } from "../utils/time-date-functions";
 
-export function PosWriter({ hovered, contextMenu, name, symbol = "*" }) {
+export function PosWriter({ hovered, name, symbol = "*" }) {
   const labelRef = useRef(null);
   const intervalRef = useRef(null);
   const { scene, camera } = useThree();
@@ -36,12 +36,12 @@ export function PosWriter({ hovered, contextMenu, name, symbol = "*" }) {
       distAU +
       "<br/>Elongation:&nbsp;" +
       elongation +
-      "<br/>X:&nbsp;" +
-      x +
-      "<br/>Y:&nbsp;" +
-      y +
-      "<br/>Z:&nbsp;" +
-      z +
+      // "<br/>X:&nbsp;" +
+      // x +
+      // "<br/>Y:&nbsp;" +
+      // y +
+      // "<br/>Z:&nbsp;" +
+      // z +
       "\xB0";
   }
   const { [name]: on } = useControls("Positions", {
@@ -67,12 +67,12 @@ export function PosWriter({ hovered, contextMenu, name, symbol = "*" }) {
     }
   }
 
-  if (contextMenu) {
-    let text = labelRef.current.innerText;
-    text += "\n" + "Date: " + posToDate(posRef.current);
-    text += "\n" + "Time: " + posToTime(posRef.current);
-    navigator.clipboard.writeText(text);
-  }
+  // if (contextMenu) {
+  //   let text = labelRef.current.innerText;
+  //   text += "\n" + "Date: " + posToDate(posRef.current);
+  //   text += "\n" + "Time: " + posToTime(posRef.current);
+  //   navigator.clipboard.writeText(text);
+  // }
 
   return (
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>

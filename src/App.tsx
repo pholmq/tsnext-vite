@@ -32,14 +32,13 @@ function TSNext() {
         <TraceController />
         <CopyPosToClipb />
         <axesHelper args={[5]} position={[0, 0, 0]} />
-        <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
+        {/* <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
           <tetrahedronGeometry />
-          {/* <boxGeometry args={[1, 1, 1]} /> */}
           <meshPhongMaterial color="gold" />
           <Sphere args={[0.35, 64, 32]} position={[0.03, 0.03, 0.03]}>
             <meshPhongMaterial color="black" />
           </Sphere>
-        </mesh>
+        </mesh> */}
       </Canvas>
       <Controls />
     </>

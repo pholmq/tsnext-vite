@@ -139,17 +139,23 @@ export const Controls = () => {
     ),
     Camera: folder(
       {
-        "Look at": {
-          value: useStore.getState().cameraTarget,
-          options: {
-            Earth: "Earth",
-            "System Center": "SystemCenter",
-            Sun: "Sun",
-            Mars: "Mars",
-            Venus: "Venus",
-          },
-          onChange: (v) => useStore.setState({ cameraTarget: v }),
+        cameratip: {
+          label: "Tip:",
+          value: "Double click a planet to center the camera on it",
+          editable: false,
         },
+
+        // "Look at": {
+        //   value: useStore.getState().cameraTarget,
+        //   options: {
+        //     Earth: "Earth",
+        //     "System Center": "SystemCenter",
+        //     Sun: "Sun",
+        //     Mars: "Mars",
+        //     Venus: "Venus",
+        //   },
+        //   onChange: (v) => useStore.setState({ cameraTarget: v }),
+        // },
         Follow: {
           value: useStore.getState().cameraFollow,
           onChange: (v) => useStore.setState({ cameraFollow: v }),
