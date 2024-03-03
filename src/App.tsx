@@ -3,11 +3,9 @@ import { Sphere, Stars } from "@react-three/drei";
 import CustomCameraControls from "./components/CustomCameraControls";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
-import ControlPanel from "./components/ControlPanel";
 import PlotSolarSystem from "./components/PlotSolarSystem";
 import TraceController from "./components/TraceController";
 import { Vector3 } from "three";
-import Draggable from "react-draggable";
 import { Controls } from "./components/Controls";
 import { CopyPosToClipb } from "./components/CopyPosToClipb";
 
