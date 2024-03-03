@@ -69,9 +69,9 @@ export const Controls = () => {
       dateRef.current.value = posToDate(posRef.current);
       timeRef.current.value = posToTime(posRef.current);
 
-      if (!run) {
-        updateURL(dateRef.current.value, timeRef.current.value);
-      }
+      // if (!run) {
+      updateURL(dateRef.current.value, timeRef.current.value);
+      // }
     }, 100);
 
     if (run) {
@@ -82,6 +82,7 @@ export const Controls = () => {
         if (document.activeElement !== timeRef.current) {
           timeRef.current.value = posToTime(posRef.current);
         }
+        updateURL(dateRef.current.value, timeRef.current.value);
       }, 1000);
     } else {
       clearInterval(intervalRef.current);
