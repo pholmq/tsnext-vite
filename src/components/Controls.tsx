@@ -82,7 +82,7 @@ export const Controls = () => {
         if (document.activeElement !== timeRef.current) {
           timeRef.current.value = posToTime(posRef.current);
         }
-        updateURL(dateRef.current.value, timeRef.current.value);
+        // updateURL(dateRef.current.value, timeRef.current.value);
       }, 1000);
     } else {
       clearInterval(intervalRef.current);
