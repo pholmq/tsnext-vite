@@ -69,9 +69,9 @@ export const Controls = () => {
       dateRef.current.value = posToDate(posRef.current);
       timeRef.current.value = posToTime(posRef.current);
 
-      // if (!run) {
-      updateURL(dateRef.current.value, timeRef.current.value);
-      // }
+      if (!run) {
+        updateURL(dateRef.current.value, timeRef.current.value);
+      }
     }, 100);
 
     if (run) {

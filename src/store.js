@@ -16,7 +16,7 @@ export const useStore = create((set) => ({
   cameraFollow: false,
   trace: false,
   orbits: true,
-  orbitsLinewidth: 2,
+  orbitsLinewidth: 1,
   arrows: false,
   arrowScale: 1,
   traceDots: false,
