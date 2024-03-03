@@ -29,6 +29,10 @@ import { PerformanceMonitor, Stats } from "@react-three/drei";
 import { Leva, button, buttonGroup, folder, useControls } from "leva";
 import { getAllPositions } from "../utils/celestial-functions";
 
+function updateURL(date: string, time: string) {
+  history.pushState({}, "", `?date=${date}&time=${time}`);
+}
+
 export const Controls = () => {
   const run = useStore((s) => s.run);
   const posRef = useStore((s) => s.posRef);
@@ -42,6 +46,21 @@ export const Controls = () => {
   const intervalRef = useRef(0);
   // console.log("Controls render");
 
+  useEffect(() => {
+    //Get date & time from the URL
+    const searchParams = new URLSearchParams(document.location.search);
+    const urlDate = searchParams.get("date");
+    const urlTime = searchParams.get("time");
+
+    if (isValidDate(urlDate)) {
+      posRef.current = dateTimeToPos(urlDate, posToTime(posRef.current));
+    }
+
+    if (isValidTime(urlTime)) {
+      posRef.current = dateTimeToPos(posToDate(posRef.current), urlTime);
+    }
+  }, []);
+
   useLayoutEffect(() => {
     // console.log("Controls uselayout rendered");
     const timeout = setTimeout(() => {
@@ -49,6 +68,10 @@ export const Controls = () => {
       //posref is updated
       dateRef.current.value = posToDate(posRef.current);
       timeRef.current.value = posToTime(posRef.current);
+
+      if (!run) {
+        updateURL(dateRef.current.value, timeRef.current.value);
+      }
     }, 100);
 
     if (run) {
@@ -227,6 +250,8 @@ export const Controls = () => {
     );
     dateRef.current.value = posToDate(posRef.current);
     timeRef.current.value = posToTime(posRef.current);
+    updateURL(dateRef.current.value, timeRef.current.value);
+
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
@@ -245,6 +270,7 @@ export const Controls = () => {
     );
     dateRef.current.value = posToDate(posRef.current);
     timeRef.current.value = posToTime(posRef.current);
+    updateURL(dateRef.current.value, timeRef.current.value);
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
@@ -299,6 +325,7 @@ export const Controls = () => {
                 posRef.current = 0;
                 dateRef.current.value = posToDate(posRef.current);
                 timeRef.current.value = posToTime(posRef.current);
+                updateURL(dateRef.current.value, timeRef.current.value);
                 useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
               }}
             >
@@ -319,6 +346,7 @@ export const Controls = () => {
                 posRef.current = todayPos;
                 dateRef.current.value = posToDate(posRef.current);
                 timeRef.current.value = posToTime(posRef.current);
+                updateURL(dateRef.current.value, timeRef.current.value);
                 useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
               }}
             >
@@ -330,6 +358,7 @@ export const Controls = () => {
                 posRef.current -= speedFact * speedmultiplier;
                 dateRef.current.value = posToDate(posRef.current);
                 timeRef.current.value = posToTime(posRef.current);
+                updateURL(dateRef.current.value, timeRef.current.value);
                 useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
               }}
             >
@@ -349,6 +378,7 @@ export const Controls = () => {
                   posRef.current += speedFact * speedmultiplier;
                   dateRef.current.value = posToDate(posRef.current);
                   timeRef.current.value = posToTime(posRef.current);
+                  updateURL(dateRef.current.value, timeRef.current.value);
                   useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
                 }}
               />

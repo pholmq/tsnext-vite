@@ -156,6 +156,10 @@ export function julianDayTimeToPos(julianDays: number, time: string) {
 
 export function isValidTime(value: string) {
   //check input
+  if (!value) {
+    return false;
+  }
+
   let aTime: any = value.split(":");
   if (aTime.length > 3) {
     //Only hh:mm:ss
@@ -174,6 +178,9 @@ export function isValidTime(value: string) {
 
 export function isValidDate(value: string) {
   //check input
+  if (!value) {
+    return false;
+  }
   let aDate: any = value.split("-");
   if (aDate.length > 3) {
     //Assume we have a minus sign first
