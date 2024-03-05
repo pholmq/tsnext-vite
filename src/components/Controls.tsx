@@ -17,13 +17,16 @@ import {
   posToJulianDay,
   isValidDate,
   dateTimeToPos,
+  dateToDays,
+  addYears,
+  timeToPos,
   isValidTime,
   isNumeric,
   julianDayTimeToPos,
   speedFactOpts,
   speedFactOptions,
   sDay,
-  dateToDays,
+  sYear,
 } from "../utils/time-date-functions";
 import { PerformanceMonitor, Stats } from "@react-three/drei";
 import { Leva, button, buttonGroup, folder, useControls } from "leva";
@@ -37,7 +40,7 @@ export const Controls = () => {
   const run = useStore((s) => s.run);
   const posRef = useStore((s) => s.posRef);
   const speedFact = useStore((s) => s.speedFact);
-  const speedmultiplier = useStore((s) => s.speedmultiplier);
+  const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const [showMenu, setShowMenu] = useState(true);
 
   const dateRef = useRef(null);
@@ -356,7 +359,19 @@ export const Controls = () => {
             <button
               className="bg-gray-700 text-white rounded ml-2 px-4"
               onClick={() => {
-                posRef.current -= speedFact * speedmultiplier;
+                if (speedFact === sYear) {
+                  //If it is a year, we need some special logic
+
+                  posRef.current =
+                    dateToDays(
+                      addYears(dateRef.current.value, -speedmultiplier)
+                    ) *
+                      sDay +
+                    timeToPos(timeRef.current.value);
+                } else {
+                  posRef.current -= speedFact * speedmultiplier;
+                }
+
                 dateRef.current.value = posToDate(posRef.current);
                 timeRef.current.value = posToTime(posRef.current);
                 updateURL(dateRef.current.value, timeRef.current.value);
@@ -376,7 +391,18 @@ export const Controls = () => {
             <button className="bg-gray-700 text-white rounded ml-2 px-4">
               <FaStepForward
                 onClick={() => {
-                  posRef.current += speedFact * speedmultiplier;
+                  if (speedFact === sYear) {
+                    //If it is a year, we need some special logic
+
+                    posRef.current =
+                      dateToDays(
+                        addYears(dateRef.current.value, speedmultiplier)
+                      ) *
+                        sDay +
+                      timeToPos(timeRef.current.value);
+                  } else {
+                    posRef.current += speedFact * speedmultiplier;
+                  }
                   dateRef.current.value = posToDate(posRef.current);
                   timeRef.current.value = posToTime(posRef.current);
                   updateURL(dateRef.current.value, timeRef.current.value);

@@ -3,7 +3,7 @@ const yearLength = 365.2425;
 const earthRotations = 366.2425;
 
 export const sDay = 1 / yearLength;
-const sYear = sDay * 365;
+export const sYear = sDay * 365;
 const sMonth = sDay * 30;
 const sWeek = sDay * 7;
 const sHour = sDay / 24;
@@ -288,16 +288,17 @@ function julianDateToDays(sDate: string) {
   return jd - 2451717;
 }
 
-function addYears(sDate: string, year: string) {
-  let aDate = sDate.split("-");
-  let y, date;
+export function addYears(sDate: string, years: number): string {
+  const aDate = sDate.split("-");
+  let y: number;
+  let date: string;
   if (aDate.length > 3) {
     //We had a minus sign first = a BC date
     y = -Number(aDate[1]);
-    date = y + year + "-" + aDate[2] + "-" + aDate[3];
+    date = `${y + years}-${aDate[2]}-${aDate[3]}`;
   } else {
     y = Number(aDate[0]);
-    date = y + year + "-" + aDate[1] + "-" + aDate[2];
+    date = `${y + years}-${aDate[1]}-${aDate[2]}`;
   }
   return date;
 }
