@@ -20,9 +20,6 @@ export const speedFactOpts = {
   weeks: sWeek,
   months: sMonth,
   years: sYear,
-  // "10 years": sYear * 10,
-  // "100 years": sYear * 100,
-  // "1000 years": sYear * 1000,
 };
 
 export const speedFactOptions = [
@@ -54,25 +51,10 @@ export const speedFactOptions = [
     label: "years",
     value: sYear,
   },
-  // {
-  //   label: "10 years",
-  //   value: sYear * 10,
-  // },
-  // {
-  //   label: "100 years",
-  //   value: sYear * 100,
-  // },
-  // {
-  //   label: "1000 years",
-  //   value: sYear * 1000,
-  // },
-
-  // '10 years': sYear*10,
-  // '100 years': sYear*100,
-  // '1000 years': sYear*1000,
 ];
 
-//Note: Julian day and Julian Date are two different terms easily confused. Julian Day is used in astronomy. Julian Date are dates before the Gregorian calendar.
+//Note: Julian day and Julian Date are two different terms easily confused.
+//Julian Day is used in astronomy. Julian Date are dates before the Gregorian calendar.
 
 export function getDefaultSpeedFact() {
   return sWeek;
