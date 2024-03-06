@@ -19,6 +19,7 @@ import {
   dateTimeToPos,
   dateToDays,
   addYears,
+  addMonths,
   timeToPos,
   isValidTime,
   isNumeric,
@@ -26,6 +27,7 @@ import {
   speedFactOpts,
   speedFactOptions,
   sDay,
+  sMonth,
   sYear,
 } from "../utils/time-date-functions";
 import { PerformanceMonitor, Stats } from "@react-three/drei";
@@ -46,7 +48,7 @@ export const Controls = () => {
   const dateRef = useRef(null);
   const timeRef = useRef(null);
 
-  const intervalRef = useRef(0);
+  const intervalRef = useRef(null);
   // console.log("Controls render");
 
   useEffect(() => {
@@ -369,7 +371,16 @@ export const Controls = () => {
                       sDay +
                     timeToPos(timeRef.current.value);
                 } else {
-                  posRef.current -= speedFact * speedmultiplier;
+                  if (speedFact === sMonth) {
+                    posRef.current =
+                      dateToDays(
+                        addMonths(dateRef.current.value, -speedmultiplier)
+                      ) *
+                        sDay +
+                      timeToPos(timeRef.current.value);
+                  } else {
+                    posRef.current -= speedFact * speedmultiplier;
+                  }
                 }
 
                 dateRef.current.value = posToDate(posRef.current);
@@ -401,7 +412,16 @@ export const Controls = () => {
                         sDay +
                       timeToPos(timeRef.current.value);
                   } else {
-                    posRef.current += speedFact * speedmultiplier;
+                    if (speedFact === sMonth) {
+                      posRef.current =
+                        dateToDays(
+                          addMonths(dateRef.current.value, speedmultiplier)
+                        ) *
+                          sDay +
+                        timeToPos(timeRef.current.value);
+                    } else {
+                      posRef.current += speedFact * speedmultiplier;
+                    }
                   }
                   dateRef.current.value = posToDate(posRef.current);
                   timeRef.current.value = posToTime(posRef.current);

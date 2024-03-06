@@ -4,7 +4,7 @@ const earthRotations = 366.2425;
 
 export const sDay = 1 / yearLength;
 export const sYear = sDay * 365;
-const sMonth = sDay * 30;
+export const sMonth = sDay * 30;
 const sWeek = sDay * 7;
 const sHour = sDay / 24;
 const sMinute = sHour / 60;
@@ -18,7 +18,7 @@ export const speedFactOpts = {
   hours: sHour,
   days: sDay,
   weeks: sWeek,
-  "months (30 days)": sMonth,
+  months: sMonth,
   years: sYear,
   // "10 years": sYear * 10,
   // "100 years": sYear * 100,
@@ -258,6 +258,61 @@ export function dateToDays(sDate: string) {
   );
 }
 
+export function addYears(sDate: string, years: number): string {
+  const aDate = sDate.split("-");
+  let y: number;
+  let date: string;
+  if (aDate.length > 3) {
+    //We had a minus sign first = a BC date
+    y = -Number(aDate[1]);
+    date = `${y + years}-${aDate[2]}-${aDate[3]}`;
+  } else {
+    y = Number(aDate[0]);
+    date = `${y + years}-${aDate[1]}-${aDate[2]}`;
+  }
+  return date;
+}
+
+export function addMonths(sDate: string, inMonths: number): string {
+  const years = Math.floor(Math.abs(inMonths) / 12);
+  const months = Math.abs(inMonths) % 12;
+  const aDate = sDate.split("-");
+  let y, m, d: number;
+  if (aDate.length > 3) {
+    //We had a minus sign first = a BC date
+    y = -Number(aDate[1]);
+    m = Number(aDate[2]);
+    d = Number(aDate[3]);
+  } else {
+    y = Number(aDate[0]);
+    m = Number(aDate[1]);
+    d = Number(aDate[2]);
+  }
+  if (inMonths > 0) {
+    y += years;
+    m += months;
+  } else {
+    y -= years;
+    m -= months;
+  }
+  // date = `${y}-${aDate[1]}-${aDate[2]}`;
+  if (m === 0) {
+    y = y - 1;
+    m = 12;
+  }
+  if (m === 13) {
+    y = y + 1;
+    m = 1;
+  }
+  return (
+    y +
+    "-" +
+    m.toString().padStart(2, "0") +
+    "-" +
+    d.toString().padStart(2, "0")
+  );
+}
+
 function julianDateToDays(sDate: string) {
   //Calculates the number of days passed since 2000-06-21 for a date. Positive or negative
   //Taken from https://alcor.concordia.ca/~gpkatch/gdate-algorithm.html
@@ -286,21 +341,6 @@ function julianDateToDays(sDate: string) {
     Math.trunc(365.25 * (y + 4716)) + Math.trunc(30.6001 * (m + 1)) + d - 1524;
 
   return jd - 2451717;
-}
-
-export function addYears(sDate: string, years: number): string {
-  const aDate = sDate.split("-");
-  let y: number;
-  let date: string;
-  if (aDate.length > 3) {
-    //We had a minus sign first = a BC date
-    y = -Number(aDate[1]);
-    date = `${y + years}-${aDate[2]}-${aDate[3]}`;
-  } else {
-    y = Number(aDate[0]);
-    date = `${y + years}-${aDate[1]}-${aDate[2]}`;
-  }
-  return date;
 }
 
 //console.log(daysToDate(0))
