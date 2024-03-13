@@ -132,9 +132,9 @@ export const Controls = () => {
         },
         "Trace length": {
           value: useTraceStore.getState().traceLength,
-          min: 100,
+          min: 1,
           max: 10000,
-          step: 100,
+          step: 1,
           onChange: (v) => useTraceStore.setState({ traceLength: v }),
         },
         // "Trace step": {
