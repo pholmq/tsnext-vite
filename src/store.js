@@ -2,6 +2,7 @@ import { createRef } from "react";
 import create from "zustand";
 import {
   getDefaultSpeedFact,
+  sDay,
   posToDate,
   posToTime,
 } from "./utils/time-date-functions";
@@ -34,6 +35,8 @@ export const usePlotStore = create((set) => ({
 export const useTraceStore = create((set) => ({
   traceLength: 5000,
   traceStepInput: 4,
+  stepFact: sDay,
+  stepMultiplier: 1,
   traceInterval: 10,
   traceLinewidth: 2,
   traceStartPosRef: createRef(0),

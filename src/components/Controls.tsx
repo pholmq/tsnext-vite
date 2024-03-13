@@ -45,6 +45,9 @@ export const Controls = () => {
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const [showMenu, setShowMenu] = useState(true);
 
+  const stepFact = useTraceStore((s) => s.stepFact);
+  const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
+
   const dateRef = useRef(null);
   const timeRef = useRef(null);
 
@@ -134,13 +137,28 @@ export const Controls = () => {
           step: 100,
           onChange: (v) => useTraceStore.setState({ traceLength: v }),
         },
-        "Trace step": {
-          value: useTraceStore.getState().traceStepInput,
+        // "Trace step": {
+        //   value: useTraceStore.getState().traceStepInput,
+        //   min: 1,
+        //   step: 1,
+        //   onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
+        // },
+
+        "1 step equals": {
+          value: stepMultiplier,
           min: 1,
-          max: 10,
           step: 1,
-          onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
+          onChange: (v) => useTraceStore.setState({ stepMultiplier: v }),
         },
+        " ": {
+          value: stepFact,
+          options: speedFactOpts,
+
+          onChange: (v) => {
+            useTraceStore.setState({ stepFact: v });
+          },
+        },
+
         "Update interval": {
           value: useTraceStore.getState().traceInterval,
           min: 1,

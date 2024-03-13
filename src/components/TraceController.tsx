@@ -23,11 +23,15 @@ export default function TraceController() {
   const {
     traceLength,
     traceStepInput,
+    stepFact,
+    stepMultiplier,
     traceInterval,
     traceStartPosRef,
     tracedObjects,
   } = useTraceStore();
-  const traceStep = traceStepInput / 1000;
+  // const traceStep = traceStepInput / 1000;
+
+  const traceStep = stepFact * stepMultiplier;
 
   const objectPos = new Vector3();
 
