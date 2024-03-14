@@ -10,6 +10,7 @@
     "name": "Earth",
     "earth": true,
     "color": "skyblue",
+    "type": "planet",
     "visible": true,
     "axesHelper": false,
     "arrows": true,

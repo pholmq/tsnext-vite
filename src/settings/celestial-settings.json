@@ -62,7 +62,7 @@
     "size": 1,
     "startPos": 261.2,
     "speed": 83.28521,
-    "rotationSpeed": 0,
+    "rotationStart": 3.14,
     "tilt": 0,
     "orbitRadius": 10,
     "orbitCentera": 0.8,

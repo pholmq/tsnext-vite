@@ -135,7 +135,7 @@ export const Cobj = ({ name, children }: Props) => {
         <group name="Orbit" ref={orbitRef}>
           <group name="Pivot" ref={pivotRef} position={[orbitRadius, 0, 0]}>
             {s.axesHelper ? <axesHelper args={[10]} /> : null}
-            {s.earth ? <Earth {...s} /> : null}
+            {/* {s.earth ? <Earth {...s} /> : null} */}
             {s.type === "planet" ? <Planet {...s} /> : null}
             {children}
           </group>
