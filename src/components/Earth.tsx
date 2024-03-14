@@ -1,4 +1,3 @@
-/*
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
@@ -79,5 +78,3 @@ export function Earth(props: any) {
     </>
   );
 }
-
-*/
