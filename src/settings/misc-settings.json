@@ -128,6 +128,7 @@
     "visible": true,
     "axesHelper": false,
     "arrows": true,
+    "reverseArrows": true,
     "rotationArrows": -6.67,
     "texture": "/textures/planets/2k_mars.jpg",
     "unicodeSymbol": "&#x2642;",

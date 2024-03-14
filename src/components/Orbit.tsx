@@ -67,7 +67,7 @@ export function Orbit({
   useFrame(() => {
     if (showOrbits) {
       // const pos = useStore.getState().pos;
-      orbitRef.current.rotation.z = rotation * posRef.current;
+      // orbitRef.current.rotation.z = rotation * posRef.current;
     }
   });
 

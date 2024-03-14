@@ -121,6 +121,7 @@ export const Cobj = ({ name, children }: Props) => {
       >
         {s.orbitRadius ? (
           <group rotation-x={-Math.PI / 2} visible={s.visible}>
+            {/* <group rotation-x={-Math.PI / 2} visible={true}> */}
             <Orbit
               radius={orbitRadius}
               color={s.color}
