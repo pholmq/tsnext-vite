@@ -3,6 +3,7 @@ const yearLength = 365.2425;
 const earthRotations = 366.2425;
 
 export const sDay = 1 / yearLength;
+//equals 0,0027379070069885
 export const sYear = sDay * 365;
 export const sMonth = sDay * 30;
 const sWeek = sDay * 7;
