@@ -79,11 +79,6 @@ export function Planet(props: any) {
     // cloudsRef.current.rotation.y -= 0.0001;
   });
 
-  // contextMenu={contextMenu}
-  // useEffect(() => {
-  //   if (contextMenu)
-  // }, [contextMenu]);
-
   const tilt = props.tilt || 0;
   const tiltb = props.tiltb || 0;
   return (
