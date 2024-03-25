@@ -52,6 +52,11 @@ const SolarSystem = () => {
               </Cobj>
             </Cobj>
           </Cobj>
+          <Cobj name="Eros deferent A">
+            <Cobj name="Eros deferent B">
+              <Cobj name="Eros"></Cobj>
+            </Cobj>
+          </Cobj>
         </Cobj>
       </Cobj>
     </group>

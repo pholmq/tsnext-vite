@@ -77,7 +77,6 @@
   },
   {
     "name": "Mercury",
-
     "color": "gray",
     "type": "planet",
     "visible": true,
@@ -222,6 +221,26 @@
   {
     "name": "Halleys",
     "color": "#00FF00",
+    "type": "planet",
+    "visible": false,
+    "planet": true,
+    "texture": "",
+    "unicodeSymbol": "",
+    "traceable": true
+  },
+  {
+    "name": "Eros deferent A",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Eros deferent B",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Eros",
+    "color": "#FF5800",
     "type": "planet",
     "visible": false,
     "planet": true,

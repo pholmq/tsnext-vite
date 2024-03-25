@@ -15,7 +15,6 @@
     "orbitTilta": 0,
     "orbitTiltb": 0
   },
-
   {
     "name": "Earth",
     "size": 4,
@@ -372,7 +371,7 @@
   },
   {
     "name": "Halleys",
-    "size": 20,
+    "size": 2,
     "startPos": 76.33,
     "speed": -0.0830100973,
     "rotationSpeed": 0,

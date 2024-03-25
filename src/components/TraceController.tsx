@@ -52,6 +52,8 @@ export default function TraceController() {
     Saturn: false,
     Uranus: false,
     Neptune: false,
+    Halleys: false,
+    Eros: false,
   });
 
   plotPosRef.current = traceStartPosRef.current;

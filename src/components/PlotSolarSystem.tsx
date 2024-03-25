@@ -48,6 +48,11 @@ const PlotSolarSystem = () => {
               </Pobj>
             </Pobj>
           </Pobj>
+          <Pobj name="Eros deferent A">
+            <Pobj name="Eros deferent B">
+              <Pobj name="Eros"></Pobj>
+            </Pobj>
+          </Pobj>
         </Pobj>
       </Pobj>
     </group>
