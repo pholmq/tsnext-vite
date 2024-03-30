@@ -6,32 +6,36 @@ import {
   PerspectiveCamera,
   OrthographicCamera,
   Box,
-  useHelper
+  useHelper,
 } from "@react-three/drei";
 export default function PlanetCamera(props: any) {
   const { camera, scene }: any = useThree();
   const camControls: any = useThree((state) => state.controls);
 
-  const toggleCam = useControls("Planet Camera", {
-    on: false
-  },  { collapsed: true });
+  const toggleCam = useControls(
+    "Planet Camera",
+    {
+      on: false,
+    },
+    { collapsed: true }
+  );
 
   const [showH, setHelper] = useControls("Planet Camera", () => ({
-    showHelper: false
+    showHelper: true,
   }));
 
   const camProps = useControls("Planet Camera", {
     fov: { value: 25, max: 100, min: 10 },
     far: { value: 500, max: 1000, min: 1 },
-    near: { value: 0, max: 0.5, min: 0.000000001, step: 0.0001 }
+    near: { value: 0, max: 0.5, min: 0.000000001, step: 0.0001 },
   });
 
   const camPos = useControls("Planet Camera", {
-    Direction: { value: 0, max: Math.PI * 2, min: 0 },
+    Direction: { value: Math.PI, max: Math.PI * 2, min: 0 },
     Up: { value: 0, max: Math.PI / 2, min: -Math.PI / 2 },
     Height: { value: 3.51, max: 10, min: 3, step: 0.0001 },
-    Latitude: { value: 0, max: Math.PI, min: -Math.PI, step: 0.001 },
-    Longitude: { value: 0, max: Math.PI * 2, min: 0, step: 0.001 }
+    Latitude: { value: 0, max: Math.PI, min: 0, step: 0.001 },
+    Longitude: { value: 0, max: Math.PI * 2, min: 0, step: 0.001 },
   });
 
   // console.log("toggleCam.on: " + toggleCam.on);
@@ -88,7 +92,7 @@ export default function PlanetCamera(props: any) {
         earthObj.getWorldPosition(vec);
 
         console.log(
-          "Rotation: " + [...earthObj.rotation] + " Worldpos: " + {...vec}
+          "Rotation: " + [...earthObj.rotation] + " Worldpos: " + { ...vec }
         );
       } else {
         // camera.position.copy(orgCamPos);
@@ -111,7 +115,7 @@ export default function PlanetCamera(props: any) {
           {/* Note: It's crucial to set rotation-order = {"YXZ"} otherwise the camera will look up/down incorrectly */}
           <group position={[0, camPos.Height, 0]}>
             {/* <Box args={[0.02, 0.01, 0.02]} position={[0, 0, 0]}> */}
-            <Box args={[0.02, 0.02, 0.02]} position={[0, 0, 0]}>
+            <Box args={[0.2, 0.2, 0.2]} position={[0, 0, 0]}>
               <meshBasicMaterial color="#ff0000" />
             </Box>
             <PerspectiveCamera

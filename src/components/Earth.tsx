@@ -71,7 +71,7 @@ export function Earth(props: any) {
               <div className="text-white text-center select-none">Earth</div>
             </Html>
           )}
-          {/* <PlanetCamera /> */}
+          <PlanetCamera />
           {/* <axesHelper args={[20]} /> */}
         </mesh>
       </group>

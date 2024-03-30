@@ -5,6 +5,7 @@ import { PosWriter } from "./PosWriter";
 import { useControls } from "leva";
 import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
+import PlanetCamera from "./PlanetCamera";
 
 function ContextMenu({ setContextMenu, setCameraTarget }) {
   return (
@@ -129,6 +130,8 @@ export function Planet(props: any) {
             <meshStandardMaterial color={props.color} />
           )}
           {props.light ? <pointLight intensity={3} /> : null}
+
+          {props.name === "Earth" ? <PlanetCamera /> : null}
         </mesh>
       </group>
     </>
