@@ -131,7 +131,7 @@ export function Planet(props: any) {
           )}
           {props.light ? <pointLight intensity={3} /> : null}
 
-          {props.name === "Earth" ? <PlanetCamera /> : null}
+          {/* {props.name === "Earth" ? <PlanetCamera /> : null} */}
         </mesh>
       </group>
     </>
