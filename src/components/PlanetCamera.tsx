@@ -8,9 +8,14 @@ import {
   Box,
   useHelper,
 } from "@react-three/drei";
+
+import useKeyboard from "../utils//useKeyboard";
+
 export default function PlanetCamera(props: any) {
   const { camera, scene }: any = useThree();
   const camControls: any = useThree((state) => state.controls);
+
+  const keyMap = useKeyboard();
 
   const toggleCam = useControls(
     "Planet Camera",
@@ -104,6 +109,22 @@ export default function PlanetCamera(props: any) {
       }
     }
   });
+
+  // useFrame(() => {
+  //   if (keyMap["KeyW"]) {
+  //     console.log("W pressed");
+  //     camPos.Up -= 0.1;
+  //   }
+  // });
+  console.log(keyMap);
+  // useEffect(() => {
+  //   console.log(keyMap);
+  //   if (keyMap["KeyW"]) {
+  //     console.log("W pressed");
+  //     camPos.Up -= 0.1;
+  //   }
+  // }, []);
+
   return (
     <group rotation={[0, camPos.Longitude, 0]}>
       {/* <Sphere args={[0.1, 8, 8]}/> */}

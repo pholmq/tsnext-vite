@@ -15,6 +15,7 @@ export const useStore = create((set) => ({
   activeCamera: "orbit",
   cameraTarget: "Earth",
   cameraFollow: false,
+  cameraEarth: false,
   trace: false,
   orbits: true,
   orbitsLinewidth: 1,

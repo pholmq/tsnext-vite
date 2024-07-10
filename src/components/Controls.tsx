@@ -208,6 +208,11 @@ export const Controls = () => {
           onChange: (v) => useStore.setState({ cameraFollow: v }),
         },
 
+        "Earth camera": {
+          value: useStore.getState().cameraEarth,
+          onChange: (v) => useStore.setState({ cameraEarth: v }),
+        },
+
         // "Camera type": {
         //   value: useStore.getState().activeCamera,
         //   options: { Orbit: "orbit", Fly: "fly" },

@@ -65,7 +65,7 @@ export function Planet(props: any) {
   const [cameraTarget, setCameraTarget] = useState(false);
 
   const traceOn = useStore((s) => s.trace);
-
+  const cameraEarth = useStore((s) => s.cameraEarth);
   useEffect(() => {
     if (cameraTarget) {
       useStore.setState({ cameraTarget: props.name });
@@ -131,7 +131,7 @@ export function Planet(props: any) {
           )}
           {props.light ? <pointLight intensity={3} /> : null}
 
-          {/* {props.name === "Earth" ? <PlanetCamera /> : null} */}
+          {props.name === "Earth" && cameraEarth ? <PlanetCamera /> : null}
         </mesh>
       </group>
     </>
