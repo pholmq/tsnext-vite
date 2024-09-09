@@ -1,5 +1,5 @@
 import { useControls } from "leva";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { CameraHelper, Vector3, Quaternion, Euler } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import {
@@ -9,13 +9,16 @@ import {
   useHelper,
 } from "@react-three/drei";
 
-import useKeyboard from "../utils//useKeyboard";
+import useKeyPress from "../utils/useKeyPress";
+import useMousePosition from "../utils/useMousePosition";
+import useMouseButton from "../utils/useMouseButton";
 
 export default function PlanetCamera(props: any) {
   const { camera, scene }: any = useThree();
   const camControls: any = useThree((state) => state.controls);
 
-  const keyMap = useKeyboard();
+  // const [keyPressed, setKeyPressed] = useState<string | null>(null);
+  const keyPressed = useKeyPress();
 
   const toggleCam = useControls(
     "Planet Camera",
@@ -35,18 +38,88 @@ export default function PlanetCamera(props: any) {
     near: { value: 0, max: 0.5, min: 0.000000001, step: 0.0001 },
   });
 
-  const camPos = useControls("Planet Camera", {
+  // const camPos = useControls("Planet Camera", {
+  //   Direction: { value: Math.PI, max: Math.PI * 2, min: 0 },
+  //   Up: { value: 0, max: Math.PI / 2, min: -Math.PI / 2 },
+  //   Height: { value: 3.51, max: 10, min: 3, step: 0.0001 },
+  //   Latitude: { value: 0, max: Math.PI, min: 0, step: 0.001 },
+  //   Longitude: { value: 0, max: Math.PI * 2, min: 0, step: 0.001 },
+  // });
+
+  const [camPos, camPosSet] = useControls("Planet Camera", () => ({
     Direction: { value: Math.PI, max: Math.PI * 2, min: 0 },
     Up: { value: 0, max: Math.PI / 2, min: -Math.PI / 2 },
     Height: { value: 3.51, max: 10, min: 3, step: 0.0001 },
     Latitude: { value: 0, max: Math.PI, min: 0, step: 0.001 },
     Longitude: { value: 0, max: Math.PI * 2, min: 0, step: 0.001 },
+  }));
+
+  // console.log(keyPressed);
+  // if (keyPressed === "w") {
+  //   // console.log("doublew");
+  //   camPosSet({ Latitude: (camPos.Latitude += 0.01) });
+  //   // camPos.Up += 0.01;
+  //   // console.log(camPos.Up);
+  // }
+
+  // useEffect(() => {
+  //   console.log(keyPressed);
+  // }, [keyPressed]);
+
+  const longitudeRef = useRef(null);
+  const latitudeRef = useRef(null);
+
+  useFrame(() => {
+    // if (keyPressed === "w") {
+    //   // console.log("doublew");
+    //   camPosSet({ Latitude: (camPos.Latitude += 0.01) });
+    //   // camPos.Up += 0.01;
+    //   // console.log(camPos.Up);
+    // }
+    if (keyPressed) {
+      if (keyPressed === "d") {
+        longitudeRef.current.rotation.y -= 0.005;
+      }
+      if (keyPressed === "a") {
+        longitudeRef.current.rotation.y += 0.005;
+      }
+      if (keyPressed === "w") {
+        latitudeRef.current.rotation.x += 0.005;
+      }
+      if (keyPressed === "s") {
+        latitudeRef.current.rotation.x -= 0.005;
+      }
+
+      if (longitudeRef.current.rotation.y > Math.PI * 2) {
+        longitudeRef.current.rotation.y = 0;
+      }
+      if (longitudeRef.current.rotation.y < 0) {
+        longitudeRef.current.rotation.y = 2 * Math.PI;
+      }
+
+      camPosSet({
+        Longitude: (camPos.Longitude = longitudeRef.current.rotation.y),
+      });
+      console.log(keyPressed);
+    }
   });
 
-  // console.log("toggleCam.on: " + toggleCam.on);
-  // console.log("camera: " + camera);
-  // console.log("camControls.enabled: " + camControls.enabled);
-  const planetCam: any = useRef();
+  const planetCam = useRef(null);
+
+  const mouse = useMousePosition();
+  const pressedButton = useMouseButton();
+
+  useFrame(() => {
+    // if (pressedButton === 0) {
+    if (planetCam.current) {
+      // Rotate the camera based on mouse position
+      const rotationSpeed = 0.5; // Adjust for sensitivity
+      planetCam.current.rotation.x = mouse.current.y * rotationSpeed; // Rotate around X-axis
+      planetCam.current.rotation.y = mouse.current.x * rotationSpeed; // Rotate around Y-axis
+    }
+    // }
+  });
+
   useHelper(showH.showHelper && planetCam, CameraHelper);
 
   const vector = new Vector3();
@@ -110,25 +183,10 @@ export default function PlanetCamera(props: any) {
     }
   });
 
-  // useFrame(() => {
-  //   if (keyMap["KeyW"]) {
-  //     console.log("W pressed");
-  //     camPos.Up -= 0.1;
-  //   }
-  // });
-  console.log(keyMap);
-  // useEffect(() => {
-  //   console.log(keyMap);
-  //   if (keyMap["KeyW"]) {
-  //     console.log("W pressed");
-  //     camPos.Up -= 0.1;
-  //   }
-  // }, []);
-
   return (
-    <group rotation={[0, camPos.Longitude, 0]}>
+    <group ref={longitudeRef} rotation={[0, camPos.Longitude, 0]}>
       {/* <Sphere args={[0.1, 8, 8]}/> */}
-      <group rotation={[camPos.Latitude, 0, 0]}>
+      <group ref={latitudeRef} rotation={[camPos.Latitude, 0, 0]}>
         {/* <Cylinder position={[0, 0.5, 0]} args={[0.01, 0.01, 1]} /> */}
         <group position={[0, 0.5, 0]}>
           {/* <CompassText /> */}
