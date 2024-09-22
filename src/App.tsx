@@ -8,7 +8,7 @@ import TraceController from "./components/TraceController";
 import { Vector3 } from "three";
 import { Controls } from "./components/Controls";
 import { CopyPosToClipb } from "./components/CopyPosToClipb";
-
+import Sidebar from "./components/SideBar";
 
 function TSNext() {
   return (
@@ -22,6 +22,7 @@ function TSNext() {
           far: 10000000,
         }}
       >
+        
         <CustomCameraControls />
         <ambientLight intensity={0.5} />
         <Stars radius={100000} />
@@ -40,6 +41,21 @@ function TSNext() {
         </mesh> */}
       </Canvas>
       <Controls />
+      <Sidebar>
+        <iframe
+          src="https://example.com"
+          title="External content"
+          style={{ width: "100%", height: "300px", border: "none" }}
+        />
+        <img
+          src="https://google.com"
+          alt="Example"
+          style={{ width: "100%", marginTop: "20px" }}
+        />
+        <p style={{ marginTop: "20px" }}>
+          This is a sidebar with dynamic HTML content. You can put anything here.
+        </p>
+      </Sidebar>
     </>
   );
 }

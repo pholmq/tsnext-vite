@@ -22,8 +22,9 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       camera
     );
 
+    /* This could be stored in a file and be shown in a different place in the app */
     const celestialDescriptionsOfTheory = {
-      Earth: "has an PVP orbit.",
+      Earth: "https://book.tychos.space/chapters/11-earths-pvp-orbit",
       Moon: "The central 'driveshaft'",
       Sun: "is rather hot!",
       Halleys:"",
@@ -46,7 +47,6 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       " " +
       symbol +
       "<br>" +
-      "" + 
       description +
       "<br>" + 
       "RA:&nbsp;" +
