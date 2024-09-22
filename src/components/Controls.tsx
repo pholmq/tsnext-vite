@@ -290,6 +290,15 @@ export const Controls = () => {
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
+  function LeftArrowKeyDown(e) {
+    if (e.key !== "ArrowLeft") {
+      return;
+    }
+    console.log("LeftArrowKey Pressed")
+  }
+
+
+
   function timeKeyDown(e) {
     if (e.key !== "Enter") {
       return;

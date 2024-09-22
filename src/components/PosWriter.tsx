@@ -21,11 +21,34 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       scene,
       camera
     );
+
+    const celestialDescriptionsOfTheory = {
+      Earth: "has an PVP orbit.",
+      Moon: "The central 'driveshaft'",
+      Sun: "is rather hot!",
+      Halleys:"",
+      Jupiter: "is the largest planet.",
+      Saturn:"",
+      Uranus:"",
+      Neptune:"",
+      Venus:"",
+      Mercury:"",
+      Mars: "was a mystery",
+      Phobos:"",
+      Deimos:"",
+      Eros:"",
+    };
+    
+    const description = celestialDescriptionsOfTheory[name] || "Description not available";
+
     labelRef.current.innerHTML =
       name +
       " " +
       symbol +
-      "<br/>" +
+      "<br>" +
+      "" + 
+      description +
+      "<br>" + 
       "RA:&nbsp;" +
       ra +
       "<br/>Dec:&nbsp;" +
