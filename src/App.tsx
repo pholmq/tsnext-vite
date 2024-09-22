@@ -9,10 +9,11 @@ import { Vector3 } from "three";
 import { Controls } from "./components/Controls";
 import { CopyPosToClipb } from "./components/CopyPosToClipb";
 
+
 function TSNext() {
   return (
     <>
-      <Canvas
+      <Canvas 
         camera={{
           name: "Camera",
           fov: 15,

@@ -78,7 +78,7 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
       <div
         hidden={hovered || on ? false : true}
-        className="text-white text-opacity-100 bg-gray-900 
+        className="p-1 text-white text-opacity-100 bg-gray-900 
         bg-opacity-50 rounded-md select-none"
       >
         <label id="posLabel" ref={labelRef}>
@@ -88,3 +88,4 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
     </Html>
   );
 }
+
