@@ -51,9 +51,11 @@ const FlyCamera = () => {
 };
 
 export default function CustomCameraControls() {
+  const planetCamera = useStore((s) => s.planetCamera);
+
   return (
     <>
-      <OrbitCamera />
+      {planetCamera ? null : <OrbitCamera />}
       {/* {camera === "orbit" ? <OrbitCamera /> : null} */}
       {/* {camera === "fly" ? <FlyCamera /> : null} */}
     </>
