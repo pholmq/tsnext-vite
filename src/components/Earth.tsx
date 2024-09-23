@@ -4,7 +4,6 @@ import { useTexture } from "@react-three/drei";
 import { useStore } from "../store";
 import { Html } from "@react-three/drei";
 
-import PlanetCamera from "./PlanetCamera";
 import { CelestialSphere } from "./CelestialSphere";
 import { Object3D } from "three";
 
@@ -71,8 +70,6 @@ export function Earth(props: any) {
               <div className="text-white text-center select-none">Earth</div>
             </Html>
           )}
-          <PlanetCamera />
-          {/* <axesHelper args={[20]} /> */}
         </mesh>
       </group>
     </>
