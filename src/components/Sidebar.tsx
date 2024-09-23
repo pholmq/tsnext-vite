@@ -5,9 +5,9 @@ const Sidebar: React.FC = () => {
   const [activeTab, setActiveTab] = useState("settings");
   const [settings, setSettings] = useState({ darkMode: false });
   const [chapter, setChapter] = useState("1-a-brief-look");
-  const [isLeft, setIsLeft] = useState(false); // Sidebar position state
+  const [isLeft, setIsLeft] = useState(false);
+  const [isMobile, setIsMobile] = useState(false); // State to handle mobile view
 
-  // Load saved settings, chapter, and sidebar position from localStorage on mount
   useEffect(() => {
     const savedSettings = localStorage.getItem("settings");
     const savedChapter = localStorage.getItem("currentChapter");
@@ -15,20 +15,24 @@ const Sidebar: React.FC = () => {
 
     if (savedSettings) setSettings(JSON.parse(savedSettings));
     if (savedChapter) setChapter(savedChapter);
-    if (savedIsLeft) setIsLeft(JSON.parse(savedIsLeft)); // Retrieve sidebar position
+    if (savedIsLeft) setIsLeft(JSON.parse(savedIsLeft));
+
+    // Check if the screen is smaller than 768px (mobile size)
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize); // Update on window resize
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Save settings to localStorage when they change
   useEffect(() => {
     localStorage.setItem("settings", JSON.stringify(settings));
   }, [settings]);
 
-  // Save the current chapter to localStorage when it changes
   useEffect(() => {
     localStorage.setItem("currentChapter", chapter);
   }, [chapter]);
 
-  // Save the sidebar position (left or right) to localStorage when it changes
   useEffect(() => {
     localStorage.setItem("sidebarPosition", JSON.stringify(isLeft));
   }, [isLeft]);
@@ -43,14 +47,15 @@ const Sidebar: React.FC = () => {
         } hover:opacity-100 transition-all transform ${
           isLeft
             ? isOpen
-              ? "left-[25rem]" // Button when open on the left side
-              : "left-[2rem]" // Button when closed on the left side
+              ? "left-[25rem]" 
+              : "left-[2rem]" 
             : isOpen
-            ? "right-[25rem]" // Button when open on the right side
-            : "right-[2rem]" // Button when closed on the right side
+            ? "right-[25rem]" 
+            : "right-[2rem]"
         }`}
       >
-        {isOpen ? "Close" : "Settings"}
+        {/* Conditionally render button content based on screen size */}
+        {isMobile ? "⚙️" : isOpen ? "Close" : "⚙️ Settings"}
       </button>
 
       {/* Sidebar */}
