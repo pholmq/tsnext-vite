@@ -1,66 +1,130 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("settings");
+  const [settings, setSettings] = useState({ darkMode: false });
+  const [chapter, setChapter] = useState("1-a-brief-look");
+  const [isLeft, setIsLeft] = useState(false); // Sidebar position state
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  useEffect(() => {
+    const savedSettings = localStorage.getItem("settings");
+    const savedChapter = localStorage.getItem("currentChapter");
+    if (savedSettings) setSettings(JSON.parse(savedSettings));
+    if (savedChapter) setChapter(savedChapter);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("settings", JSON.stringify(settings));
+  }, [settings]);
+
+  useEffect(() => {
+    localStorage.setItem("currentChapter", chapter);
+  }, [chapter]);
 
   return (
-    <>
-      {/* Toggle button for opening/closing the sidebar */}
+    <div className="p-8 bg-gray-100 min-h-screen flex justify-end items-center">
+      {/* Sidebar Toggle Button */}
       <button
-        onClick={toggleSidebar}
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: isOpen ? "420px" : "20px", // Adjust button position
-          zIndex: 1100,
-          backgroundColor: "#333",
-          color: "rgba(255,255,255,0.75)",
-          border: "none",
-          padding: "8px",
-          cursor: "pointer",
-          
-        }}
-        onMouseOver={(e) => {
-          e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.75)"; // Darker background on hover
-          e.currentTarget.style.color = "black"; // Change text color on hover
-        }}
-        onMouseOut={(e) => {
-          e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.75)"; // Revert background when not hovering
-          e.currentTarget.style.color = "rgba(50,50,50,50.70)"; // Revert text color when not hovering
-        }}
+        onClick={() => setIsOpen(!isOpen)}
+        className={`fixed top-5 z-50 px-4 py-2 bg-gray-800 text-white rounded ${
+          isOpen ? 'opacity-100' : 'opacity-50'
+        } hover:opacity-100 transition-all transform ${
+          isLeft
+            ? isOpen
+              ? "left-[25rem]" // Button when open on the left side
+              : "left-[2rem]" // Button when closed on the left side
+            : isOpen
+            ? "right-[25rem]" // Button when open on the right side
+            : "right-[2rem]" // Button when closed on the right side
+        }`}
       >
-        {isOpen ? "Close" : "Open"} Book
+        {isOpen ? "Close Sidebar" : "Open Sidebar"}
       </button>
 
-      {/* Sidebar container */}
+      {/* Sidebar */}
       <div
-        style={{
-
-          position: "fixed",
-          top: 0,
-          right: isOpen ? 0 : "-420px", // Slide in/out animation
-          width: "420px",
-          height: "100vh",
-          backgroundColor: "rgba(0, 0, 0, 0.90)",
-          transition: "right 0.5s ease", // Smooth transition for sliding
-          zIndex: 1000,
-          overflowY: "auto", // To scroll through long content
-        }}
+        className={`fixed top-0 h-full w-96 bg-gray-900 text-white transform ${
+          isOpen ? 'translate-x-0' : isLeft ? '-translate-x-full' : 'translate-x-full'
+        } transition-transform duration-500 ease-in-out shadow-lg overflow-y-auto ${
+          isLeft ? 'left-0' : 'right-0'
+        }`}
       >
-        {/* Sidebar content */}
-        <div style={{  padding: "10px", color: "white" }}>
-          <iframe
-            src="https://book.tychos.space/chapters/1-a-brief-look/"
-            title="External content"
-            style={{ width: "100%", height: "100vh", border: "none" }}
-          />
+        <div className="p-6 space-y-4">
+          {/* Tabs */}
+          <div className="flex justify-around">
+            {['settings', 'info', 'book'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-3 py-2 rounded-lg ${
+                  activeTab === tab ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'
+                }`}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          {/* Tab Content */}
+          {activeTab === "settings" && (
+            <div>
+              <h2 className="text-xl font-bold mb-4">Settings</h2>
+              <label className="flex items-center space-x-3 mb-4">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5"
+                  checked={settings.darkMode}
+                  onChange={(e) =>
+                    setSettings({ ...settings, darkMode: e.target.checked })
+                  }
+                />
+                <span>Enable Dark Mode</span>
+              </label>
+
+              {/* Move Sidebar Button inside Settings */}
+              <button
+                onClick={() => setIsLeft(!isLeft)}
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 transition-all"
+              >
+                {isLeft ? "Move to Right" : "Move to Left"}
+              </button>
+            </div>
+          )}
+
+          {activeTab === "info" && (
+            <div>
+              <h2 className="text-xl font-bold mb-4">Information</h2>
+              <p className="text-sm">
+                This sidebar allows you to configure settings, view info, and read a book.
+              </p>
+            </div>
+          )}
+
+          {activeTab === "book" && (
+            <div>
+              <h2 className="text-xl font-bold mb-4">Book Reader</h2>
+              <div className="mb-4">
+                <label className="block mb-2">Select Chapter</label>
+                <select
+                  value={chapter}
+                  onChange={(e) => setChapter(e.target.value)}
+                  className="block w-full p-2 rounded bg-gray-800 border border-gray-700"
+                >
+                  <option value="1-a-brief-look">Chapter 1: A Brief Look</option>
+                  <option value="2-another-chapter">Chapter 2: Another Chapter</option>
+                </select>
+              </div>
+              <iframe
+                src={`https://book.tychos.space/chapters/${chapter}/`}
+                title="Book Reader"
+                className="w-full h-96 border-none rounded"
+              />
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
