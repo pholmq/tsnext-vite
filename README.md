@@ -1,38 +1,38 @@
-# Tychosium dev
+# Tychosium Development
 
 ## Commits
 - [x] Added sidebar that displays a chapter of the book in an `iframe` using a new component called `Sidebar.tsx`
-- [x] Added css padding for`rightclick` on planets.
-- [x] Added css padding for`posWriter` on planets.
+- [x] Added CSS padding for `rightclick` on planets.
+- [x] Added CSS padding for `posWriter` on planets.
 - [x] Added clickable text on `TYCHOSIUM`, for minimizing the UI panel.
-- [x] Added mobile `breakpoint` for responsivness `768px`
-- [x] Change font on `leva` object, for more coherent style
-- [x] Added `weight` to the cross symbol next to the tychosium text
-- [x] Added a feature where you have a short description to each planet, *though descriptions are pending*
+- [x] Added mobile `breakpoint` for responsiveness `768px`
+- [x] Changed font on `leva` object for a more coherent style.
+- [x] Added `weight` to the cross symbol next to the tychosium text.
+- [x] Added a feature where each planet has a short description, *though descriptions are pending*.
 
-## Buggar
+## Bugs
 
 - [ ] Mobile version
-- [ ] Settings är inte mobilanpassad och nu kan man inte stänga ned den för `close` knappen är inte tillgänglig att klicka på
-    - [ ] Det går ej att dubbelklicka eller högerklicka på planeter, detta var endast i chromes egna visare (viewer)
-- [ ] Det går inte på ett smidigt sätt att sluta fokusera på ett objekt. (inte att förväxlas med `Camera: follow`)
-- [ ] Neptunus saknar textur, kan vara medvetet då det ej finns bra högupplösta bilder på alla planeter
-- [ ] Saknas en loadingbar för långa laddningar
-- [ ] Hackar när man kör själva simuleringen (kan vara min dator)
+- [ ] Settings are not mobile-friendly, and the `close` button is inaccessible.
+    - [ ] Unable to double-click or right-click on planets; this only occurs in Chrome's viewer.
+- [ ] There's no easy way to stop focusing on an object (not to be confused with `Camera: follow`).
+- [ ] Neptune lacks texture, which might be intentional due to the lack of high-resolution images for all planets.
+- [ ] Missing a loading bar for long loading times.
+- [ ] Simulation stutters when running (could be an issue with my computer).
 
 ## Features
 - [ ] **Mobile version**
-    - [ ] Anpassad UI till storleken på skärmen och kontrollpanelen (responsivitet)
+    - [ ] UI adjusted to the screen size and control panel (responsiveness).
 - [x] **Tooltip**
-    - [x] Använd tooltip för att informera om ett teoretisk koncept (exempelvis: PVP-banan)
+    - [x] Use tooltips to inform about theoretical concepts (e.g., PVP orbit).
 - [ ] **Controls**
-    - [ ] Kunna använda pilarna till att gå frammåt och bakåt i tid
+    - [ ] Ability to use arrow keys to move forward and backward in time.
 - [ ] **Fullscreen**
-    - [ ] Ett sätt att få till fullscreen, utan att det är för lätt att komma åt knappen
+    - [ ] A way to enable fullscreen without making the button too easy to access.
 - [ ] **URL**
-    - [ ] En URL bör ha med kameran också så att man kan länka till ett mer exakt ställe i systemet
+    - [ ] The URL should include the camera position, allowing more precise linking within the system.
 - [ ] **Interval**
-    - [ ] För att lättare kunna se ett fenomen så kan det vara bra att kunna spela upp endast ett specifikt intervall mellan två årtal i en given hastighet
+    - [ ] To better observe phenomena, allow playing a specific interval between two years at a given speed.
 - [ ] **.icon**
-    - [ ] Fixa en .icon som visas som visas när man öppnar en ny tab
-- [ ] Glow on hovering on object / planet
+    - [ ] Create an .icon that displays when opening a new tab.
+- [ ] Glow on hover over object/planet.
