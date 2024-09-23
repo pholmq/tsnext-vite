@@ -7,20 +7,31 @@ const Sidebar: React.FC = () => {
   const [chapter, setChapter] = useState("1-a-brief-look");
   const [isLeft, setIsLeft] = useState(false); // Sidebar position state
 
+  // Load saved settings, chapter, and sidebar position from localStorage on mount
   useEffect(() => {
     const savedSettings = localStorage.getItem("settings");
     const savedChapter = localStorage.getItem("currentChapter");
+    const savedIsLeft = localStorage.getItem("sidebarPosition");
+
     if (savedSettings) setSettings(JSON.parse(savedSettings));
     if (savedChapter) setChapter(savedChapter);
+    if (savedIsLeft) setIsLeft(JSON.parse(savedIsLeft)); // Retrieve sidebar position
   }, []);
 
+  // Save settings to localStorage when they change
   useEffect(() => {
     localStorage.setItem("settings", JSON.stringify(settings));
   }, [settings]);
 
+  // Save the current chapter to localStorage when it changes
   useEffect(() => {
     localStorage.setItem("currentChapter", chapter);
   }, [chapter]);
+
+  // Save the sidebar position (left or right) to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("sidebarPosition", JSON.stringify(isLeft));
+  }, [isLeft]);
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen flex justify-end items-center">
@@ -39,7 +50,7 @@ const Sidebar: React.FC = () => {
             : "right-[2rem]" // Button when closed on the right side
         }`}
       >
-        {isOpen ? "Close Sidebar" : "Open Sidebar"}
+        {isOpen ? "Close" : "Settings"}
       </button>
 
       {/* Sidebar */}
