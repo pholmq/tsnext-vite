@@ -52,7 +52,7 @@ const Sidebar: React.FC = () => {
             : isOpen
             ? "right-[25rem]" 
             : "right-[2rem]"
-        }`}
+        }${isMobile ? 'w-10 h-10':''}`}
       >
         {/* Conditionally render button content based on screen size */}
         {isMobile ? "⚙️" : isOpen ? "Close" : "⚙️ Settings"}
@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
       >
         <div className="p-6 space-y-4">
           {/* Tabs */}
-          <div className="flex justify-around">
+          <div className="flex justify-items-start">
             {['settings', 'info', 'book'].map((tab) => (
               <button
                 key={tab}
@@ -97,6 +97,7 @@ const Sidebar: React.FC = () => {
                 />
                 <span>Enable Dark Mode</span>
               </label>
+                
 
               {/* Move Sidebar Button inside Settings */}
               <button
@@ -127,9 +128,39 @@ const Sidebar: React.FC = () => {
                   onChange={(e) => setChapter(e.target.value)}
                   className="block w-full p-2 rounded bg-gray-800 border border-gray-700"
                 >
-                  <option value="1-a-brief-look">Chapter 1: A Brief Look</option>
-                  <option value="2-another-chapter">Chapter 2: Another Chapter</option>
-                </select>
+                  <option value="1-a-brief-look">Chapter 1 — A brief history of geo-heliocentrism</option>
+                  <option value="2-about-binary-systems">Chapter 2 — About binary / double star systems</option>
+                  <option value="3-about-our-sun-mars">Chapter 3 — About our Sun-Mars binary system</option>
+                  <option value="4-intro-tychos">Chapter 4 — Introducing the TYCHOS model</option>
+                  <option value="5-mars">Chapter 5 — Mars, the “key” that Kepler never found</option>
+                  <option value="6-sirius">Chapter 6 — Is Sirius the twin of our Solar System?</option>
+                  <option value="7-the-copernican-model">Chapter 7 — The Copernican model: a geometric impossibility</option>
+                  <option value="8-suns-two-moons">Chapter 8 — About the Sun's two moons: Mercury & Venus</option>
+                  <option value="9-tilts-obliquities-osci">Chapter 9 — Tilts, obliquities and oscillations</option>
+                  <option value="10-requiem">Chapter 10 — Requiem for the “Lunisolar Wobble” theory</option>
+                  <option value="11-earths-pvp-orbit">Chapter 11 — Earth’s PVP orbit (Polaris-Vega-Polaris)</option>
+                  <option value="12-relative-motions">Chapter 12 — The relative motions of the Sun and Earth</option>
+                  <option value="13-the-central-driveshaft">Chapter 13 — Our system's 'central driveshaft': the Moon</option>
+                  <option value="14-the-moon">Chapter 14 — The Moon: curing Newton's headache</option>
+                  <option value="15-our-asteroid-belts">Chapter 15 — Our Asteroid belts and Meteor showers</option>
+                  <option value="16-our-cosmic-clockwork">Chapter 16 — Our Cosmic Clockwork and the “16 factor”</option>
+                  <option value="17-the-great-inequality">Chapter 17 — “The Great Inequality” - solved by the TYCHOS</option>
+                  <option value="18-uranus-neptune-pluto">Chapter 18 — Uranus, Neptune & Pluto prove the PVP orbit</option>
+                  <option value="19-the-tychos-great-year">Chapter 19: Understanding the TYCHOS' Great Year</option>
+                  <option value="20-the-811000-mega-cycle">Chapter 20: The 811000-year Mega Cycle</option>
+                  <option value="21-mans-yearly-path">Chapter 21 — A Man's Yearly Path - and the Analemma</option>
+                  <option value="22-bradley-einstein">Chapter 22 — Deconstructing Bradley and Einstein</option>
+                  <option value="23-are-the-stars-closer">Chapter 23 — Are the stars much closer than believed?</option>
+                  <option value="24-dayton-miller">Chapter 24 — Dayton Miller - and the speed of Earth</option>
+                  <option value="25-negative-parallax">Chapter 25 — The 'Negative' Stellar Parallax demystified</option>
+                  <option value="26-probing-kapteyn">Chapter 26 — Probing Kapteyn, Hubble and Esclangon</option>
+                  <option value="27-the-momentous-incongruity">Chapter 27 — The MOMENTOUS incongruity</option>
+                  <option value="28-the-barnards-star">Chapter 28 — The Barnard's star confirms the TYCHOS</option>
+                  <option value="29-eros-and-tychos">Chapter 29 — EROS and TYCHOS: love at first sight</option>
+                  <option value="30-halleys-comet">Chapter 30 — Halley's comet: the Great Deceiver</option>
+                  <option value="31-list-of-puzzles">Chapter 31 — List of puzzles solved by the TYCHOS</option>
+                  <option value="32-epilogue">Chapter 32 — Epilogue: may reason prevail</option>
+                  </select>
               </div>
               <iframe
                 src={`https://book.tychos.space/chapters/${chapter}/`}
