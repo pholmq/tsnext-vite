@@ -9,7 +9,7 @@ import { Vector3 } from "three";
 import { Controls } from "./components/Controls";
 import { CopyPosToClipb } from "./components/CopyPosToClipb";
 import Sidebar from "./components/Sidebar";
-import ExoplanetStars from "./components/ExpolanetStars";
+import ExoplanetStars from "./components/ExoplanetStars";
 
 
 function TSNext() {
@@ -27,7 +27,7 @@ function TSNext() {
         
         <CustomCameraControls />
         <ambientLight intensity={0.5} />
-        <Stars radius={100000} />
+        <Stars count={800} radius={100000} />
         <AnimationController />
         <SolarSystem />
         <PlotSolarSystem />
