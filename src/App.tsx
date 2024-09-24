@@ -9,6 +9,8 @@ import { Vector3 } from "three";
 import { Controls } from "./components/Controls";
 import { CopyPosToClipb } from "./components/CopyPosToClipb";
 import Sidebar from "./components/Sidebar";
+import ExoplanetStars from "./components/ExpolanetStars";
+
 
 function TSNext() {
   return (
@@ -39,6 +41,7 @@ function TSNext() {
             <meshPhongMaterial color="black" />
           </Sphere>
         </mesh> */}
+        <ExoplanetStars />
       </Canvas>
       <Controls />
       <Sidebar/>
