@@ -104,8 +104,8 @@ const ExoplanetStars: React.FC = () => {
   // Render stars using InstancedMesh for optimized performance with React Fiber components
   return (
     <instancedMesh ref={instancedRef} args={[null, null, visibleStars]}>
-      <sphereBufferGeometry args={[100, 16, 16]} />
-      <meshBasicMaterial color="yellow" />
+      <sphereBufferGeometry args={[70, 16, 16]} />
+      <meshBasicMaterial color="white" />
     </instancedMesh>
   );
 };
