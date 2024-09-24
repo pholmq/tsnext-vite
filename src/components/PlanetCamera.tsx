@@ -13,6 +13,7 @@ import {
 import useKeyPress from "../utils/useKeyPress";
 import useMouseButton from "../utils/useMouseButton";
 import useMousePosition from "../utils//useMousePosition";
+import useScrollWheel from "../utils/useScrollWheel";
 
 export default function PlanetCamera() {
   const earthRadius = 4;
@@ -25,6 +26,7 @@ export default function PlanetCamera() {
   const keyPressed = useKeyPress();
   const mouse = useMousePosition();
   const pressedButton = useMouseButton();
+  const scrollState = useScrollWheel();
 
   // console.log(keyPressed);
   // if (pressedButton !== null) {
@@ -36,6 +38,8 @@ export default function PlanetCamera() {
   let rotationY = 0;
   let rotationX = 0;
   useFrame(() => {
+    console.log(scrollState);
+
     // if (!planetCam.current) {
     //   return
     // }
