@@ -33,8 +33,13 @@ import {
 import { PerformanceMonitor, Stats } from "@react-three/drei";
 import { Leva, button, buttonGroup, folder, useControls } from "leva";
 import { getAllPositions } from "../utils/celestial-functions";
+import { Camera } from "three";
+
+
 
 function updateURL(date: string, time: string) {
+  /* How to access the correct camera info? :) */
+  /* (camera:Camera and &${camera.getWorldQuaternion.name}) */
   history.pushState({}, "", `?date=${date}&time=${time}`);
 }
 
@@ -43,7 +48,8 @@ export const Controls = () => {
   const posRef = useStore((s) => s.posRef);
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
-  const [showMenu, setShowMenu] = useState(true);
+  /* Mobile responsiveness breakpoint */
+  const [showMenu, setShowMenu] = useState(window.innerWidth >= 768);
 
   const stepFact = useTraceStore((s) => s.stepFact);
   const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
@@ -284,6 +290,15 @@ export const Controls = () => {
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
+  function LeftArrowKeyDown(e) {
+    if (e.key !== "ArrowLeft") {
+      return;
+    }
+    console.log("LeftArrowKey Pressed")
+  }
+
+
+
   function timeKeyDown(e) {
     if (e.key !== "Enter") {
       return;
@@ -303,8 +318,10 @@ export const Controls = () => {
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
+  
   function changeScale(newScale) {
     let div = document.getElementById("controls");
+    /* Use tailwind scales instead?*/
     div.style.transform = "scale(" + 0.5 + "," + 0.5 + ")";
   }
 
@@ -314,42 +331,30 @@ export const Controls = () => {
 
       <div
         id="controls"
-        className="flex flex-col max-h-[95vh] absolute top-0 m-1 w-80 bg-gray-900 opacity-80 rounded-md select-none"
+        className=" flex flex-col max-h-[95vh] absolute top-0 m-1
+         bg-gray-900 opacity-80 rounded-md select-none"
       >
-        <div className="flex ">
+                <div className="flex items-center">
           <button
-            className=" text-white px-1 py-2"
+            className="flex items-center text-2xl text-white px-1 py-2"
+            onLoad={() => {
+              setShowMenu(!showMenu);
+            }}
             onClick={() => {
               setShowMenu(!showMenu);
             }}
           >
             {showMenu ? <FaTimes /> : <FaBars />}
+            <span className="p-1 ml-2 text-2xl font-cambria text-white text-center font-bold">
+              The TYCHOSIUM
+            </span>
           </button>
-          {/* <button
-            className=" text-white px-1 py-2"
-            onClick={() => {
-              changeScale(0.1);
-            }}
-          >
-            <FaMinus />
-          </button>
-          <button className=" text-white px-1 py-2" onClick={() => {}}>
-            <FaPlus />
-          </button> */}
-          <h2 className=" font-cambria text-white text-3xl text-center italic font-bold">
-            The TYCHOSIUM
-          </h2>
-          {/* <button
-            className=" bg-gray-700 rounded text-white px-1 py-2"
-            onClick={() => {}}
-          >
-            <FaInfo />
-          </button> */}
         </div>
+
         <div>
-          <div className="flex justify-end m-1 mr-1">
+          <div className="flex justify-end m-1 my-1 mr-1 text-1xl">
             <button
-              className="bg-gray-700 text-white rounded ml-2 px-4"
+              className="bg-gray-700 text-white rounded ml-2 px-3"
               onClick={() => {
                 posRef.current = 0;
                 dateRef.current.value = posToDate(posRef.current);
@@ -473,13 +478,16 @@ export const Controls = () => {
             onKeyDown={timeKeyDown}
           />
         </div>
-        <div hidden={!showMenu} className="mt-2 overflow-auto">
-          <Leva
+        <div hidden={!showMenu} className="mt-2 overflow-auto text-lg custom-leva leva">
+          <Leva /* Change the font font so that it is coherent to other panels */
             neverHide
             fill
             titleBar={false}
             theme={{
               colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
+              fonts: {
+                mono: "'Roboto', sans-serif",
+              },
             }}
           />
         </div>

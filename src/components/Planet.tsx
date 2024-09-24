@@ -12,11 +12,11 @@ function ContextMenu({ setContextMenu, setCameraTarget }) {
     <Html position={[0, 0, 0]}>
       <div
         // hidden={hovered || on ? false : true}
-        className="text-white text-opacity-100 bg-gray-900 
+        className="m-1 text-white text-opacity-100 bg-gray-900 
         bg-opacity-50 rounded-md select-none"
       >
         <button
-          className="hover:bg-sky-700"
+          className="m-1 hover:bg-sky-700"
           id="Focus"
           onClick={(e) => {
             setCameraTarget(true);
@@ -36,6 +36,7 @@ function ContextMenu({ setContextMenu, setCameraTarget }) {
           Trace&nbsp;on
         </button> */}
         <button
+        className="m-1"
           onClick={() => {
             console.log("click");
             setContextMenu(false);

@@ -21,11 +21,34 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       scene,
       camera
     );
+
+    /* This could be stored in a file and be shown in a different place in the app */
+    const celestialDescriptionsOfTheory = {
+      Earth: "https://book.tychos.space/chapters/11-earths-pvp-orbit",
+      Moon: "The central 'driveshaft'",
+      Sun: "is rather hot!",
+      Halleys:"",
+      Jupiter: "is the largest planet.",
+      Saturn:"",
+      Uranus:"",
+      Neptune:"",
+      Venus:"",
+      Mercury:"",
+      Mars: "was a mystery",
+      Phobos:"",
+      Deimos:"",
+      Eros:"",
+    };
+    
+    const description = celestialDescriptionsOfTheory[name] || "Description not available";
+
     labelRef.current.innerHTML =
       name +
       " " +
       symbol +
-      "<br/>" +
+      "<br>" +
+      description +
+      "<br>" + 
       "RA:&nbsp;" +
       ra +
       "<br/>Dec:&nbsp;" +
@@ -78,7 +101,7 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
       <div
         hidden={hovered || on ? false : true}
-        className="text-white text-opacity-100 bg-gray-900 
+        className="p-1 text-white text-opacity-100 bg-gray-900 
         bg-opacity-50 rounded-md select-none"
       >
         <label id="posLabel" ref={labelRef}>
@@ -88,3 +111,4 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
     </Html>
   );
 }
+
