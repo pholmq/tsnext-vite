@@ -12,7 +12,7 @@
 - [x] Added all chapters for the book in the settings menu
 
 ## Bugs
-
+- [ ] `follow` and `planetView` and functions alike should be cancelable by using `ESC` key
 - [ ] Mobile version
 - [ ] Settings are not mobile-friendly, and the `close` button is inaccessible.
     - [ ] Unable to double-click or right-click on planets; this only occurs in Chrome's viewer.
