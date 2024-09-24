@@ -9,6 +9,7 @@
 - [x] Changed font on `leva` object for a more coherent style.
 - [x] Added `weight` to the cross symbol next to the tychosium text.
 - [x] Added a feature where each planet has a short description, *though descriptions are pending*.
+- [x] Added all chapters for the book in the settings menu
 
 ## Bugs
 
