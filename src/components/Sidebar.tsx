@@ -97,8 +97,6 @@ const Sidebar: React.FC = () => {
                 />
                 <span>Enable Dark Mode</span>
               </label>
-                
-
               {/* Move Sidebar Button inside Settings */}
               <button
                 onClick={() => setIsLeft(!isLeft)}

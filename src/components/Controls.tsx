@@ -60,6 +60,18 @@ export const Controls = () => {
   const intervalRef = useRef(null);
   // console.log("Controls render");
 
+
+  // Sidebar.tsx coupling, local storage
+  const [isLeft, setIsLeft] = useState(true);
+
+  // Load `isLeft` state from local storage
+  useEffect(() => {
+    const savedIsLeft = localStorage.getItem("sidebarPosition");
+    if (savedIsLeft) {
+      setIsLeft(JSON.parse(savedIsLeft));
+    }
+  }, []);
+
   useEffect(() => {
     //Get date & time from the URL
     const searchParams = new URLSearchParams(document.location.search);
@@ -328,11 +340,18 @@ export const Controls = () => {
   return (
     <>
       {/* <Stats />z */}
-
+      <div
+      id="controls"
+      className={`flex flex-col max-h-[95vh] absolute top-0 ${
+        isLeft ? "right-0" : "left-0"
+      } m-1 bg-gray-900 opacity-80 rounded-md select-none`}
+    >
+      {/* Control panel content */}
+    </div>
       <div
         id="controls"
-        className=" flex flex-col max-h-[95vh] absolute top-0 m-1
-         bg-gray-900 opacity-80 rounded-md select-none"
+        className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${ isLeft ? "right-0" : "left-0"}
+         bg-green-900 opacity-80 rounded-md select-none`}
       >
                 <div className="flex items-center">
           <button
