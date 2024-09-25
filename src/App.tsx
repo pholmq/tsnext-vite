@@ -11,7 +11,6 @@ import { CopyPosToClipb } from "./components/CopyPosToClipb";
 import Sidebar from "./components/Sidebar";
 import ExoplanetStars from "./components/ExoplanetStars";
 
-
 function TSNext() {
   return (
     <>

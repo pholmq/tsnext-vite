@@ -40,7 +40,8 @@ export function Earth(props: any) {
           0,
           props.tilt * (Math.PI / 180),
         ]}
-      >
+      > 
+      {/* "Move the berycenter and make that the center for all the stars"  */}
         <CelestialSphere visible={false} />
         <mesh
           name="Earth"

@@ -5,6 +5,8 @@ import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
 import { usePlotStore, useTraceStore } from "../store";
 
+
+// PObj == plot object
 type Props = {
   name: string;
   children?: React.ReactNode;

@@ -23,6 +23,7 @@ const parseIPACFormatCSV = (csvText: string) => {
   return data;
 };
 
+// This fucntion is now centerd to the berycenter, needs to be centered at the earth
 // Utility to convert RA/DEC to 3D position in space
 const raDecToPosition = (ra: number, dec: number, distance: number = 100000) => {
   const phi = (ra / 180) * Math.PI; // Convert RA to radians
@@ -100,7 +101,7 @@ const ExoplanetStars: React.FC = () => {
       </Html>
     );
   }
-
+// Group all the stars! 
   // Render stars using InstancedMesh for optimized performance with React Fiber components
   return (
     <instancedMesh ref={instancedRef} args={[null, null, visibleStars]}>
