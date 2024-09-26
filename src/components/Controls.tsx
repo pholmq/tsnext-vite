@@ -350,8 +350,8 @@ export const Controls = () => {
     </div>
       <div
         id="controls"
-        className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${ isLeft ? "right-0" : "left-0"}
-         bg-green-900 opacity-80 rounded-md select-none`}
+        className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${ isLeft ? "bg-yellow-500 right-0" : "left-0"}
+         bg-grey-900 opacity-80 rounded-md select-none`}
       >
                 <div className="flex items-center">
           <button
