@@ -60,7 +60,7 @@ const Sidebar: React.FC = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 h-full w-96 bg-gray-900 text-white transform ${
+        className={`fixed top-0 max-h-screen w-96 bg-gray-900 text-white transform ${
           isOpen ? 'translate-x-0' : isLeft ? '-translate-x-full' : 'translate-x-full'
         } transition-transform duration-500 ease-in-out shadow-lg overflow-y-auto ${
           isLeft ? 'left-0' : 'right-0'
@@ -118,7 +118,7 @@ const Sidebar: React.FC = () => {
 
           {activeTab === "book" && (
             <div>
-              <h2 className="text-xl font-bold mb-4">Book Reader</h2>
+              <h2 className="text-xl max-h-screen font-bold mb-4">Book Reader</h2>
               <div className="mb-4">
                 <label className="block mb-2">Select Chapter</label>
                 <select
@@ -163,8 +163,9 @@ const Sidebar: React.FC = () => {
               <iframe
                 src={`https://book.tychos.space/chapters/${chapter}/`}
                 title="Book Reader"
-                className="w-full h-96 border-none rounded"
-              />
+                className="w-full h-screen border-none rounded"
+                style={{ maxWidth: "95vw", maxHeight: "80vh" }}
+                 />
             </div>
           )}
         </div>
