@@ -14,7 +14,7 @@ import ExoplanetStars from "./components/ExoplanetStars";
 function TSNext() {
   return (
     <>
-      <Canvas 
+      <Canvas
         camera={{
           name: "Camera",
           fov: 15,
@@ -23,10 +23,9 @@ function TSNext() {
           far: 10000000,
         }}
       >
-        
         <CustomCameraControls />
         <ambientLight intensity={0.5} />
-        <Stars count={800} radius={100000} />
+        {/* <Stars count={800} radius={100000} /> */}
         <AnimationController />
         <SolarSystem />
         <PlotSolarSystem />
@@ -43,7 +42,7 @@ function TSNext() {
         <ExoplanetStars />
       </Canvas>
       <Controls />
-      <Sidebar/>
+      {/* <Sidebar /> */}
     </>
   );
 }
