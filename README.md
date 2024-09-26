@@ -1,5 +1,101 @@
 # Tychosium Development
 
+
+## Mermaid diagram
+
+```mermaid
+classDiagram
+    class App {
+        +render(): JSX.Element
+    }
+
+    class TSNext {
+        +render(): JSX.Element
+    }
+
+    class Sidebar {
+        +isOpen: boolean
+        +activeTab: string
+        +settings: object
+        +chapter: string
+        +isLeft: boolean
+        +isMobile: boolean
+        +useEffect(): void
+    }
+
+    class AnimationController {
+        +startAnimation(): void
+        +pauseAnimation(): void
+        +setSpeed(): void
+    }
+
+    class CelestialSphere {
+        +renderStars(): JSX.Element
+    }
+
+    class Cobj {
+        +getPosition(): Vector3
+        +getRotation(): Quaternion
+    }
+
+    class Controls {
+        +run: boolean
+        +posRef: object
+        +speedFact: number
+        +speedMultiplier: number
+        +showMenu: boolean
+        +useEffect(): void
+    }
+
+    class CustomCameraControls {
+        +updateCameraPosition(): void
+        +resetCamera(): void
+        +zoom(): void
+    }
+
+    class Earth {
+        +rotate(): void
+        +renderSurface(): JSX.Element
+    }
+
+    class Orbit {
+        +drawOrbit(): void
+        +calculatePosition(): Vector3
+    }
+
+    class Planet {
+        +renderPlanet(): JSX.Element
+        +rotateAroundSun(): void
+    }
+
+    class SolarSystem {
+        +renderPlanets(): JSX.Element
+        +calculateOrbits(): void
+    }
+
+    App --> TSNext : Renders main components
+    TSNext --> Sidebar : Embeds sidebar
+    TSNext --> AnimationController : Manages animations
+    TSNext --> CustomCameraControls : Handles camera controls
+    TSNext --> SolarSystem : Renders solar system
+
+    SolarSystem --> Planet : Manages planets
+    SolarSystem --> Orbit : Manages orbits
+
+    Planet --> Earth : Earth-specific behavior
+    Orbit --> Cobj : Uses celestial object positions
+
+    CustomCameraControls --> Controls : Responds to control changes
+    Sidebar --> Controls : Toggles controls
+
+    AnimationController --> SolarSystem : Animates solar system
+    CelestialSphere --> SolarSystem : Renders background stars
+
+
+```
+
+
+
 ## Commits
 - [x] Added sidebar that displays a chapter of the book in an `iframe` using a new component called `Sidebar.tsx`
 - [x] Added CSS padding for `rightclick` on planets.
