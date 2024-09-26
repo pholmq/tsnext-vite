@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 
-function useKeyPress(): string | null {
+export default function useKeyPress(): string | null {
   const [keyPressed, setKeyPressed] = useState<string | null>(null);
 
   useEffect(() => {
     const downHandler = (event: KeyboardEvent) => {
+      event.preventDefault();
       setKeyPressed(event.key);
     };
 
@@ -23,5 +24,3 @@ function useKeyPress(): string | null {
 
   return keyPressed;
 }
-
-export default useKeyPress;
