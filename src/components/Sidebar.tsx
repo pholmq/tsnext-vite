@@ -16,8 +16,7 @@ const Sidebar: React.FC = () => {
     if (savedSettings) setSettings(JSON.parse(savedSettings));
     if (savedChapter) setChapter(savedChapter);
     if (savedIsLeft) setIsLeft(JSON.parse(savedIsLeft));
-
-    // Check if the screen is smaller than 768px (mobile size)
+// Check if the screen is smaller than 768px (mobile size)
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize); // Update on window resize
@@ -42,7 +41,7 @@ const Sidebar: React.FC = () => {
       {/* Sidebar Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed top-5 z-50 px-4 py-2 bg-gray-800 text-white rounded ${
+        className={`space-y-1 fixed top-5 z-50 px-4 py-2 bg-gray-800 text-white rounded ${
           isOpen ? 'opacity-100' : 'opacity-50'
         } hover:opacity-100 transition-all transform ${
           isLeft
@@ -67,9 +66,9 @@ const Sidebar: React.FC = () => {
         }`}
       >
         <div className="p-6 space-y-4">
-          {/* Tabs */}
-          <div className="flex justify-items-start">
-            {['settings', 'info', 'book'].map((tab) => (
+          {/* THE TABS STARS HERE */}
+          <div className="flex justify-items-start m-2">
+            {['settings', 'info', 'book', 'forums'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -107,6 +106,16 @@ const Sidebar: React.FC = () => {
             </div>
           )}
 
+          {activeTab === "forums" && (
+            <div>
+              <h2 className="text-xl font-bold mb-4">Tychos own forums</h2>
+              <p className="text-sm">
+                Ask quetions at our official <a target="_blank" href="http://forum.tychos.space">TYCHOS forums!</a>
+              </p>
+            </div>
+          )}
+
+ 
           {activeTab === "info" && (
             <div>
               <h2 className="text-xl font-bold mb-4">Information</h2>

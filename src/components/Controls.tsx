@@ -362,7 +362,7 @@ export const Controls = () => {
 
       <div
         id="controls"
-        className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${ isLeft ? "bg-yellow-500 right-0" : "left-0"}
+        className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${ isLeft ? "bg-grey-900 right-0" : "bg-grey-900 left-0"}
          bg-grey-900 opacity-80 rounded-md select-none`}
       >
         <div className="flex items-center">
