@@ -93,6 +93,31 @@ classDiagram
 
 
 ```
+---
+
+## Key Components:
+App: The main application component that renders the TSNext component.
+TSNext: Handles rendering of the core scene, including the Sidebar, AnimationController, CustomCameraControls, and SolarSystem.
+Sidebar: A UI component for interacting with settings and controls.
+AnimationController: Manages animation-related functionalities (start, pause, and speed).
+CelestialSphere: Renders the background stars in the scene.
+Cobj: Represents celestial objects and handles positions and rotations.
+Controls: Manages user input controls for the simulation.
+CustomCameraControls: Manages the camera in the 3D scene.
+Earth: Represents Earth-specific rendering and behavior.
+Orbit: Handles the drawing and calculations of orbits for planets.
+Planet: Represents planets and their movements in the solar system.
+SolarSystem: Renders the entire solar system, including planets and orbits.
+
+## Relationships:
+App renders TSNext, which handles embedding of the sidebar, animations, and camera controls.
+The SolarSystem component manages individual planets and their orbits.
+AnimationController controls the animations within the solar system.
+CustomCameraControls interfaces with the user input to manipulate the camera.
+Orbit depends on Cobj to manage celestial object positions.
+
+---
+
 
 
 
