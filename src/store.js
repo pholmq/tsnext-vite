@@ -22,6 +22,8 @@ export const useStore = create((set) => ({
   arrows: false,
   arrowScale: 1,
   traceDots: false,
+  menuRight: false,
+  showStats: false,
   runPosWriter: false, //We flip this in controls to get PosWriter to update
   // posWriterRef: createRef({}), //a ref obj that holds the PosWriters data
   // posWriterPlanets: {},

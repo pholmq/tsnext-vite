@@ -42,7 +42,7 @@ function TSNext() {
         <ExoplanetStars />
       </Canvas>
       <Controls />
-      <Sidebar />
+      {/* <Sidebar /> */}
     </>
   );
 }
