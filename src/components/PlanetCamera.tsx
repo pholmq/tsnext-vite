@@ -1,16 +1,13 @@
-import { useRef, useEffect, useState } from "react";
-import { CameraHelper, Vector3, Quaternion, Euler, Object3D } from "three";
+import { useRef } from "react";
+import { CameraHelper } from "three";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  OrbitControls,
-  Stars,
-  useTexture,
-  PerspectiveCamera,
-  useHelper,
-  CameraControls,
-} from "@react-three/drei";
+import { useFrame, useThree } from "@react-three/fiber";
+import { PerspectiveCamera, useHelper } from "@react-three/drei";
+
+import { useGesture } from "@use-gesture/react";
+
 import useKeyPress from "../utils/useKeyPress";
+// import usePressedKey from "../utils/usePressedKey";
 import useMouseButton from "../utils/useMouseButton";
 import useMousePosition from "../utils//useMousePosition";
 import useScrollWheel from "../utils/useScrollWheel";
@@ -23,10 +20,41 @@ export default function PlanetCamera() {
   const longRef = useRef(null);
   const latRef = useRef(null);
   useHelper(planetCam, CameraHelper);
+  // const keyPressed = useKeyPress();
   const keyPressed = useKeyPress();
   const mouse = useMousePosition();
   const pressedButton = useMouseButton();
   const scrollState = useScrollWheel();
+
+  const { gl } = useThree();
+
+  let rotateX = 0;
+
+  useGesture(
+    {
+      onDrag: ({ delta: [dx, dy] }) => {
+        const sensitivity = 0.01;
+        planetCam.current.rotation.y += dx * sensitivity;
+        const rotationX = planetCam.current.rotation.x + dy * sensitivity;
+        if (rotationX < Math.PI / 2 && rotationX > -Math.PI / 2) {
+          planetCam.current.rotation.x = rotationX;
+        }
+      },
+      onWheel: ({ delta: [, dy] }) => {
+        //
+        const sensitivity = 0.1;
+        const fov = planetCam.current.fov + dy * sensitivity;
+
+        if (fov > 0 && fov < 120) {
+          planetCam.current.fov = fov;
+        }
+      },
+    },
+    {
+      target: gl.domElement,
+      eventOptions: { passive: false },
+    }
+  );
 
   // console.log(keyPressed);
   // if (pressedButton !== null) {
@@ -38,33 +66,8 @@ export default function PlanetCamera() {
   let rotationY = 0;
   let rotationX = 0;
   useFrame(() => {
-    console.log(scrollState);
-
-    // if (!planetCam.current) {
-    //   return
-    // }
-    if (pressedButton === 0) {
-      if (startX === null) {
-        startX = mouse.current.x;
-        rotationY = planetCam.current.rotation.y;
-        startY = mouse.current.y;
-        rotationX = planetCam.current.rotation.x;
-      }
-
-      planetCam.current.rotation.y = rotationY + (mouse.current.x - startX) * 2;
-      if (
-        rotationX - (mouse.current.y - startY) * 2 < Math.PI / 2 &&
-        rotationX - (mouse.current.y - startY) * 2 > -Math.PI / 2
-      ) {
-        planetCam.current.rotation.x =
-          rotationX - (mouse.current.y - startY) * 2;
-      }
-      // console.log(planetCam.current.rotation.x);
-    } else {
-      startX === null;
-    }
-
     if (keyPressed) {
+      console.log(keyPressed);
       if (keyPressed === "d") {
         longRef.current.rotation.y -= 0.005;
       }
@@ -98,7 +101,16 @@ export default function PlanetCamera() {
         planetCam.current.rotation.y -= 0.01;
       }
       if (keyPressed === "PageUp") {
-        planetCam.current.fov += 1;
+        if (planetCam.current.fov > 0) {
+          planetCam.current.fov -= 0.5;
+          planetCam.current.updateProjectionMatrix();
+        }
+      }
+      if (keyPressed === "PageDown") {
+        if (planetCam.current.fov < 120) {
+          planetCam.current.fov += 0.5;
+          planetCam.current.updateProjectionMatrix();
+        }
       }
     }
   });
@@ -116,7 +128,6 @@ export default function PlanetCamera() {
             makeDefault={true}
             ref={planetCam}
             rotation-order={"YXZ"}
-            // rotation={[camPos.Up, camPos.Direction, 0]}
           ></PerspectiveCamera>
         </group>
       </group>

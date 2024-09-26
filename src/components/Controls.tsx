@@ -35,8 +35,6 @@ import { Leva, button, buttonGroup, folder, useControls } from "leva";
 import { getAllPositions } from "../utils/celestial-functions";
 import { Camera } from "three";
 
-
-
 function updateURL(date: string, time: string) {
   /* How to access the correct camera info? :) */
   /* (camera:Camera and &${camera.getWorldQuaternion.name}) */
@@ -58,7 +56,9 @@ export const Controls = () => {
   const timeRef = useRef(null);
 
   const intervalRef = useRef(null);
-  // console.log("Controls render");
+
+  const menuRight = useStore((s) => s.menuRight);
+  const showStats = useStore((s) => s.showStats);
 
 
   // Sidebar.tsx coupling, local storage
@@ -279,6 +279,19 @@ export const Controls = () => {
       },
       { collapsed: true }
     ),
+    "App settings": folder(
+      {
+        "Menu at the right": {
+          value: useStore.getState().menuRight,
+          onChange: (v) => useStore.setState({ menuRight: v }),
+        },
+        "Show performance": {
+          value: useStore.getState().showStats,
+          onChange: (v) => useStore.setState({ showStats: v }),
+        },
+      },
+      { collapsed: true }
+    ),
     "Celestial settings": folder({}, { collapsed: true }),
   }));
 
@@ -306,10 +319,8 @@ export const Controls = () => {
     if (e.key !== "ArrowLeft") {
       return;
     }
-    console.log("LeftArrowKey Pressed")
+    console.log("LeftArrowKey Pressed");
   }
-
-
 
   function timeKeyDown(e) {
     if (e.key !== "Enter") {
@@ -330,7 +341,6 @@ export const Controls = () => {
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
-  
   function changeScale(newScale) {
     let div = document.getElementById("controls");
     /* Use tailwind scales instead?*/
@@ -348,12 +358,14 @@ export const Controls = () => {
     >
       {/* Control panel content */}
     </div>
+      {showStats ? <Stats /> : null}
+
       <div
         id="controls"
         className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${ isLeft ? "bg-yellow-500 right-0" : "left-0"}
          bg-grey-900 opacity-80 rounded-md select-none`}
       >
-                <div className="flex items-center">
+        <div className="flex items-center">
           <button
             className="flex items-center text-2xl text-white px-1 py-2"
             onLoad={() => {
@@ -497,7 +509,10 @@ export const Controls = () => {
             onKeyDown={timeKeyDown}
           />
         </div>
-        <div hidden={!showMenu} className="mt-2 overflow-auto text-lg custom-leva leva">
+        <div
+          hidden={!showMenu}
+          className="mt-2 overflow-auto text-lg custom-leva leva"
+        >
           <Leva /* Change the font font so that it is coherent to other panels */
             neverHide
             fill
