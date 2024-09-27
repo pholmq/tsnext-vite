@@ -36,7 +36,7 @@ function ContextMenu({ setContextMenu, setCameraTarget }) {
           Trace&nbsp;on
         </button> */}
         <button
-        className="m-1"
+          className="m-1"
           onClick={() => {
             console.log("click");
             setContextMenu(false);
@@ -65,8 +65,6 @@ export function Planet(props: any) {
   const [contextMenu, setContextMenu] = useState(false);
   const [cameraTarget, setCameraTarget] = useState(false);
 
-  const traceOn = useStore((s) => s.trace);
-  const planetCamera = useStore((s) => s.planetCamera);
   useEffect(() => {
     if (cameraTarget) {
       useStore.setState({ cameraTarget: props.name });
@@ -132,7 +130,7 @@ export function Planet(props: any) {
           )}
           {props.light ? <pointLight intensity={3} /> : null}
 
-          {props.name === "Earth" && planetCamera ? <PlanetCamera /> : null}
+          {props.name === "Earth" ? <PlanetCamera /> : null}
         </mesh>
       </group>
     </>

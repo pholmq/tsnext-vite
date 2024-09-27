@@ -60,7 +60,6 @@ export const Controls = () => {
   const menuRight = useStore((s) => s.menuRight);
   const showStats = useStore((s) => s.showStats);
 
-
   // Sidebar.tsx coupling, local storage
   const [isLeft, setIsLeft] = useState(true);
 
@@ -226,9 +225,13 @@ export const Controls = () => {
           onChange: (v) => useStore.setState({ cameraFollow: v }),
         },
 
-        "Planet camera": {
+        "Planet camera on/off": {
           value: useStore.getState().planetCamera,
           onChange: (v) => useStore.setState({ planetCamera: v }),
+        },
+        "Show planet camera position": {
+          value: useStore.getState().planetCameraHelper,
+          onChange: (v) => useStore.setState({ planetCameraHelper: v }),
         },
 
         // "Camera type": {
@@ -351,18 +354,20 @@ export const Controls = () => {
     <>
       {/* <Stats />z */}
       <div
-      id="controls"
-      className={`flex flex-col max-h-[95vh] absolute top-0 ${
-        isLeft ? "right-0" : "left-0"
-      } m-1 bg-gray-900 opacity-80 rounded-md select-none`}
-    >
-      {/* Control panel content */}
-    </div>
+        id="controls"
+        className={`flex flex-col max-h-[95vh] absolute top-0 ${
+          isLeft ? "right-0" : "left-0"
+        } m-1 bg-gray-900 opacity-80 rounded-md select-none`}
+      >
+        {/* Control panel content */}
+      </div>
       {showStats ? <Stats /> : null}
 
       <div
         id="controls"
-        className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${ isLeft ? "bg-yellow-500 right-0" : "left-0"}
+        className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${
+          isLeft ? "bg-yellow-500 right-0" : "left-0"
+        }
          bg-grey-900 opacity-80 rounded-md select-none`}
       >
         <div className="flex items-center">
