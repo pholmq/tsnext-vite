@@ -10,6 +10,9 @@ import { Controls } from "./components/Controls";
 import { CopyPosToClipb } from "./components/CopyPosToClipb";
 import Sidebar from "./components/Sidebar";
 import ExoplanetStars from "./components/ExoplanetStars";
+import { useState } from "react";
+import LoadingBar from "./components/LoadingBar"; // Import the loading bar
+import { useProgress } from "@react-three/drei"; // Import useProgress to detect when loading is complete
 
 function TSNext() {
   return (
@@ -32,25 +35,29 @@ function TSNext() {
         <TraceController />
         <CopyPosToClipb />
         <axesHelper args={[5]} position={[0, 0, 0]} />
-        {/* <mesh rotation={[-Math.PI / 5, 0, Math.PI / 4]}>
-          <tetrahedronGeometry />
-          <meshPhongMaterial color="gold" />
-          <Sphere args={[0.35, 64, 32]} position={[0.03, 0.03, 0.03]}>
-            <meshPhongMaterial color="black" />
-          </Sphere>
-        </mesh> */}
         <ExoplanetStars />
       </Canvas>
       <Controls />
-      <Sidebar /> 
+      <Sidebar />
     </>
   );
 }
 
 export default function App() {
+  const { active } = useProgress(); // Check if loading is still active
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Once assets finish loading, update the state
+  useState(() => {
+    if (!active) {
+      setIsLoaded(true);
+    }
+  }, [active]);
+
   return (
     <div className="App h-screen bg-black">
-      <TSNext />
+      {!isLoaded && <LoadingBar />} {/* Show loading bar until loading is complete */}
+      {isLoaded && <TSNext />} {/* Render the scene once loading is complete */}
     </div>
   );
 }
