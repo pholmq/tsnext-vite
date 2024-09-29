@@ -64,10 +64,7 @@ export default function PlanetCamera() {
       target: gl.domElement,
       eventOptions: { passive: false },
     }
-  ); // console.log(keyPressed);
-  // if (pressedButton !== null) {
-  //   console.log(pressedButton);
-  // }
+  );
 
   let startX = null;
   let startY = 0;
