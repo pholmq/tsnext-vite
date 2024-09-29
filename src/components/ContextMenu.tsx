@@ -7,7 +7,7 @@ export function ContextMenu({ setContextMenu, setCameraTarget }) {
     const element = document.getElementById("ContextMenu");
     if (element) {
       const distance = distanceFromHtmlElement(element, e.clientX, e.clientY);
-      console.log(`Distance from element: ${distance}px`);
+      // console.log(`Distance from element: ${distance}px`);
       if (distance > 100) {
         setContextMenu(false);
       }
