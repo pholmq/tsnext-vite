@@ -9,6 +9,7 @@ import { Vector3 } from "three";
 import { Controls } from "./components/Controls";
 import { CopyPosToClipb } from "./components/CopyPosToClipb";
 import Sidebar from "./components/Sidebar";
+import PlanetCameraInfo from "./components/PlanetCameraInfo";
 import ExoplanetStars from "./components/ExoplanetStars";
 import { useState } from "react";
 import LoadingBar from "./components/LoadingBar"; // Import the loading bar
@@ -38,6 +39,8 @@ function TSNext() {
         <ExoplanetStars />
       </Canvas>
       <Controls />
+      {/* <Sidebar /> */}
+      <PlanetCameraInfo />
       <Sidebar />
     </>
   );

@@ -1,55 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "../store";
-import { Html, useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import { PosWriter } from "./PosWriter";
-import { useControls } from "leva";
 import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
 import PlanetCamera from "./PlanetCamera";
-
-function ContextMenu({ setContextMenu, setCameraTarget }) {
-  return (
-    <Html position={[0, 0, 0]}>
-      <div
-        // hidden={hovered || on ? false : true}
-        className="m-1 text-white text-opacity-100 bg-gray-900 
-        bg-opacity-50 rounded-md select-none"
-      >
-        <button
-          className="m-1 hover:bg-sky-700"
-          id="Focus"
-          onClick={(e) => {
-            setCameraTarget(true);
-            // console.log((e.target as HTMLElement).id);
-            setContextMenu(false);
-          }}
-        >
-          Focus
-        </button>
-        <br />
-        {/* <button
-          onClick={() => {
-            console.log("click");
-            setContextMenu(false);
-          }}
-        >
-          Trace&nbsp;on
-        </button> */}
-        <button
-        className="m-1"
-          onClick={() => {
-            console.log("click");
-            setContextMenu(false);
-          }}
-        >
-          Close&nbsp;menu
-        </button>
-
-        {/* <label id="posLabel">Close&nbsp;menu</label> */}
-      </div>
-    </Html>
-  );
-}
+import { ContextMenu } from "./ContextMenu";
 
 function PlanetTexture({ texture }) {
   const [planetTexture] = useTexture([texture]);
@@ -65,8 +21,6 @@ export function Planet(props: any) {
   const [contextMenu, setContextMenu] = useState(false);
   const [cameraTarget, setCameraTarget] = useState(false);
 
-  const traceOn = useStore((s) => s.trace);
-  const planetCamera = useStore((s) => s.planetCamera);
   useEffect(() => {
     if (cameraTarget) {
       useStore.setState({ cameraTarget: props.name });
@@ -98,6 +52,7 @@ export function Planet(props: any) {
             symbol={props.unicodeSymbol}
           />
         )}
+
         {props.name === "Earth" ? <CelestialSphere visible={false} /> : null}
         <mesh
           name={props.name}
@@ -109,12 +64,11 @@ export function Planet(props: any) {
             e.stopPropagation();
             setHover(true);
           }}
-          onPointerOut={(e) => {
+          onPointerLeave={(e) => {
             e.stopPropagation();
             setHover(false);
-            // setContextMenu(false);
           }}
-          onContextMenu={(e) => {
+          onContextMenu={(e: any) => {
             e.stopPropagation();
             setContextMenu(true);
           }}
@@ -132,7 +86,7 @@ export function Planet(props: any) {
           )}
           {props.light ? <pointLight intensity={3} /> : null}
 
-          {props.name === "Earth" && planetCamera ? <PlanetCamera /> : null}
+          {props.name === "Earth" ? <PlanetCamera /> : null}
         </mesh>
       </group>
     </>

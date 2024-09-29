@@ -27,28 +27,32 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       Earth: "https://book.tychos.space/chapters/11-earths-pvp-orbit",
       Moon: "The central 'driveshaft'",
       Sun: "is rather hot!",
-      Halleys:"",
+      Halleys: "",
       Jupiter: "is the largest planet.",
-      Saturn:"",
-      Uranus:"",
-      Neptune:"",
-      Venus:"",
-      Mercury:"",
+      Saturn: "",
+      Uranus: "",
+      Neptune: "",
+      Venus: "",
+      Mercury: "",
       Mars: "was a mystery",
-      Phobos:"",
-      Deimos:"",
-      Eros:"",
+      Phobos: "",
+      Deimos: "",
+      Eros: "",
     };
-    
-    const description = celestialDescriptionsOfTheory[name] || "Description not available";
+
+    const description =
+      celestialDescriptionsOfTheory[name] || "Description not available";
 
     labelRef.current.innerHTML =
       name +
       " " +
       symbol +
       "<br>" +
-      description +
-      "<br>" + 
+      // description +
+      "Double&nbspclick&nbspto&nbspfocus" +
+      "<br>" +
+      "Right&nbspclick&nbspfor&nbspmenu" +
+      "<br>" +
       "RA:&nbsp;" +
       ra +
       "<br/>Dec:&nbsp;" +
@@ -111,4 +115,3 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
     </Html>
   );
 }
-
