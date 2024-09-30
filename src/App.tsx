@@ -14,6 +14,7 @@ import ExoplanetStars from "./components/ExoplanetStars";
 import { useState } from "react";
 import LoadingBar from "./components/LoadingBar"; // Import the loading bar
 import { useProgress } from "@react-three/drei"; // Import useProgress to detect when loading is complete
+import { Leva } from "leva";
 
 function TSNext() {
   return (
