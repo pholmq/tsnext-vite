@@ -51,11 +51,11 @@ export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Once assets finish loading, update the state
-  useState(() => {
-    if (!active) {
-      setIsLoaded(true);
-    }
-  }, [active]);
+  // useState(() => {
+  //   if (!active) {
+  //     setIsLoaded(true);
+  //   }
+  // }, [active]);
 
   return (
     <div className="App h-screen bg-black">
