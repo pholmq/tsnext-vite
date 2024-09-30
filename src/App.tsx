@@ -59,9 +59,11 @@ export default function App() {
 
   return (
     <div className="App h-screen bg-black">
-      {!isLoaded && <LoadingBar />}{" "}
+      {/* {!isLoaded && <LoadingBar />}{" "}
       {/* Show loading bar until loading is complete */}
-      {isLoaded && <TSNext />} {/* Render the scene once loading is complete */}
+      {/* {isLoaded && <TSNext />} Render the scene once loading is complete */}{" "}
+      */
+      <TSNext />
     </div>
   );
 }
