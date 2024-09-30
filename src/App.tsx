@@ -51,7 +51,7 @@ function TSNext() {
 
 export default function App() {
   return (
-    <div className="App h-screen bg-black">
+    <div className="App touch-none h-screen bg-black">
       <TSNext />
     </div>
   );

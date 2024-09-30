@@ -6,12 +6,12 @@ import { Html } from "@react-three/drei"; // For rendering HTML inside the 3D sc
 // Utility to parse custom IPAC-like format for star data (hostname, ra, dec)
 const parseIPACFormatCSV = (csvText: string) => {
   const lines = csvText.split("\n").filter((line) => line.trim() !== ""); // Split by line and filter empty lines
-  
+
   // Skip the first four lines (headers, units, etc.)
   const dataLines = lines.slice(4); // The actual data starts from the 5th line
 
   // Parse each data line into objects
-  const data = dataLines.map(line => {
+  const data = dataLines.map((line) => {
     const [hostname, ra, dec] = line.trim().match(/\S+/g); // Split based on whitespace, taking care of spaces in hostnames
     return {
       hostname: hostname.trim(),
@@ -19,13 +19,17 @@ const parseIPACFormatCSV = (csvText: string) => {
       dec: parseFloat(dec),
     };
   });
-  
+
   return data;
 };
 
 // This fucntion is now centerd to the berycenter, needs to be centered at the earth
 // Utility to convert RA/DEC to 3D position in space
-const raDecToPosition = (ra: number, dec: number, distance: number = 100000) => {
+const raDecToPosition = (
+  ra: number,
+  dec: number,
+  distance: number = 100000
+) => {
   const phi = (ra / 180) * Math.PI; // Convert RA to radians
   const theta = ((90 - dec) / 180) * Math.PI; // Convert DEC to radians
 
@@ -61,7 +65,7 @@ const ExoplanetStars: React.FC = () => {
       setLoading(false);
     } catch (err) {
       console.error("Error loading stars from CSV:", err);
-      setError('Failed to load stars data: ${err.message}');
+      setError("Failed to load stars data: ${err.message}");
       setLoading(false);
     }
   };
@@ -101,11 +105,11 @@ const ExoplanetStars: React.FC = () => {
       </Html>
     );
   }
-// Group all the stars! 
+  // Group all the stars!
   // Render stars using InstancedMesh for optimized performance with React Fiber components
   return (
     <instancedMesh ref={instancedRef} args={[null, null, visibleStars]}>
-      <sphereBufferGeometry args={[70, 16, 16]} />
+      <sphereGeometry args={[70, 16, 16]} />
       <meshBasicMaterial color="white" />
     </instancedMesh>
   );

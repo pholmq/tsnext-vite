@@ -1,8 +1,15 @@
 import { Html } from "@react-three/drei";
 import { useEffect } from "react";
 import distanceFromHtmlElement from "../utils/distanceFromHtmlElement";
-
+import { useStore } from "../store";
+import { useControls } from "leva";
 export function ContextMenu({ setContextMenu, setCameraTarget }) {
+  // const [showH, setHelper] = useControls("Planet Camera", () => ({
+  //   showHelper: true,
+  // }));
+  const [{ Follow }, setFollow] = useControls("Camera", () => ({
+    Follow: false,
+  }));
   const handleMouseMove = (e) => {
     const element = document.getElementById("ContextMenu");
     if (element) {
@@ -39,28 +46,21 @@ export function ContextMenu({ setContextMenu, setCameraTarget }) {
             setContextMenu(false);
           }}
         >
-          Focus
+          Camera_focus
         </button>
         <br />
-        {/* <button
-              onClick={() => {
-                console.log("click");
-                setContextMenu(false);
-              }}
-            >
-              Trace&nbsp;on
-            </button> */}
         <button
-          className="m-1"
-          onClick={() => {
-            // console.log("click");
+          className="m-1 hover:bg-sky-700"
+          id="Focus"
+          onClick={(e) => {
+            setCameraTarget(true);
+            setFollow({ Follow: true });
             setContextMenu(false);
           }}
         >
-          Close&nbsp;menu
+          Camera_follow
         </button>
-
-        {/* <label id="posLabel">Close&nbsp;menu</label> */}
+        <br />
       </div>
     </Html>
   );
