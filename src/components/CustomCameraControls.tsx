@@ -13,14 +13,9 @@ const OrbitCamera = () => {
   const cameraControlsRef = useRef<CameraControls>(null);
   const targetObjRef = useRef(null);
   useLayoutEffect(() => {
-    // cameraControlsRef.current.smoothTime = 0.01;
-    if (cameraTarget === "SystemCenter") {
-      cameraControlsRef.current.setTarget(0, 0, 0);
-    } else {
-      targetObjRef.current = scene.getObjectByName(cameraTarget);
-      targetObjRef.current.getWorldPosition(target);
-      cameraControlsRef.current.setTarget(target.x, target.y, target.z, false);
-    }
+    targetObjRef.current = scene.getObjectByName(cameraTarget);
+    targetObjRef.current.getWorldPosition(target);
+    cameraControlsRef.current.setTarget(target.x, target.y, target.z, false);
   }, [cameraTarget]);
 
   useLayoutEffect(() => {

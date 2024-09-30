@@ -1,10 +1,13 @@
 [
   {
     "name": "SystemCenter",
-    "color": "grey",
-    "type": "deferent",
+    "color": "darkGrey",
+    "type": "planet",
     "visible": true,
-    "axesHelper": false
+    "planet": true,
+    "texture": "",
+    "unicodeSymbol": "",
+    "traceable": true
   },
   {
     "name": "Earth",

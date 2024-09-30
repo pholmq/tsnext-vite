@@ -49,9 +49,7 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       symbol +
       "<br>" +
       // description +
-      "Double&nbspclick&nbspto&nbspfocus" +
-      "<br>" +
-      "Right&nbspclick&nbspfor&nbspmenu" +
+      "(Right&nbspclick&nbspfor&nbspmenu)" +
       "<br>" +
       "RA:&nbsp;" +
       ra +

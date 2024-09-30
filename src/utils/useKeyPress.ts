@@ -5,7 +5,6 @@ export default function useKeyPress(): string | null {
 
   useEffect(() => {
     const downHandler = (event: KeyboardEvent) => {
-      event.preventDefault();
       setKeyPressed(event.key);
     };
 
