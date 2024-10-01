@@ -9,7 +9,7 @@ const fetchStarData = async (url: string) => {
 };
 
 // Utility: Convert RA/Dec to Cartesian
-const parseRaDecToCartesian = (ra: string, dec: string, distance = 10000) => {
+const parseRaDecToCartesian = (ra: string, dec: string, distance = 25000) => {
   const raParts = ra.match(/(\d+)h (\d+)m (\d+\.\d+)s/);
   const raHours = parseFloat(raParts[1]);
   const raMinutes = parseFloat(raParts[2]);
@@ -72,7 +72,7 @@ const ExoplanetStars = () => {
     });
   }, []);
 
-  // Shuffle the star array
+  // REMOVE TO DEBUG STARS Shuffle the star array
   function shuffleArray(array: any[]) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -86,10 +86,9 @@ const ExoplanetStars = () => {
     if (!starData || starData.length === 0) return []; // Return empty array if starData isn't available yet
 
     // Shuffle the star data array
-    const shuffledStarData = shuffleArray([...starData]); // spread to avoid mutating original array
-    
+    //const shuffledStarData = shuffleArray([...starData]); // spread to avoid mutating original array
     // Slice 850 random stars from the shuffled array
-    const selectedStars = shuffledStarData.slice(0, 850);
+    const selectedStars = starData.slice(0, 9000);
     
     return selectedStars.map(star => {
       const { RA, Dec, K, V } = star;
@@ -138,8 +137,8 @@ const ExoplanetStars = () => {
 
   return (
     <instancedMesh ref={instancedRef} args={[null, null, starPositions.length]}>
-      <sphereGeometry args={[10, 16, 16]} />
-      <meshStandardMaterial emissiveIntensity={1000} emissive={new Color(0, 0, 1)} /> {/* Adjust emissiveIntensity for glow */}
+      <sphereGeometry args={[9, 16, 16]} />
+      <meshStandardMaterial emissiveIntensity={1} emissive={new Color(0, 0, 1)} /> {/* Adjust emissiveIntensity for glow */}
     </instancedMesh>
   );
 };
