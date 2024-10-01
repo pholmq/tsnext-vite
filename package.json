@@ -19,6 +19,7 @@
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
     "react-icons": "^4.8.0",
+    "simplex-noise": "^4.0.3",
     "three": "^0.150.1"
   },
   "devDependencies": {
