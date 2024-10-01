@@ -138,8 +138,8 @@ const ExoplanetStars = () => {
 
   return (
     <instancedMesh ref={instancedRef} args={[null, null, starPositions.length]}>
-      <sphereGeometry args={[5, 16, 16]} />
-      <meshBasicMaterial />
+      <sphereGeometry args={[1, 16, 16]} />
+      <meshStandardMaterial emissiveIntensity={2} emissive={new Color(0, 0, 1)} /> {/* Adjust emissiveIntensity for glow */}
     </instancedMesh>
   );
 };
