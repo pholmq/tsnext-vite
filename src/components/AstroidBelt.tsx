@@ -17,9 +17,9 @@ export function AsteroidBelt({ numAsteroids = 1000, innerRadius = 5, outerRadius
       // Generate random positions in a circular belt between inner and outer radius
       const angle = Math.random() * 2 * Math.PI;
       const radius = innerRadius + Math.random() * (outerRadius - innerRadius);
-      const x = Math.cos(angle) * radius + (Math.random() - 0.5) * 0.1;
-      const z = Math.sin(angle) * radius;
-      const y = Math.random(); // Keep asteroids mostly in a flat plane
+      const x = Math.cos(angle) * radius + (Math.random() - 0.5) * 12;
+      const z = Math.sin(angle) * radius + (Math.random() - 0.5) * 0.1;
+      const y = Math.random() * 1.3; // Keep asteroids mostly in a flat plane
 
       positions.push(new THREE.Vector3(x, y, z));
 
