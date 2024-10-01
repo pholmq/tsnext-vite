@@ -9,7 +9,7 @@ const fetchStarData = async (url: string) => {
 };
 
 // Utility: Convert RA/Dec to Cartesian
-const parseRaDecToCartesian = (ra: string, dec: string, distance = 1) => {
+const parseRaDecToCartesian = (ra: string, dec: string, distance = 1000) => {
   const raParts = ra.match(/(\d+)h (\d+)m (\d+\.\d+)s/);
   const raHours = parseFloat(raParts[1]);
   const raMinutes = parseFloat(raParts[2]);
@@ -45,7 +45,7 @@ const colorTemperatureToRGB = (kelvin: number) => {
   }
 
   // Return normalized RGB values (Clamp between 0 and 1)
-  return [red / 255, green / 255, blue / 255];
+  return [Math.min(1, red / 255), Math.min(1, green / 255), Math.min(1, blue / 255)];
 };
 
 // Determine star size based on magnitude
@@ -67,17 +67,17 @@ const ExoplanetStars = () => {
   }, []);
 
   const starPositions = useMemo(() => {
-    return starData.slice(0, 1000).map(star => {
+    return starData.slice(0,100).map(star => {
       const { RA, Dec, K, V } = star;
-      const position = parseRaDecToCartesian(RA, Dec, 10); // Set distance to 1000
+      const position = parseRaDecToCartesian(RA, Dec);
       const color = colorTemperatureToRGB(K);
       const scale = starSizeByMagnitude(V);
-
+      
       console.log(`RA: ${RA}, Dec: ${Dec}, Cartesian: ${position}`);
       console.log(`Kelvin: ${K}, RGB: ${color}`);
       console.log(`Magnitude: ${V}, Size: ${scale}`);
-
-      return { position, scale, color, kelvin: K }; // Include Kelvin temperature (K)
+      
+      return { position, scale, color };
     });
   }, [starData]);
 
@@ -95,7 +95,9 @@ const ExoplanetStars = () => {
       // Set color
       const [r, g, b] = star.color;
       const starColor = new Color(r, g, b);
-      console.log(`Kelvin: ${star.kelvin}, Setting Color at index ${index}:`, starColor);
+      console.log(`Setting Color at index ${index}:`, starColor);
+      console.log(`Kelvin: ${star.K}, Setting Color at index ${index}:`, starColor);
+
       instancedRef.current.setColorAt(index, starColor);
     });
 
