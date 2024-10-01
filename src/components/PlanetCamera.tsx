@@ -7,7 +7,6 @@ import { PerspectiveCamera, useHelper, Html } from "@react-three/drei";
 import { useGesture } from "@use-gesture/react";
 
 import useKeyPress from "../utils/useKeyPress";
-// import usePressedKey from "../utils/usePressedKey";
 import { useStore } from "../store";
 
 export default function PlanetCamera() {
@@ -20,9 +19,6 @@ export default function PlanetCamera() {
   const latRef = useRef(null);
   const camMountRef = useRef(null);
   const keyPressed = useKeyPress();
-  // const mouse = useMousePosition();
-  // const pressedButton = useMouseButton();
-  // const scrollState = useScrollWheel();
 
   const { gl } = useThree();
 

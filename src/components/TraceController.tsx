@@ -40,7 +40,6 @@ export default function TraceController() {
 
   const plotObjectsReady = plotObjects.length > 0;
 
-  // const {Mars} = useControls("Trace planets", {"Mars": false})
   const tracePlanets = useControls("Trace settings", {
     "Planets:": { value: "", editable: false },
     Moon: false,

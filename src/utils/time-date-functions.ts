@@ -200,9 +200,6 @@ export function isValidDate(value: string) {
 export function dateTimeToPos(date: string, time: string) {
   return sDay * dateToDays(date) + timeToPos(time);
 }
-// o.pos = sDay * dateToDays(o.Date) + timeToPos(o.Time);
-
-//console.log(dateToDays("2000-06-20"))
 
 export function isNumeric(n: any) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -278,7 +275,6 @@ export function addMonths(sDate: string, inMonths: number): string {
     y -= years;
     m -= months;
   }
-  // date = `${y}-${aDate[1]}-${aDate[2]}`;
   if (m === 0) {
     y = y - 1;
     m = 12;
@@ -311,9 +307,6 @@ function julianDateToDays(sDate: string) {
     m = Number(aDate[1]);
     d = Number(aDate[2]);
   }
-
-  // if (y < 0 ) y += 1;
-  //if (y === -1) y -= 1;
 
   if (m < 3) {
     m += 12;

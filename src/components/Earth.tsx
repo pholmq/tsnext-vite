@@ -5,7 +5,6 @@ import { useStore } from "../store";
 import { Html } from "@react-three/drei";
 
 import { CelestialSphere } from "./CelestialSphere";
-import { Object3D } from "three";
 
 export function Earth(props: any) {
   const earthRef: any = useRef();
@@ -40,8 +39,8 @@ export function Earth(props: any) {
           0,
           props.tilt * (Math.PI / 180),
         ]}
-      > 
-      {/* "Move the berycenter and make that the center for all the stars"  */}
+      >
+        {/* "Move the berycenter and make that the center for all the stars"  */}
         <CelestialSphere visible={false} />
         <mesh
           name="Earth"

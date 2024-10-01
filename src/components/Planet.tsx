@@ -6,6 +6,7 @@ import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
 import PlanetCamera from "./PlanetCamera";
 import { ContextMenu } from "./ContextMenu";
+import { useLevaControls } from "./useLevaControls";
 
 function PlanetTexture({ texture }) {
   const [planetTexture] = useTexture([texture]);
@@ -21,9 +22,12 @@ export function Planet(props: any) {
   const [contextMenu, setContextMenu] = useState(false);
   const [cameraTarget, setCameraTarget] = useState(false);
 
+  const { updateControls } = useLevaControls();
+
   useEffect(() => {
     if (cameraTarget) {
       useStore.setState({ cameraTarget: props.name });
+      updateControls({ Target: props.name } as { [key: string]: any });
       setCameraTarget(false);
     }
   }, [cameraTarget]);
@@ -59,7 +63,6 @@ export function Planet(props: any) {
           visible={props.visible}
           ref={ref}
           scale={1}
-          // rotation={[0, rotationStart, 0]}
           onPointerOver={(e) => {
             e.stopPropagation();
             setHover(true);
@@ -87,6 +90,7 @@ export function Planet(props: any) {
           {props.light ? <pointLight intensity={3} /> : null}
 
           {props.name === "Earth" ? <PlanetCamera /> : null}
+          {props.name === cameraTarget ? <PlanetCamera /> : null}
         </mesh>
       </group>
     </>

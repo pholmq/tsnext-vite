@@ -1,11 +1,6 @@
 import { Cobj } from "./Cobj";
-// import { useThree } from "@react-three/fiber";
 
 const SolarSystem = () => {
-  // const { scene } = useThree();
-  // const meshObjects = scene.children.filter(child => child.type === 'Mesh');
-  // const meshObject = scene.getObjectByName('Earth');
-  // console.log(meshObject);
   return (
     <group>
       <Cobj name="SystemCenter">

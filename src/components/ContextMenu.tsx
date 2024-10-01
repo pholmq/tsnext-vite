@@ -3,13 +3,12 @@ import { useEffect } from "react";
 import distanceFromHtmlElement from "../utils/distanceFromHtmlElement";
 import { useStore } from "../store";
 import { useControls } from "leva";
+import { useLevaControls } from "./useLevaControls";
 export function ContextMenu({ setContextMenu, setCameraTarget }) {
   // const [showH, setHelper] = useControls("Planet Camera", () => ({
   //   showHelper: true,
   // }));
-  const [{ Follow }, setFollow] = useControls("Camera", () => ({
-    Follow: false,
-  }));
+  const { updateControls } = useLevaControls();
   const handleMouseMove = (e) => {
     const element = document.getElementById("ContextMenu");
     if (element) {
@@ -54,7 +53,7 @@ export function ContextMenu({ setContextMenu, setCameraTarget }) {
           id="Focus"
           onClick={(e) => {
             setCameraTarget(true);
-            setFollow({ Follow: true });
+            updateControls({ Follow: true } as { [key: string]: any });
             setContextMenu(false);
           }}
         >
