@@ -9,7 +9,7 @@ const fetchStarData = async (url: string) => {
 };
 
 // Utility: Convert RA/Dec to Cartesian
-const parseRaDecToCartesian = (ra: string, dec: string, distance = 1000) => {
+const parseRaDecToCartesian = (ra: string, dec: string, distance = 10000) => {
   const raParts = ra.match(/(\d+)h (\d+)m (\d+\.\d+)s/);
   const raHours = parseFloat(raParts[1]);
   const raMinutes = parseFloat(raParts[2]);
@@ -138,8 +138,8 @@ const ExoplanetStars = () => {
 
   return (
     <instancedMesh ref={instancedRef} args={[null, null, starPositions.length]}>
-      <sphereGeometry args={[1, 16, 16]} />
-      <meshStandardMaterial emissiveIntensity={2} emissive={new Color(0, 0, 1)} /> {/* Adjust emissiveIntensity for glow */}
+      <sphereGeometry args={[10, 16, 16]} />
+      <meshStandardMaterial emissiveIntensity={1000} emissive={new Color(0, 0, 1)} /> {/* Adjust emissiveIntensity for glow */}
     </instancedMesh>
   );
 };
