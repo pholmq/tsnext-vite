@@ -61,12 +61,6 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       distAU +
       "<br/>Elongation:&nbsp;" +
       elongation +
-      // "<br/>X:&nbsp;" +
-      // x +
-      // "<br/>Y:&nbsp;" +
-      // y +
-      // "<br/>Z:&nbsp;" +
-      // z +
       "\xB0";
   }
   const { [name]: on } = useControls("Positions", {
@@ -91,13 +85,6 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       clearInterval(intervalRef.current);
     }
   }
-
-  // if (contextMenu) {
-  //   let text = labelRef.current.innerText;
-  //   text += "\n" + "Date: " + posToDate(posRef.current);
-  //   text += "\n" + "Time: " + posToTime(posRef.current);
-  //   navigator.clipboard.writeText(text);
-  // }
 
   return (
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>

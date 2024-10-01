@@ -8,8 +8,6 @@ import { Vector3 } from "three";
 
 import { Orbit } from "./Orbit";
 import { Planet } from "./Planet";
-// import { Earth } from "./Earth";
-import { Pobj } from "./Pobj";
 
 type Props = {
   name: string;

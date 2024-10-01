@@ -24,14 +24,10 @@ export function Planet(props: any) {
 
   const { updateControls } = useLevaControls();
 
-  // const [, setTargetInMenu] = useControls("Camera", () => ({
-  //   Target: "",
-  // }));
   useEffect(() => {
     if (cameraTarget) {
       useStore.setState({ cameraTarget: props.name });
       updateControls({ Target: props.name } as { [key: string]: any });
-      // setTargetInMenu({ Target: props.name });
       setCameraTarget(false);
     }
   }, [cameraTarget]);
@@ -67,7 +63,6 @@ export function Planet(props: any) {
           visible={props.visible}
           ref={ref}
           scale={1}
-          // rotation={[0, rotationStart, 0]}
           onPointerOver={(e) => {
             e.stopPropagation();
             setHover(true);

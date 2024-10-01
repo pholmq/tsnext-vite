@@ -4,6 +4,8 @@ import { speedFactOpts } from "../utils/time-date-functions";
 import { useCallback, useRef } from "react";
 
 export const useLevaControls = () => {
+  //A custom hook for the leva controls with an update function
+
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);

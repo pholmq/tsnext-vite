@@ -7,14 +7,10 @@ import {
   FaStepForward,
   FaBars,
   FaTimes,
-  FaPlus,
-  FaMinus,
-  FaInfo,
 } from "react-icons/fa";
 import {
   posToDate,
   posToTime,
-  posToJulianDay,
   isValidDate,
   dateTimeToPos,
   dateToDays,
@@ -22,18 +18,12 @@ import {
   addMonths,
   timeToPos,
   isValidTime,
-  isNumeric,
-  julianDayTimeToPos,
-  speedFactOpts,
-  speedFactOptions,
   sDay,
   sMonth,
   sYear,
 } from "../utils/time-date-functions";
-import { PerformanceMonitor, Stats } from "@react-three/drei";
-import { Leva, button, buttonGroup, folder, useControls } from "leva";
-import { getAllPositions } from "../utils/celestial-functions";
-import { Camera } from "three";
+import { Stats } from "@react-three/drei";
+import { Leva } from "leva";
 import { useLevaControls } from "./useLevaControls";
 
 function updateURL(date: string, time: string) {
@@ -91,7 +81,6 @@ export const Controls = () => {
   }, []);
 
   useLayoutEffect(() => {
-    // console.log("Controls uselayout rendered");
     const timeout = setTimeout(() => {
       //We need to wait a little so that the
       //posref is updated
@@ -111,7 +100,6 @@ export const Controls = () => {
         if (document.activeElement !== timeRef.current) {
           timeRef.current.value = posToTime(posRef.current);
         }
-        // updateURL(dateRef.current.value, timeRef.current.value);
       }, 1000);
     } else {
       clearInterval(intervalRef.current);
@@ -180,13 +168,6 @@ export const Controls = () => {
           ${menuRight ? "right-0" : "left-0"}
           m-1 bg-gray-900 opacity-80 rounded-md select-none`}
       >
-        {/* <div
-        id="controls"
-        className={`flex flex-col max-h-[95vh] absolute top-0 m-1 ${
-          isLeft ? "bg-yellow-500 right-0" : "left-0"
-        }
-         bg-grey-900 opacity-80 rounded-md select-none`}
-      > */}
         <div className="flex items-center">
           <button
             className="flex items-center text-2xl text-white px-1 py-2"

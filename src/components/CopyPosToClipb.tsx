@@ -23,27 +23,8 @@ export function CopyPosToClipb() {
         "Neptune",
       ];
       let result = "The Tychosium" + "\n";
-      // getAllPositions()
-      // result += "Pos: " + posRef.current + "\n";
       result += "Date: " + posToDate(posRef.current) + "\n";
       result += "Time: " + posToTime(posRef.current) + "\n";
-
-      // const earth = scene.getObjectByName("Earth");
-      // const objectPos = new Vector3();
-
-      // earth.getWorldPosition(objectPos);
-      // result += "\n" + "Earth" + "\n";
-      // result += "X: " + objectPos.x + "\n";
-      // result += "Y: " + objectPos.y + "\n";
-      // result += "Z: " + objectPos.z + "\n\n";
-
-      // let q = new Quaternion();
-      // earth.getWorldQuaternion(q);
-      // result += "Earth orientation: " + "\n";
-      // result += "W: " + q.w + "\n";
-      // result += "X: " + q.x + "\n";
-      // result += "Y: " + q.y + "\n";
-      // result += "Z: " + q.z + "\n";
 
       planetsArr.forEach((e) => {
         const v = getRaDecDistance(e, scene, camera);
@@ -53,10 +34,6 @@ export function CopyPosToClipb() {
         result += "Km: " + v.distKm + "\n";
         result += "AU: " + v.distAU + "\n";
         result += "Elongation: " + v.elongation + "\n";
-
-        // result += "X: " + v.x + "\n";
-        // result += "Y: " + v.y + "\n";
-        // result += "Z: " + v.z + "\n";
       });
       navigator.clipboard.writeText(result);
     }),

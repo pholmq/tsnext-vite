@@ -62,15 +62,6 @@ export function Orbit({
   const showOrbits = useStore((s) => s.orbits);
   const orbitsLinewidth = useStore((s) => s.orbitsLinewidth);
 
-  // console.log(showOrbits);
-
-  useFrame(() => {
-    if (showOrbits) {
-      // const pos = useStore.getState().pos;
-      // orbitRef.current.rotation.z = rotation * posRef.current;
-    }
-  });
-
   let points: any[] = [];
   let arrowPoints = [];
   let arrowStepSize = 45;
@@ -94,7 +85,6 @@ export function Orbit({
 
   return (
     <>
-      {/* {showOrbits && ( */}
       <group ref={orbitRef} visible={showOrbits}>
         <group visible={arrows && showArrows}>
           <Arrow
@@ -128,8 +118,6 @@ export function Orbit({
           color={color} // Default
           lineWidth={orbitsLinewidth} // In pixels (default)
           dashed={false}
-          // transparent
-          // opacity={0.5}
         />
       </group>
       {/* )} */}

@@ -4,14 +4,8 @@ import { Line } from "@react-three/drei";
 import { useFrameInterval } from "../utils/useFrameInterval";
 
 export default function TraceLine({ name }) {
-  const {
-    traceLength,
-    traceStepInput,
-    traceLinewidth,
-    traceInterval,
-    tracedObjects,
-    // pointsArrRef,
-  } = useTraceStore();
+  const { traceLength, traceLinewidth, traceInterval, tracedObjects } =
+    useTraceStore();
   const tracedObj = tracedObjects.find((item) => item.name === name);
   const pointsArrRef = tracedObj.pointsArrRef;
   if (pointsArrRef.current === null) {
@@ -51,14 +45,12 @@ export default function TraceLine({ name }) {
   }, [traceLength]);
 
   useFrameInterval(() => {
-    // useFrame(() => {
     float32arr.set(pointsArrRef.current); //Bottleneck?
     //An optimaization might be to have an index for float32arr and only add
     //new points instead of copying the entire pointsArr every frame
     line2Ref.current.geometry.setPositions(float32arr);
     line2Ref.current.geometry.instanceCount =
       (pointsArrRef.current.length - 1) / 3;
-    // });
   }, traceInterval);
 
   return (
