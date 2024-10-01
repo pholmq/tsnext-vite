@@ -30,7 +30,7 @@ export function Planet(props: any) {
   useEffect(() => {
     if (cameraTarget) {
       useStore.setState({ cameraTarget: props.name });
-      updateControls({ Target: props.name });
+      updateControls({ Target: props.name } as { [key: string]: any });
       // setTargetInMenu({ Target: props.name });
       setCameraTarget(false);
     }
