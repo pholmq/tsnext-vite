@@ -62,12 +62,12 @@ const ExoplanetStars = () => {
   const instancedRef = useRef<any>(null); // Ref for InstancedMesh
 
   useEffect(() => {
-    const url = 'https://raw.githubusercontent.com/pholmq/tsnova-resources/master/bsc5-short.json';
+    const url = 'exoplanets_positions.json';
     fetchStarData(url).then(setStarData);
   }, []);
 
   const starPositions = useMemo(() => {
-    return starData.slice(0,100).map(star => {
+    return starData.slice(0,7000).map(star => {
       const { RA, Dec, K, V } = star;
       const position = parseRaDecToCartesian(RA, Dec);
       const color = colorTemperatureToRGB(K);
@@ -116,8 +116,8 @@ const ExoplanetStars = () => {
 
   return (
     <instancedMesh ref={instancedRef} args={[null, null, starPositions.length]}>
-      <sphereGeometry args={[5, 16, 16]} />
-      <meshBasicMaterial vertexColors={true} />
+      <sphereGeometry args={[1, 16, 16]} />
+      <meshBasicMaterial color="white" />
     </instancedMesh>
   );
 };

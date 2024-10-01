@@ -54,19 +54,8 @@ export default function App() {
   const { active } = useProgress(); // Check if loading is still active
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Once assets finish loading, update the state
-  // useState(() => {
-  //   if (!active) {
-  //     setIsLoaded(true);
-  //   }
-  // }, [active]);
-
   return (
     <div className="App h-screen bg-black">
-      {/* {!isLoaded && <LoadingBar />}{" "}
-      {/* Show loading bar until loading is complete */}
-      {/* {isLoaded && <TSNext />} Render the scene once loading is complete */}{" "}
-      */
       <TSNext />
     </div>
   );
