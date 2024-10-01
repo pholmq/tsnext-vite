@@ -67,7 +67,7 @@ const ExoplanetStars = () => {
   }, []);
 
   const starPositions = useMemo(() => {
-    return starData.slice(0,7000).map(star => {
+    return starData.slice(0,9096).map(star => {
       const { RA, Dec, K, V } = star;
       const position = parseRaDecToCartesian(RA, Dec);
       const color = colorTemperatureToRGB(K);
