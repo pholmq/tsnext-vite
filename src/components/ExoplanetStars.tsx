@@ -1,116 +1,121 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
-import { Matrix4 } from "three"; // Import from three
-import { Html } from "@react-three/drei"; // For rendering HTML inside the 3D scene
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Matrix4, Color } from 'three'; // Import Matrix4 and Color from three
 
-// Utility to parse custom IPAC-like format for star data (hostname, ra, dec)
-const parseIPACFormatCSV = (csvText: string) => {
-  const lines = csvText.split("\n").filter((line) => line.trim() !== ""); // Split by line and filter empty lines
-
-  // Skip the first four lines (headers, units, etc.)
-  const dataLines = lines.slice(4); // The actual data starts from the 5th line
-
-  // Parse each data line into objects
-  const data = dataLines.map((line) => {
-    const [hostname, ra, dec] = line.trim().match(/\S+/g); // Split based on whitespace, taking care of spaces in hostnames
-    return {
-      hostname: hostname.trim(),
-      ra: parseFloat(ra),
-      dec: parseFloat(dec),
-    };
-  });
-
-  return data;
+// Fetch the star catalog data
+const fetchStarData = async (url: string) => {
+  const response = await fetch(url);
+  return await response.json();
 };
 
-// This fucntion is now centerd to the berycenter, needs to be centered at the earth
-// Utility to convert RA/DEC to 3D position in space
-const raDecToPosition = (
-  ra: number,
-  dec: number,
-  distance: number = 100000
-) => {
-  const phi = (ra / 180) * Math.PI; // Convert RA to radians
-  const theta = ((90 - dec) / 180) * Math.PI; // Convert DEC to radians
+// Utility: Convert RA/Dec to Cartesian
+const parseRaDecToCartesian = (ra: string, dec: string, distance = 1) => {
+  const raParts = ra.match(/(\d+)h (\d+)m (\d+\.\d+)s/);
+  const raHours = parseFloat(raParts[1]);
+  const raMinutes = parseFloat(raParts[2]);
+  const raSeconds = parseFloat(raParts[3]);
+  const raDegrees = 15 * (raHours + raMinutes / 60 + raSeconds / 3600);
 
-  const x = distance * Math.sin(theta) * Math.cos(phi);
-  const y = distance * Math.cos(theta);
-  const z = distance * Math.sin(theta) * Math.sin(phi);
+  const decParts = dec.match(/([+-]?\d+)° (\d+)′ (\d+)″/);
+  const decDegrees = parseFloat(decParts[1]) + parseFloat(decParts[2]) / 60 + parseFloat(decParts[3]) / 3600;
 
-  return [x, y, z]; // Return array format for React Three Fiber
+  const raRadians = (raDegrees * Math.PI) / 180; // Convert to radians
+  const decRadians = (decDegrees * Math.PI) / 180; // Convert to radians
+
+  const x = distance * Math.cos(decRadians) * Math.cos(raRadians);
+  const y = distance * Math.cos(decRadians) * Math.sin(raRadians);
+  const z = distance * Math.sin(decRadians);
+
+  return [x, y, z];
 };
 
-interface StarData {
-  hostname: string;
-  ra: number;
-  dec: number;
-}
+// Convert color temperature (Kelvin) to approximate RGB
+const colorTemperatureToRGB = (kelvin: number) => {
+  let temp = kelvin / 100;
+  let red, green, blue;
 
-const ExoplanetStars: React.FC = () => {
-  // Hooks to manage stars data, loading, and error state
-  const [stars, setStars] = useState<StarData[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [visibleStars, setVisibleStars] = useState<number>(1300); // Limit stars for performance
+  if (temp <= 66) {
+    red = 255;
+    green = Math.max(99.4708025861 * Math.log(temp) - 161.1195681661, 0);
+    blue = temp <= 19 ? 0 : Math.max(138.5177312231 * Math.log(temp - 10) - 305.0447927307, 0);
+  } else {
+    red = Math.max(329.698727446 * Math.pow(temp - 60, -0.1332047592), 0);
+    green = Math.max(288.1221695283 * Math.pow(temp - 60, -0.0755148492), 0);
+    blue = 255;
+  }
+
+  // Return normalized RGB values (Clamp between 0 and 1)
+  return [red / 255, green / 255, blue / 255];
+};
+
+// Determine star size based on magnitude
+const starSizeByMagnitude = (magnitude: number) => {
+  if (magnitude < 1) return 12;
+  if (magnitude < 3) return 6;
+  if (magnitude < 5) return 3;
+  return 1;
+};
+
+// Exoplanet stars visualization component
+const ExoplanetStars = () => {
+  const [starData, setStarData] = useState([]);
   const instancedRef = useRef<any>(null); // Ref for InstancedMesh
 
-  // Load the CSV file from the local filesystem
-  const loadStarsFromCSV = async () => {
-    try {
-      const response = await fetch("exoplanets_positions.csv"); // Fetch the local CSV file
-      const csvText = await response.text(); // Read the CSV file as text
-
-      const parsedStars = parseIPACFormatCSV(csvText); // Parse the CSV
-      setStars(parsedStars); // Set the parsed data in state
-      setLoading(false);
-    } catch (err) {
-      console.error("Error loading stars from CSV:", err);
-      setError("Failed to load stars data: ${err.message}");
-      setLoading(false);
-    }
-  };
-
-  // Load stars on component mount
   useEffect(() => {
-    loadStarsFromCSV();
+    const url = 'https://raw.githubusercontent.com/pholmq/tsnova-resources/master/bsc5-short.json';
+    fetchStarData(url).then(setStarData);
   }, []);
 
+  const starPositions = useMemo(() => {
+    return starData.slice(0, 1000).map(star => {
+      const { RA, Dec, K, V } = star;
+      const position = parseRaDecToCartesian(RA, Dec, 10); // Set distance to 1000
+      const color = colorTemperatureToRGB(K);
+      const scale = starSizeByMagnitude(V);
+
+      console.log(`RA: ${RA}, Dec: ${Dec}, Cartesian: ${position}`);
+      console.log(`Kelvin: ${K}, RGB: ${color}`);
+      console.log(`Magnitude: ${V}, Size: ${scale}`);
+
+      return { position, scale, color, kelvin: K }; // Include Kelvin temperature (K)
+    });
+  }, [starData]);
+
   useFrame(() => {
-    if (instancedRef.current) {
-      const tempMatrix = new Matrix4(); // Matrix4 from three
+    // Ensure instancedRef is initialized and starPositions are loaded
+    if (!instancedRef.current || starPositions.length === 0) return;
 
-      stars.slice(0, visibleStars).forEach((star, index) => {
-        const [x, y, z] = raDecToPosition(star.ra, star.dec);
+    const tempMatrix = new Matrix4();
 
-        tempMatrix.setPosition(x, y, z);
-        instancedRef.current.setMatrixAt(index, tempMatrix);
-      });
+    starPositions.forEach((star, index) => {
+      const [x, y, z] = star.position;
+      tempMatrix.setPosition(x, y, z);
+      instancedRef.current.setMatrixAt(index, tempMatrix);
 
+      // Set color
+      const [r, g, b] = star.color;
+      const starColor = new Color(r, g, b);
+      console.log(`Kelvin: ${star.kelvin}, Setting Color at index ${index}:`, starColor);
+      instancedRef.current.setColorAt(index, starColor);
+    });
+
+    // Check for valid instanceMatrix and instanceColor properties before updating
+    if (instancedRef.current.instanceMatrix) {
       instancedRef.current.instanceMatrix.needsUpdate = true;
+    }
+
+    if (instancedRef.current.instanceColor) {
+      instancedRef.current.instanceColor.needsUpdate = true;
     }
   });
 
-  // Conditional rendering: always call hooks before conditionally rendering JSX
-  if (loading) {
-    return (
-      <Html>
-        <div>Loading...</div>
-      </Html>
-    );
-  }
-  if (error) {
-    return (
-      <Html>
-        <div>Error: {error}</div>
-      </Html>
-    );
-  }
-  // Group all the stars!
-  // Render stars using InstancedMesh for optimized performance with React Fiber components
+  // Return empty mesh if star data isn't loaded yet
+  if (starPositions.length === 0) return null;
+
   return (
-    <instancedMesh ref={instancedRef} args={[null, null, visibleStars]}>
-      <sphereGeometry args={[70, 16, 16]} />
-      <meshBasicMaterial color="white" />
+    <instancedMesh ref={instancedRef} args={[null, null, starPositions.length]}>
+      <sphereGeometry args={[5, 16, 16]} />
+      <meshBasicMaterial vertexColors={true} />
     </instancedMesh>
   );
 };

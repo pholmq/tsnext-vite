@@ -12,6 +12,7 @@ const OrbitCamera = () => {
   const { scene } = useThree();
   const cameraControlsRef = useRef<CameraControls>(null);
   const targetObjRef = useRef(null);
+  
   useLayoutEffect(() => {
     targetObjRef.current = scene.getObjectByName(cameraTarget);
     targetObjRef.current.getWorldPosition(target);
