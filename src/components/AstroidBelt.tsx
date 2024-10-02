@@ -6,7 +6,7 @@ import { useTexture } from "@react-three/drei";
 export function AsteroidBelt({ numAsteroids = 1000, innerRadius = 5, outerRadius = 7 }) {
   const meshRef = useRef<THREE.InstancedMesh | null>(null);
 
-  const [asteroidTexture] = useTexture(["/textures/asteroid.webp"]); // Path to your asteroid texture
+  const [asteroidTexture] = useTexture(["/textures/asteroid.webp"]);
 
   // Memoize asteroid data (positions, scales, rotations)
   const asteroids = useMemo(() => {

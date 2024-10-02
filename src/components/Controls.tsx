@@ -27,8 +27,6 @@ import { Leva } from "leva";
 import { useLevaControls } from "./useLevaControls";
 
 function updateURL(date: string, time: string) {
-  /* How to access the correct camera info? :) */
-  /* (camera:Camera and &${camera.getWorldQuaternion.name}) */
   history.pushState({}, "", `?date=${date}&time=${time}`);
 }
 
@@ -37,6 +35,7 @@ export const Controls = () => {
   const posRef = useStore((s) => s.posRef);
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
+  
   /* Mobile responsiveness breakpoint */
   const [showMenu, setShowMenu] = useState(window.innerWidth >= 768);
 

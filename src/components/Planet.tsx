@@ -6,7 +6,7 @@ import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
 import PlanetCamera from "./PlanetCamera";
 import { ContextMenu } from "./ContextMenu";
-import { PlanetRings } from "./PlanetRings"; // Import the PlanetRings component
+import { PlanetRings } from "./PlanetRings";
 
 export function Planet(props: any) {
   const ref: any = useRef();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Matrix4, Color, Vector3, InstancedMesh } from 'three'; // Import InstancedMesh for performance
+import { Matrix4, Color, Vector3, InstancedMesh } from 'three';
 
 // Fetch the star catalog data
 const fetchStarData = async (url: string) => {
@@ -64,7 +64,7 @@ const ExoplanetStars = () => {
 
   // Fetch star data on component mount
   useEffect(() => {
-    const url = 'exoplanets_positions.json'; // Replace with your data URL
+    const url = 'exoplanets_positions.json';
     fetchStarData(url).then(data => {
       if (data && data.length) {
         setStarData(data); // Set starData once the data is fetched
@@ -85,8 +85,8 @@ const ExoplanetStars = () => {
   const starPositions = useMemo(() => {
     if (!starData || starData.length === 0) return []; // Return empty array if starData isn't available yet
 
-    // Shuffle the star data array
-    //const shuffledStarData = shuffleArray([...starData]); // spread to avoid mutating original array
+    // Uncomment the row below to shuffle the stars
+    // const shuffledStarData = shuffleArray([...starData]); // spread to avoid mutating original array
     // Slice 850 random stars from the shuffled array
     const selectedStars = starData.slice(0, 9000);
     
