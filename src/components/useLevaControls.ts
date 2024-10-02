@@ -194,7 +194,7 @@ export const useLevaControls = () => {
   setControlsRef.current = setControls;
 
   // Create a function to update controls externally
-  const updateControls = useCallback((updates: Partial<typeof values>) => {
+  const updateControls = useCallback((updates: Partial<any>) => {
     setControlsRef.current(updates);
   }, []);
 

@@ -53,7 +53,7 @@ export function ContextMenu({ setContextMenu, setCameraTarget }) {
           id="Focus"
           onClick={(e) => {
             setCameraTarget(true);
-            updateControls({ Follow: true } as { [key: string]: any });
+            updateControls({ Follow: true });
             setContextMenu(false);
           }}
         >
