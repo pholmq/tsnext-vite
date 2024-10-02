@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Matrix4, Color } from 'three'; // Import Matrix4 and Color from three
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { Matrix4, Color } from "three"; // Import Matrix4 and Color from three
 
 // Fetch the star catalog data
 const fetchStarData = async (url: string) => {
@@ -17,7 +17,10 @@ const parseRaDecToCartesian = (ra: string, dec: string, distance = 1000) => {
   const raDegrees = 15 * (raHours + raMinutes / 60 + raSeconds / 3600);
 
   const decParts = dec.match(/([+-]?\d+)° (\d+)′ (\d+)″/);
-  const decDegrees = parseFloat(decParts[1]) + parseFloat(decParts[2]) / 60 + parseFloat(decParts[3]) / 3600;
+  const decDegrees =
+    parseFloat(decParts[1]) +
+    parseFloat(decParts[2]) / 60 +
+    parseFloat(decParts[3]) / 3600;
 
   const raRadians = (raDegrees * Math.PI) / 180; // Convert to radians
   const decRadians = (decDegrees * Math.PI) / 180; // Convert to radians
@@ -37,7 +40,10 @@ const colorTemperatureToRGB = (kelvin: number) => {
   if (temp <= 66) {
     red = 255;
     green = Math.max(99.4708025861 * Math.log(temp) - 161.1195681661, 0);
-    blue = temp <= 19 ? 0 : Math.max(138.5177312231 * Math.log(temp - 10) - 305.0447927307, 0);
+    blue =
+      temp <= 19
+        ? 0
+        : Math.max(138.5177312231 * Math.log(temp - 10) - 305.0447927307, 0);
   } else {
     red = Math.max(329.698727446 * Math.pow(temp - 60, -0.1332047592), 0);
     green = Math.max(288.1221695283 * Math.pow(temp - 60, -0.0755148492), 0);
@@ -45,7 +51,11 @@ const colorTemperatureToRGB = (kelvin: number) => {
   }
 
   // Return normalized RGB values (Clamp between 0 and 1)
-  return [Math.min(1, red / 255), Math.min(1, green / 255), Math.min(1, blue / 255)];
+  return [
+    Math.min(1, red / 255),
+    Math.min(1, green / 255),
+    Math.min(1, blue / 255),
+  ];
 };
 
 // Determine star size based on magnitude
@@ -62,21 +72,22 @@ const ExoplanetStars = () => {
   const instancedRef = useRef<any>(null); // Ref for InstancedMesh
 
   useEffect(() => {
-    const url = 'https://raw.githubusercontent.com/pholmq/tsnova-resources/master/bsc5-short.json';
+    const url =
+      "https://raw.githubusercontent.com/pholmq/tsnova-resources/master/bsc5-short.json";
     fetchStarData(url).then(setStarData);
   }, []);
 
   const starPositions = useMemo(() => {
-    return starData.slice(0,100).map(star => {
+    return starData.slice(0, 100).map((star) => {
       const { RA, Dec, K, V } = star;
       const position = parseRaDecToCartesian(RA, Dec);
       const color = colorTemperatureToRGB(K);
       const scale = starSizeByMagnitude(V);
-      
+
       console.log(`RA: ${RA}, Dec: ${Dec}, Cartesian: ${position}`);
       console.log(`Kelvin: ${K}, RGB: ${color}`);
       console.log(`Magnitude: ${V}, Size: ${scale}`);
-      
+
       return { position, scale, color };
     });
   }, [starData]);
@@ -96,7 +107,10 @@ const ExoplanetStars = () => {
       const [r, g, b] = star.color;
       const starColor = new Color(r, g, b);
       console.log(`Setting Color at index ${index}:`, starColor);
-      console.log(`Kelvin: ${star.K}, Setting Color at index ${index}:`, starColor);
+      console.log(
+        `Kelvin: ${star.color}, Setting Color at index ${index}:`,
+        starColor
+      );
 
       instancedRef.current.setColorAt(index, starColor);
     });

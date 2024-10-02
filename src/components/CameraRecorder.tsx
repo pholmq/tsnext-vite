@@ -31,7 +31,9 @@ const CameraRecorder = () => {
   const targetObjRef = useRef<any>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [recordingData, setRecordingData] = useState<RecordingData | null>(null);
+  const [recordingData, setRecordingData] = useState<RecordingData | null>(
+    null
+  );
   const [recordingsList, setRecordingsList] = useState<RecordingData[]>([]);
   const playbackIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -59,7 +61,7 @@ const CameraRecorder = () => {
   const recordFrame = () => {
     const timestamp = Date.now();
     const cameraPosition = cameraControlsRef.current?.camera.position;
-    const cameraTarget = cameraControlsRef.current?.getTarget();
+    const cameraTarget = cameraControlsRef.current?.getTarget(target);
     const cameraQuaternion = cameraControlsRef.current?.camera.quaternion; // Get the camera's quaternion (orientation)
 
     if (cameraPosition && cameraTarget && cameraQuaternion) {
@@ -120,11 +122,28 @@ const CameraRecorder = () => {
       if (index < recording.frames.length) {
         const { position, target, quaternion } = recording.frames[index];
         // Set both the camera's position, target, and orientation (quaternion)
-        cameraControlsRef.current?.camera.position.set(position.x, position.y, position.z);
-        cameraControlsRef.current?.setLookAt(position.x, position.y, position.z, target.x, target.y, target.z, false);
+        cameraControlsRef.current?.camera.position.set(
+          position.x,
+          position.y,
+          position.z
+        );
+        cameraControlsRef.current?.setLookAt(
+          position.x,
+          position.y,
+          position.z,
+          target.x,
+          target.y,
+          target.z,
+          false
+        );
 
         // Apply the quaternion to set the orientation of the camera
-        const camQuaternion = new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+        const camQuaternion = new Quaternion(
+          quaternion.x,
+          quaternion.y,
+          quaternion.z,
+          quaternion.w
+        );
         cameraControlsRef.current?.camera.quaternion.copy(camQuaternion);
 
         index++;
