@@ -7,6 +7,7 @@ import { useFrame } from "@react-three/fiber";
 import PlanetCamera from "./PlanetCamera";
 import { ContextMenu } from "./ContextMenu";
 import { PlanetRings } from "./PlanetRings"; // Import the PlanetRings component
+import { useControls } from "leva";
 
 export function Planet(props: any) {
   const ref: any = useRef();
@@ -15,6 +16,11 @@ export function Planet(props: any) {
   const [hovered, setHover] = useState(false);
   const [contextMenu, setContextMenu] = useState(false);
   const [cameraTarget, setCameraTarget] = useState(false);
+
+  //Add the planet to the Planets meny
+  useControls("Planets", {
+    [props.name]: props.visible,
+  });
 
   useEffect(() => {
     if (cameraTarget) {
@@ -34,11 +40,30 @@ export function Planet(props: any) {
   const tiltb = props.tiltb || 0;
 
   // Define ring parameters for planets with rings
-  const ringParams: Record<string, { innerRadius: number; outerRadius: number; texture: string }> = {
-    Saturn: { innerRadius: props.size + 0.5, outerRadius: props.size + 7.5, texture: "/textures/saturn_ring.jpg" },
-    Jupiter: { innerRadius: props.size + 0.3, outerRadius: props.size + 4.6, texture: "/textures/jupiter_ring.jpg" },
-    Uranus: { innerRadius: props.size + 0.4, outerRadius: props.size + 4.9, texture: "/textures/uranus_ring.jpg" },
-    Neptune: { innerRadius: props.size + 0.4, outerRadius: props.size + 4.8, texture: "/textures/neptune_ring.jpg" },
+  const ringParams: Record<
+    string,
+    { innerRadius: number; outerRadius: number; texture: string }
+  > = {
+    Saturn: {
+      innerRadius: props.size + 0.5,
+      outerRadius: props.size + 7.5,
+      texture: "/textures/saturn_ring.jpg",
+    },
+    Jupiter: {
+      innerRadius: props.size + 0.3,
+      outerRadius: props.size + 4.6,
+      texture: "/textures/jupiter_ring.jpg",
+    },
+    Uranus: {
+      innerRadius: props.size + 0.4,
+      outerRadius: props.size + 4.9,
+      texture: "/textures/uranus_ring.jpg",
+    },
+    Neptune: {
+      innerRadius: props.size + 0.4,
+      outerRadius: props.size + 4.8,
+      texture: "/textures/neptune_ring.jpg",
+    },
   };
 
   return (
