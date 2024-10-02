@@ -39,26 +39,20 @@ type Settings = {
 };
 
 export const Cobj = ({ name, children }: Props) => {
+  //Get the settings for this object
   const cSettings =
     celestialSettings[celestialSettings.findIndex((p) => p.name === name)];
   const aSettings =
     miscSettings[celestialSettings.findIndex((p) => p.name === name)];
+
+  //and merge them into s
   const s = { ...cSettings, ...aSettings };
 
   const containerRef: any = useRef();
   const pivotRef: any = useRef();
   const orbitRef: any = useRef();
 
-  // let visible = s.visible;
-
-  if (s.type === "planet") {
-    const { [s.name]: showHide } = useControls("Planets", {
-      [s.name]: s.visible,
-    });
-    s.visible = showHide;
-    // console.log(s.name, ": ", visible);
-  }
-
+  //We add all objects to the Celestial settings meny so that they can be modified at run tim
   const {
     startPos,
     speed,
@@ -97,8 +91,6 @@ export const Cobj = ({ name, children }: Props) => {
       },
     }),
   });
-
-  const containerPos = s.containerPos ? s.containerPos : 0;
 
   const posRef: any = useStore((state) => state.posRef);
 
