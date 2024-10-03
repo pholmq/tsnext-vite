@@ -34,6 +34,7 @@ function TSNext() {
         <Suspense fallback={null}>
           <CustomCameraControls />
           <ambientLight intensity={0.5} />
+          {/* Remove this comment below? */}
           {/* <Stars count={800} radius={100000} /> */}
           <AnimationController />
           <SolarSystem />
