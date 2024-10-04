@@ -17,8 +17,8 @@ import { useProgress } from "@react-three/drei"; // Import useProgress to detect
 import { Leva } from "leva";
 import { AsteroidBelt } from "./components/AstroidBelt";
 
-
 function TSNext() {
+
   return (
     <>
       <Loader />

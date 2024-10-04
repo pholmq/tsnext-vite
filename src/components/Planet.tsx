@@ -8,6 +8,10 @@ import PlanetCamera from "./PlanetCamera";
 import { ContextMenu } from "./ContextMenu";
 import { PlanetRings } from "./PlanetRings";
 import { useControls } from "leva";
+import { addEffect } from "@react-three/fiber";
+import { EffectsOnObj } from "./EffectsOnObj";
+
+
 
 export function Planet(props: any) {
   const ref: any = useRef();
@@ -65,6 +69,14 @@ export function Planet(props: any) {
       texture: "/textures/neptune_ring.jpg",
     },
   };
+
+ // Determine the effect type based on the planet's name
+ let effectType;
+ if (props.name === "Sun") {
+   effectType = "sunGlow";
+ } else if (props.name === "Halley") {
+   effectType = "cometTrail";
+ }
 
   return (
     <>
@@ -125,8 +137,14 @@ export function Planet(props: any) {
             />
           )}
 
+
           {props.name === "Earth" && <PlanetCamera />}
+          
         </mesh>
+
+          {/* Add particle effects based on the planet's name */}
+        {effectType && <EffectsOnObj effectType={effectType} position={[0, 0, 0]} />}
+
       </group>
     </>
   );

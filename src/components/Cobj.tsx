@@ -9,9 +9,6 @@ import { Vector3 } from "three";
 import { Orbit } from "./Orbit";
 import { Planet } from "./Planet";
 
-import { addEffect } from './AddEffect'; // Import the addEffect function
-
-
 type Props = {
   name: string;
   children?: React.ReactNode;
@@ -102,14 +99,6 @@ export const Cobj = ({ name, children }: Props) => {
       speed * posRef.current - startPos * (Math.PI / 180);
   });
 
-  // Determine the effect type based on the object name or type
-  let effectType;
-  if (name === 'Sun') {
-    effectType = 'sunGlow';
-  } else if (name === 'Halleys') {
-    effectType = 'cometTrail';
-  }
-
   return (
     <>
       {/* <Pobj name={name}></Pobj> */}
@@ -139,10 +128,6 @@ export const Cobj = ({ name, children }: Props) => {
             {/* {s.earth ? <Earth {...s} /> : null} */}
             {s.type === "planet" ? <Planet {...s} /> : null}
             {children}
-
-
-            {/* Add the selected effect to the object */}
-            {effectType && addEffect(effectType, pivotRef)}
 
           </group>
         </group>
