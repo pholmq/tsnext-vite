@@ -17,7 +17,6 @@ import { useProgress } from "@react-three/drei"; // Import useProgress to detect
 import { Leva } from "leva";
 import { AsteroidBelt } from "./components/AstroidBelt";
 
-
 function TSNext() {
   return (
     <>
@@ -31,7 +30,7 @@ function TSNext() {
           far: 10000000,
         }}
       >
-        <Suspense fallback={null}>
+        <Suspense>
           <CustomCameraControls />
           <ambientLight intensity={0.5} />
           {/* <Stars count={800} radius={100000} /> */}
@@ -42,11 +41,10 @@ function TSNext() {
           <CopyPosToClipb />
           <axesHelper args={[5]} position={[0, 0, 0]} />
           <ExoplanetStars />
-          <AsteroidBelt/>
+          <AsteroidBelt />
         </Suspense>
       </Canvas>
       <Controls />
-      {/* <Sidebar /> */}
       <PlanetCameraInfo />
       <Sidebar />
     </>

@@ -1,11 +1,6 @@
 import { createRef } from "react";
 import create from "zustand";
-import {
-  getDefaultSpeedFact,
-  sDay,
-  posToDate,
-  posToTime,
-} from "./utils/time-date-functions";
+import { getDefaultSpeedFact, sDay } from "./utils/time-date-functions";
 
 export const useStore = create((set) => ({
   posRef: createRef(0),
