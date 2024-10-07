@@ -1,10 +1,14 @@
-import { useStore, useTraceStore } from "../store";
+import { useStore, usePlanetStore, useTraceStore } from "../store";
 import { folder, useControls } from "leva";
 import { speedFactOpts } from "../utils/time-date-functions";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import miscSettings from "../settings/misc-settings.json";
 
 export const useLevaControls = () => {
   //A custom hook for the leva controls with an update function
+  const planetsArray = miscSettings
+    .filter((item) => item.planet === true)
+    .map((item) => item.name);
 
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
@@ -107,7 +111,8 @@ export const useLevaControls = () => {
 
         Target: {
           value: useStore.getState().cameraTarget,
-          options: ["Earth", "Sun", "Mars"],
+          // options: ["Earth", "Sun", "Mars"],
+          options: planetsArray,
           onChange: (v) => useStore.setState({ cameraTarget: v }),
         },
 
@@ -124,12 +129,6 @@ export const useLevaControls = () => {
           value: useStore.getState().planetCameraHelper,
           onChange: (v) => useStore.setState({ planetCameraHelper: v }),
         },
-
-        // "Camera type": {
-        //   value: useStore.getState().activeCamera,
-        //   options: { Orbit: "orbit", Fly: "fly" },
-        //   onChange: (v) => useStore.setState({ activeCamera: v }),
-        // },
       },
       { collapsed: true }
     ),

@@ -15,6 +15,7 @@
     "color": "skyblue",
     "type": "planet",
     "visible": true,
+    "planet": true,
     "axesHelper": false,
     "arrows": true,
     "reverseArrows": true,
