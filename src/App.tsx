@@ -18,6 +18,7 @@ import { Leva } from "leva";
 import { AsteroidBelt } from "./components/AstroidBelt";
 
 function TSNext() {
+
   return (
     <>
       <Loader />
@@ -33,6 +34,7 @@ function TSNext() {
         <Suspense>
           <CustomCameraControls />
           <ambientLight intensity={0.5} />
+          {/* Remove this comment below? */}
           {/* <Stars count={800} radius={100000} /> */}
           <AnimationController />
           <SolarSystem />

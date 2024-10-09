@@ -4,6 +4,8 @@ import { speedFactOpts } from "../utils/time-date-functions";
 import { useCallback, useEffect, useRef } from "react";
 import miscSettings from "../settings/misc-settings.json";
 
+// useLevaControls.TS not TSX?
+
 export const useLevaControls = () => {
   //A custom hook for the leva controls with an update function
   const planetsArray = miscSettings
@@ -14,6 +16,7 @@ export const useLevaControls = () => {
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
   const stepFact = useTraceStore((s) => s.stepFact);
+  
 
   const [values, setControls] = useControls(() => ({
     "1 sec/step equals": {

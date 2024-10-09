@@ -128,6 +128,7 @@ export const Cobj = ({ name, children }: Props) => {
             {/* {s.earth ? <Earth {...s} /> : null} */}
             {s.type === "planet" ? <Planet {...s} /> : null}
             {children}
+
           </group>
         </group>
       </group>

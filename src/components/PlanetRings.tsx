@@ -8,7 +8,7 @@ export function PlanetRings({ innerRadius, outerRadius, planetSize, texture }) {
 
   return (
     <mesh ref={ringRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-      <ringGeometry args={[innerRadius, outerRadius, 64]} />
+      <ringGeometry args={[innerRadius, outerRadius + 10, 64]} />
       <meshBasicMaterial
         map={ringTexture}
         side={THREE.DoubleSide}
