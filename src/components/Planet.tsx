@@ -135,7 +135,6 @@ export function Planet(props: any) {
             <PlanetRings
               innerRadius={ringParams[props.name].innerRadius}
               outerRadius={ringParams[props.name].outerRadius}
-              planetSize={props.size}
               texture={ringParams[props.name].texture}
             />
           )}
