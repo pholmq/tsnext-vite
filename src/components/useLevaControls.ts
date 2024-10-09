@@ -12,6 +12,7 @@ export const useLevaControls = () => {
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
   const stepFact = useTraceStore((s) => s.stepFact);
+  
 
   const [values, setControls] = useControls(() => ({
     "1 sec/step equals": {

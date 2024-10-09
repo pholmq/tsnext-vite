@@ -70,6 +70,9 @@ export function Planet(props: any) {
     },
   };
 
+ // This could be done in settings (misc + celes)
+ // "effects": ["lensflare", "comet-trail", ""]
+ // 
  // Determine the effect type based on the planet's name
  let effectType;
  if (props.name === "Sun") {

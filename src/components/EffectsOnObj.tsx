@@ -2,7 +2,10 @@ import React, { useMemo } from "react";
 import { useTexture, Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
-// Function to return the appropriate effect component
+// Store everything in misc-settings and or Zustand
+
+
+
 export function EffectsOnObj({ effectType, position }: { effectType: string, position: [number, number, number] }) {
   if (effectType === 'cometTrail') {
     return <CometTrail position={position} />;
@@ -16,17 +19,21 @@ export function EffectsOnObj({ effectType, position }: { effectType: string, pos
 function CometTrail({ position }: { position: [number, number, number] }) {
   const cometTexture = useTexture("/textures/effects/glow_particle.png");
 
+  // Number of particles for the comet trail
+  const particleCount = 500;
+
   // Memoize the particle positions for comet trail
   const cometParticles = useMemo(() => {
-    const positions = new Float32Array(500 * 3);
-    for (let i = 0; i < 500; i++) {
-      const x = (Math.random() - 0.5) * 150;
-      const y = (Math.random() - 0.5) * 150;
+    const positions = new Float32Array(particleCount * 3); // x, y, z for each particle
+    for (let i = 0; i < particleCount; i++) {
+      const x = (Math.random() - 0.5) * 5;
+      const y = (Math.random() - 0.5) * 5;
       const z = (Math.random() - 0.5) * 20;
-      positions.set([x, y, z], i * 3);
+      positions.set([x, y, z], i * 3); // Set at index i*3 for x, y, z
     }
     return positions;
-  }, []);
+  }, [particleCount]);
+
 
   return (
     <group position={position}>
@@ -35,14 +42,14 @@ function CometTrail({ position }: { position: [number, number, number] }) {
           <bufferAttribute
             attach="attributes-position"
             array={cometParticles}
-            count={500}
+            count={particleCount}
             itemSize={3}
           />
         </bufferGeometry>
         <PointMaterial
           transparent
           opacity={0.8}
-          size={10000000} // Adjust size for visibility
+          size={1} // Adjust size for visibility
           sizeAttenuation
           map={cometTexture}
           depthWrite={false}
@@ -56,17 +63,20 @@ function CometTrail({ position }: { position: [number, number, number] }) {
 function SunGlow({ position }: { position: [number, number, number] }) {
   const glowTexture = useTexture("/textures/effects/glow_particle.png");
 
+  // Number of particles for the sun glow
+  const particleCount = 300;
+
   // Memoize the particle positions for the sun glow
   const glowParticles = useMemo(() => {
-    const positions = new Float32Array(300 * 3);
-    for (let i = 0; i < 300; i++) {
-      const x = (Math.random() - 0.5) * 1500;
-      const y = (Math.random() - 0.5) * 1500;
-      const z = (Math.random() - 0.5) * 1500;
-      positions.set([x, y, z], i * 3);
+    const positions = new Float32Array(particleCount * 3); // x, y, z for each particle
+    for (let i = 0; i < particleCount; i++) {
+      const x = (Math.random() - 0.5) * 150;
+      const y = (Math.random() - 0.5) * 150;
+      const z = (Math.random() - 0.5) * 150;
+      positions.set([x, y, z], i * 3); // Set at index i*3 for x, y, z
     }
     return positions;
-  }, []);
+  }, [particleCount]);
 
   return (
     <group position={position}>
@@ -75,7 +85,7 @@ function SunGlow({ position }: { position: [number, number, number] }) {
           <bufferAttribute
             attach="attributes-position"
             array={glowParticles}
-            count={300}
+            count={particleCount}
             itemSize={3}
           />
         </bufferGeometry>
