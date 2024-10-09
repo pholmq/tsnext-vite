@@ -49,13 +49,13 @@ export function Planet(props: any) {
     { innerRadius: number; outerRadius: number; texture: string }
   > = {
     Saturn: {
-      innerRadius: props.size + 0.5,
-      outerRadius: props.size + 7.5,
+      innerRadius: props.size + 0.7,
+      outerRadius: props.size + 5,
       texture: "/textures/saturn_ring.jpg",
     },
     Jupiter: {
-      innerRadius: props.size + 0.3,
-      outerRadius: props.size + 4.6,
+      innerRadius: props.size + 10,
+      outerRadius: props.size + 1,
       texture: "/textures/jupiter_ring.jpg",
     },
     Uranus: {
@@ -64,9 +64,9 @@ export function Planet(props: any) {
       texture: "/textures/uranus_ring.jpg",
     },
     Neptune: {
-      innerRadius: props.size + 0.4,
-      outerRadius: props.size + 4.8,
-      texture: "/textures/neptune_ring.jpg",
+      innerRadius: props.size + 1.8,
+      outerRadius: props.size + 7,
+      texture: "/textures/neptune_ring.png",
     },
   };
 
