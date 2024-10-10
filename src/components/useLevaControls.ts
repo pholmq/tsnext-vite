@@ -1,4 +1,4 @@
-import { useStore, usePlanetStore, useTraceStore } from "../store";
+import { useStore, useTraceStore } from "../store";
 import { folder, useControls } from "leva";
 import { speedFactOpts } from "../utils/time-date-functions";
 import { useCallback, useEffect, useRef } from "react";
@@ -116,7 +116,10 @@ export const useLevaControls = () => {
           value: useStore.getState().cameraTarget,
           // options: ["Earth", "Sun", "Mars"],
           options: planetsArray,
-          onChange: (v) => useStore.setState({ cameraTarget: v }),
+          onChange: (v) => {
+            useStore.setState({ cameraTarget: v });
+            console.log(v);
+          },
         },
 
         Follow: {
