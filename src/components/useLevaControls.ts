@@ -9,14 +9,13 @@ import miscSettings from "../settings/misc-settings.json";
 export const useLevaControls = () => {
   //A custom hook for the leva controls with an update function
   const planetsArray = miscSettings
-    .filter((item) => item.planet === true)
+    .filter((item) => item.type === "planet")
     .map((item) => item.name);
 
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
   const stepFact = useTraceStore((s) => s.stepFact);
-  
 
   const [values, setControls] = useControls(() => ({
     "1 sec/step equals": {
@@ -118,7 +117,7 @@ export const useLevaControls = () => {
           options: planetsArray,
           onChange: (v) => {
             useStore.setState({ cameraTarget: v });
-            console.log(v);
+            // console.log(v);
           },
         },
 

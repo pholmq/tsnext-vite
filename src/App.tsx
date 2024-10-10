@@ -18,7 +18,6 @@ import { Leva } from "leva";
 import { AsteroidBelt } from "./components/AstroidBelt";
 
 function TSNext() {
-
   return (
     <>
       <Loader />
