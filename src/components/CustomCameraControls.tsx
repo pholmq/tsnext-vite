@@ -12,7 +12,7 @@ const OrbitCamera = () => {
   const { scene } = useThree();
   const cameraControlsRef = useRef<CameraControls>(null);
   const targetObjRef = useRef(null);
-  
+
   useLayoutEffect(() => {
     targetObjRef.current = scene.getObjectByName(cameraTarget);
     targetObjRef.current.getWorldPosition(target);
@@ -31,7 +31,7 @@ const OrbitCamera = () => {
     }
   });
 
-  return <CameraControls ref={cameraControlsRef} maxDistance={500000} />;
+  return <CameraControls ref={cameraControlsRef} maxDistance={80000} />;
 };
 
 export default function CustomCameraControls() {

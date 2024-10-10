@@ -21,6 +21,8 @@ export default function PlanetCamera() {
   const keyPressed = useKeyPress();
 
   const { gl } = useThree();
+  //Set touch action to none so useGesture doesn't complain
+  gl.domElement.style.touchAction = "none";
 
   let rotateX = 0;
 

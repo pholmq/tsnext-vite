@@ -4,18 +4,16 @@
     "color": "darkGrey",
     "type": "planet",
     "visible": true,
-    "planet": true,
     "texture": "",
     "unicodeSymbol": "",
     "traceable": true
-  }, 
+  },
   {
     "name": "Earth",
     "earth": true,
     "color": "skyblue",
     "type": "planet",
     "visible": true,
-    "planet": true,
     "axesHelper": false,
     "arrows": true,
     "reverseArrows": true,
@@ -42,7 +40,6 @@
     "type": "planet",
     "visible": true,
     "axesHelper": false,
-    "planet": true,
     "texture": "/textures/planets/2k_moon.jpg",
     "unicodeSymbol": "&#x263D;",
     "traceable": true
@@ -60,7 +57,6 @@
     "visible": true,
     "axesHelper": false,
     "arrows": true,
-    "planet": true,
     "texture": "/textures/planets/2k_sun.jpg",
     "light": true,
     "glow": true,
@@ -143,7 +139,6 @@
     "type": "planet",
     "color": "grey",
     "visible": false,
-    "planet": true,
     "texture": "",
     "unicodeSymbol": "",
     "traceable": true
@@ -153,7 +148,6 @@
     "type": "planet",
     "color": "grey",
     "visible": false,
-    "planet": true,
     "texture": "",
     "unicodeSymbol": "",
     "traceable": true
@@ -182,7 +176,6 @@
     "color": "grey",
     "type": "planet",
     "visible": true,
-    "planet": true,
     "texture": "/textures/planets/2k_saturn.jpg",
     "unicodeSymbol": "&#x2644;",
     "traceable": true
@@ -197,7 +190,6 @@
     "color": "grey",
     "type": "planet",
     "visible": true,
-    "planet": true,
     "texture": "/textures/planets/2k_uranus.jpg",
     "unicodeSymbol": "&#x2645;",
     "traceable": true
@@ -212,7 +204,6 @@
     "color": "#5E93F1",
     "type": "planet",
     "visible": true,
-    "planet": true,
     "texture": "/textures/planets/2k_neptune.jpg",
     "unicodeSymbol": "&#x2646;",
     "traceable": true
@@ -247,7 +238,6 @@
     "color": "#FF5800",
     "type": "planet",
     "visible": false,
-    "planet": true,
     "texture": "",
     "unicodeSymbol": "",
     "traceable": true
