@@ -1,7 +1,7 @@
 [
   {
     "name": "SystemCenter",
-    "color": "darkGrey",
+    "color": "black",
     "type": "planet",
     "visible": true,
     "texture": "",
