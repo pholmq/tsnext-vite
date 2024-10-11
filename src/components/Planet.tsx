@@ -21,6 +21,7 @@ export function Planet(props: any) {
   const [hovered, setHover] = useState(false);
   const [contextMenu, setContextMenu] = useState(false);
   // const [cameraTarget, setCameraTarget] = useState(false);
+  const cameraTarget: any = useStore((state) => state.cameraTarget);
 
   //Add the planet to the Planets meny
   useControls("Planets", {
@@ -133,7 +134,9 @@ export function Planet(props: any) {
             />
           )}
 
-          {props.name === "Earth" && <PlanetCamera />}
+          {props.name === cameraTarget && (
+            <PlanetCamera planetRadius={props.size} />
+          )}
         </mesh>
 
         {/* Add particle effects based on the planet's name */}
