@@ -9,9 +9,8 @@ import { useGesture } from "@use-gesture/react";
 import useKeyPress from "../utils/useKeyPress";
 import { useStore } from "../store";
 
-export default function PlanetCamera() {
-  const earthRadius = 4;
-  let cameraHeight = earthRadius;
+export default function PlanetCamera({ planetRadius }) {
+  let cameraHeight = planetRadius + 0.1;
   const longitude = 0;
   const latitude = 0;
   const planetCamRef: any = useRef();
@@ -45,6 +44,7 @@ export default function PlanetCamera() {
             }
           }
         : () => {}, // and if not, it gets and empty function
+
       onWheel: planetCamera
         ? ({ delta: [, dy] }) => {
             //
@@ -86,7 +86,9 @@ export default function PlanetCamera() {
         camMountRef.current.position.y += 0.005;
         break;
       case "e":
-        camMountRef.current.position.y -= 0.005;
+        if (camMountRef.current.position.y > planetRadius + 0.007) {
+          camMountRef.current.position.y -= 0.005;
+        }
         break;
     }
     if (longRef.current.rotation.y > Math.PI * 2) {
