@@ -1,8 +1,10 @@
 import { useStore, useTraceStore } from "../store";
 import { folder, useControls } from "leva";
 import { speedFactOpts } from "../utils/time-date-functions";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import miscSettings from "../settings/misc-settings.json";
+
+// useLevaControls.TS not TSX?
 
 export const useLevaControls = () => {
   //A custom hook for the leva controls with an update function
@@ -16,27 +18,22 @@ export const useLevaControls = () => {
   const stepFact = useTraceStore((s) => s.stepFact);
 
   const [values, setControls] = useControls(() => ({
-    "⏲️ 1 sec/step equals": {
+    "1 sec/step equals": {
       value: speedmultiplier,
       step: 1,
       onChange: (v) => useStore.setState({ speedmultiplier: v }),
     },
-    "⏳ Speed factor": {
+    "\u{000D}": {
       value: speedFact,
       options: speedFactOpts,
-      onChange: (v) => useStore.setState({ speedFact: v }),
+
+      onChange: (v) => {
+        useStore.setState({ speedFact: v });
+      },
     },
-    "🚀 Target planets": {
-      value: getControlValue(useStore, "cameraTarget"),
-      options: planetsArray,
-      onChange: (v) => useStore.setState({ cameraTarget: v }),
-    },
-    "🔄 Orbits": {
-      value: getControlValue(useStore, "orbits"),
-      onChange: (v) => useStore.setState({ orbits: v }),
-    },
+
     Trace: {
-      value: getControlValue(useStore, "trace"),
+      value: useStore.getState().trace,
       onChange: (v) => useStore.setState({ trace: v }),
     },
     "Trace settings": folder(
@@ -191,13 +188,16 @@ export const useLevaControls = () => {
           onChange: (v) => useStore.setState({ showStats: v }),
         },
       },
-    }, { collapsed: true }),
-    "🪐 Celestial settings": folder({}, { collapsed: true }),
+      { collapsed: true }
+    ),
+    "Celestial settings": folder({}, { collapsed: true }),
   }));
 
+  // Store the setControls function in a ref to avoid unnecessary re-renders
   const setControlsRef = useRef(setControls);
   setControlsRef.current = setControls;
 
+  // Create a function to update controls externally
   const updateControls = useCallback((updates: Partial<any>) => {
     setControlsRef.current(updates);
   }, []);
