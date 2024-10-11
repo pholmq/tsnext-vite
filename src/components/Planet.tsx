@@ -38,33 +38,6 @@ export function Planet(props: any) {
   const tilt = props.tilt || 0;
   const tiltb = props.tiltb || 0;
 
-  // Define ring parameters for planets with rings
-  const ringParams: Record<
-    string,
-    { innerRadius: number; outerRadius: number; texture: string }
-  > = {
-    Saturn: {
-      innerRadius: props.size + 0.7,
-      outerRadius: props.size + 5,
-      texture: "/textures/saturn_ring.jpg",
-    },
-    Jupiter: {
-      innerRadius: props.size + 10,
-      outerRadius: props.size + 1,
-      texture: "/textures/jupiter_ring.jpg",
-    },
-    Uranus: {
-      innerRadius: props.size + 0.4,
-      outerRadius: props.size + 4.9,
-      texture: "/textures/uranus_ring.jpg",
-    },
-    Neptune: {
-      innerRadius: props.size + 1.8,
-      outerRadius: props.size + 7,
-      texture: "/textures/neptune_ring.png",
-    },
-  };
-
   // This could be done in settings (misc + celes)
   // "effects": ["lensflare", "comet-trail", ""]
   //
@@ -126,11 +99,11 @@ export function Planet(props: any) {
           {props.light && <pointLight intensity={3} />}
 
           {/* Add Rings for planets with rings */}
-          {props.name in ringParams && (
+          {props.rings && (
             <PlanetRings
-              innerRadius={ringParams[props.name].innerRadius}
-              outerRadius={ringParams[props.name].outerRadius}
-              texture={ringParams[props.name].texture}
+              innerRadius={props.rings.innerRadius + props.size}
+              outerRadius={props.rings.outerRadius + props.size}
+              texture={props.rings.texture}
             />
           )}
 
