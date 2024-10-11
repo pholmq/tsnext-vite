@@ -5,14 +5,15 @@ import { useCallback, useRef } from "react";
 import miscSettings from "../settings/misc-settings.json";
 
 export const useLevaControls = () => {
-  const planetsArray = miscSettings.filter(item => item.planet).map(item => item.name);
+  //A custom hook for the leva controls with an update function
+  const planetsArray = miscSettings
+    .filter((item) => item.type === "planet")
+    .map((item) => item.name);
 
-  const speedmultiplier = useStore(s => s.speedmultiplier);
-  const speedFact = useStore(s => s.speedFact);
-  const stepMultiplier = useTraceStore(s => s.stepMultiplier);
-  const stepFact = useTraceStore(s => s.stepFact);
-
-  const getControlValue = (storeFn, key) => storeFn.getState()[key];
+  const speedFact = useStore((s) => s.speedFact);
+  const speedmultiplier: number = useStore((s) => s.speedmultiplier);
+  const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
+  const stepFact = useTraceStore((s) => s.stepFact);
 
   const [values, setControls] = useControls(() => ({
     "⏲️ 1 sec/step equals": {
@@ -38,103 +39,157 @@ export const useLevaControls = () => {
       value: getControlValue(useStore, "trace"),
       onChange: (v) => useStore.setState({ trace: v }),
     },
-    "⚙️ Trace settings": folder({
-      "🔘 Dotted line": {
-        value: getControlValue(useStore, "traceDots"),
-        onChange: (v) => useStore.setState({ traceDots: v }),
+    "Trace settings": folder(
+      {
+        "Dotted line": {
+          value: useStore.getState().traceDots,
+          onChange: (v) => useStore.setState({ traceDots: v }),
+        },
+        "Line width": {
+          value: useTraceStore.getState().traceLinewidth,
+          min: 1,
+          max: 10,
+          step: 1,
+          onChange: (v) => useTraceStore.setState({ traceLinewidth: v }),
+        },
+        "Trace length": {
+          value: useTraceStore.getState().traceLength,
+          min: 1,
+          max: 10000,
+          step: 1,
+          onChange: (v) => useTraceStore.setState({ traceLength: v }),
+        },
+        // "Trace step": {
+        //   value: useTraceStore.getState().traceStepInput,
+        //   min: 1,
+        //   step: 1,
+        //   onChange: (v) => useTraceStore.setState({ traceStepInput: v }),
+        // },
+
+        "1 step equals": {
+          value: stepMultiplier,
+          min: 1,
+          step: 1,
+          onChange: (v) => useTraceStore.setState({ stepMultiplier: v }),
+        },
+        " ": {
+          value: stepFact,
+          options: speedFactOpts,
+
+          onChange: (v) => {
+            useTraceStore.setState({ stepFact: v });
+          },
+        },
+
+        "Update interval": {
+          value: useTraceStore.getState().traceInterval,
+          min: 1,
+          max: 1000,
+          step: 1,
+          onChange: (v) => useTraceStore.setState({ traceInterval: v }),
+        },
       },
-      "📏 Line width": {
-        value: getControlValue(useTraceStore, "traceLinewidth"),
-        min: 1,
-        max: 10,
-        step: 1,
-        onChange: (v) => useTraceStore.setState({ traceLinewidth: v }),
+      { collapsed: true }
+    ),
+
+    Positions: folder(
+      {
+        // "Copy all positions to the clipboard": button(() => {
+        //   getAllPositions()
+        //   alert("!");
+        // }),
+        tip: {
+          label: "Tip:",
+          value: "You can hover a planet to see its position",
+          editable: false,
+        },
       },
-      "📐 Trace length": {
-        value: getControlValue(useTraceStore, "traceLength"),
-        min: 1,
-        max: 10000,
-        step: 1,
-        onChange: (v) => useTraceStore.setState({ traceLength: v }),
+      { collapsed: true }
+    ),
+    Camera: folder(
+      {
+        cameratip: {
+          label: "Tip:",
+          value: "Double click a planet to center the camera on it",
+          editable: false,
+        },
+
+        Target: {
+          value: useStore.getState().cameraTarget,
+          // options: ["Earth", "Sun", "Mars"],
+          options: planetsArray,
+          onChange: (v) => {
+            useStore.setState({ cameraTarget: v });
+            // console.log(v);
+          },
+        },
+
+        Follow: {
+          value: useStore.getState().cameraFollow,
+          onChange: (v) => useStore.setState({ cameraFollow: v }),
+        },
+
+        "Planet camera": {
+          value: useStore.getState().planetCamera,
+          onChange: (v) => useStore.setState({ planetCamera: v }),
+        },
+        "Show planet camera position": {
+          value: useStore.getState().planetCameraHelper,
+          onChange: (v) => useStore.setState({ planetCameraHelper: v }),
+        },
       },
-      "⏩ 1 step equals": {
-        value: stepMultiplier,
-        min: 1,
-        step: 1,
-        onChange: (v) => useTraceStore.setState({ stepMultiplier: v }),
+      { collapsed: true }
+    ),
+    Planets: folder(
+      {
+        "Planet sizes": {
+          value: 1,
+          min: -5,
+          max: 5,
+          step: 1,
+        },
       },
-      "🔄 Step factor": {
-        value: stepFact,
-        options: speedFactOpts,
-        onChange: (v) => useTraceStore.setState({ stepFact: v }),
+      { collapsed: true }
+    ),
+
+    "Orbit settings": folder(
+      {
+        Orbits: {
+          value: useStore.getState().orbits,
+          onChange: (v) => useStore.setState({ orbits: v }),
+        },
+        Linewidth: {
+          value: useStore.getState().orbitsLinewidth,
+          min: 1,
+          max: 10,
+          step: 1,
+          onChange: (v) => useStore.setState({ orbitsLinewidth: v }),
+        },
+
+        Arrows: {
+          value: useStore.getState().arrows,
+          onChange: (v) => useStore.setState({ arrows: v }),
+        },
+        "Arrow size": {
+          value: useStore.getState().arrowScale,
+          min: 1,
+          max: 5,
+          step: 1,
+          onChange: (v) => useStore.setState({ arrowScale: v }),
+        },
       },
-      "⏱️ Update interval": {
-        value: getControlValue(useTraceStore, "traceInterval"),
-        min: 1,
-        max: 1000,
-        step: 1,
-        onChange: (v) => useTraceStore.setState({ traceInterval: v }),
-      },
-    }, { collapsed: true }),
-    Camera: folder({
-      "🎯 Target": {
-        value: getControlValue(useStore, "cameraTarget"),
-        options: planetsArray,
-        onChange: (v) => useStore.setState({ cameraTarget: v }),
-      },
-      "👁️ Follow": {
-        value: getControlValue(useStore, "cameraFollow"),
-        onChange: (v) => useStore.setState({ cameraFollow: v }),
-      },
-      "📸 Planet camera": {
-        value: getControlValue(useStore, "planetCamera"),
-        onChange: (v) => useStore.setState({ planetCamera: v }),
-      },
-      "🪐 Show planet camera position": {
-        value: getControlValue(useStore, "planetCameraHelper"),
-        onChange: (v) => useStore.setState({ planetCameraHelper: v }),
-      },
-    }, { collapsed: true }),
-    Planets: folder({
-      "🌍 Planet sizes": {
-        value: 1,
-        min: -5,
-        max: 5,
-        step: 1,
-      },
-    }, { collapsed: true }),
-    "⚙️ Orbit settings": folder({
-      "🔄 Orbits": {
-        value: getControlValue(useStore, "orbits"),
-        onChange: (v) => useStore.setState({ orbits: v }),
-      },
-      "📏 Line width": {
-        value: getControlValue(useStore, "orbitsLinewidth"),
-        min: 1,
-        max: 10,
-        step: 1,
-        onChange: (v) => useStore.setState({ orbitsLinewidth: v }),
-      },
-      "➡️ Arrows": {
-        value: getControlValue(useStore, "arrows"),
-        onChange: (v) => useStore.setState({ arrows: v }),
-      },
-      "📐 Arrow size": {
-        value: getControlValue(useStore, "arrowScale"),
-        min: 1,
-        max: 5,
-        step: 1,
-        onChange: (v) => useStore.setState({ arrowScale: v }),
-      },
-    }, { collapsed: true }),
-    "⚙️ App settings": folder({
-      "📋 Menu at the right": {
-        value: getControlValue(useStore, "menuRight"),
-        onChange: (v) => useStore.setState({ menuRight: v }),
-      },
-      "📊 Show performance": {
-        value: getControlValue(useStore, "showStats"),
-        onChange: (v) => useStore.setState({ showStats: v }),
+      { collapsed: true }
+    ),
+    "App settings": folder(
+      {
+        "Menu at the right": {
+          value: useStore.getState().menuRight,
+          onChange: (v) => useStore.setState({ menuRight: v }),
+        },
+        "Show performance": {
+          value: useStore.getState().showStats,
+          onChange: (v) => useStore.setState({ showStats: v }),
+        },
       },
     }, { collapsed: true }),
     "🪐 Celestial settings": folder({}, { collapsed: true }),
