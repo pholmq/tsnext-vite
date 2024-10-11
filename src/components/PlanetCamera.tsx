@@ -29,7 +29,11 @@ export default function PlanetCamera({ planetRadius }) {
 
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
 
-  useHelper(planetCameraHelper ? planetCamRef : false, CameraHelper);
+  useHelper(
+    //Only show helper if planetCamera is not active
+    planetCameraHelper && !planetCamera ? planetCamRef : false,
+    CameraHelper
+  );
 
   useGesture(
     {
@@ -64,10 +68,6 @@ export default function PlanetCamera({ planetRadius }) {
     }
   );
 
-  let startX = null;
-  let startY = 0;
-  let rotationY = 0;
-  let rotationX = 0;
   useFrame(() => {
     switch (keyPressed) {
       case "w":
@@ -132,10 +132,12 @@ export default function PlanetCamera({ planetRadius }) {
       <group ref={longRef} rotation={[0, longitude, 0]}>
         <group ref={latRef} rotation={[latitude, 0, 0]}>
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
-            <mesh position={[0, 0.1, 0]}>
-              <boxGeometry args={[0.05, 0.05, 0.05]} />
-              <meshStandardMaterial color="red" />
-            </mesh>
+            {planetCamera ? null : (
+              <mesh position={[0, 0.1, 0]}>
+                <boxGeometry args={[0.5, 0.5, 0.5]} />
+                <meshStandardMaterial color="red" />
+              </mesh>
+            )}
             <PerspectiveCamera
               near={0.00001}
               makeDefault={planetCamera}
