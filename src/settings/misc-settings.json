@@ -164,7 +164,12 @@
     "visible": true,
     "texture": "/textures/planets/2k_jupiter.jpg",
     "unicodeSymbol": "&#x2643;",
-    "traceable": true
+    "traceable": true,
+    "rings": {
+      "innerRadius": 10,
+      "outerRadius": 1,
+      "texture": "/textures/jupiter_ring.jpg"
+    }
   },
   {
     "name": "Saturn deferent",
@@ -178,7 +183,12 @@
     "visible": true,
     "texture": "/textures/planets/2k_saturn.jpg",
     "unicodeSymbol": "&#x2644;",
-    "traceable": true
+    "traceable": true,
+    "rings": {
+      "innerRadius": 0.7,
+      "outerRadius": 5,
+      "texture": "/textures/saturn_ring.jpg"
+    }
   },
   {
     "name": "Uranus deferent",
@@ -192,7 +202,12 @@
     "visible": true,
     "texture": "/textures/planets/2k_uranus.jpg",
     "unicodeSymbol": "&#x2645;",
-    "traceable": true
+    "traceable": true,
+    "rings": {
+      "innerRadius": 0.4,
+      "outerRadius": 4.9,
+      "texture": "/textures/uranus_ring.jpg"
+    }
   },
   {
     "name": "Neptune deferent",
@@ -206,7 +221,12 @@
     "visible": true,
     "texture": "/textures/planets/2k_neptune.jpg",
     "unicodeSymbol": "&#x2646;",
-    "traceable": true
+    "traceable": true,
+    "rings": {
+      "innerRadius": 1.8,
+      "outerRadius": 7,
+      "texture": "/textures/neptune_ring.png"
+    }
   },
   {
     "name": "Halleys deferent",
