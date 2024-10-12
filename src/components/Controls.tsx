@@ -319,6 +319,7 @@ export const Controls = () => {
         >
           <Leva /* Change the font font so that it is coherent to other panels */
             neverHide
+            hideCopyButton
             fill
             titleBar={false}
             theme={{
