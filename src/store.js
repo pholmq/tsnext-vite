@@ -13,6 +13,7 @@ export const useStore = create((set) => ({
   cameraFollow: false,
   planetCamera: false,
   planetCameraHelper: false,
+  planetCameraDirection: null,
   trace: false,
   orbits: true,
   orbitsLinewidth: 1,
