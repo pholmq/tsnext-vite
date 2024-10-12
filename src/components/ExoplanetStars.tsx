@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Matrix4, Color, Vector3, InstancedMesh } from 'three';
+import { Matrix4, Color, Vector3, InstancedMesh, Raycaster } from 'three';
+import { Html } from '@react-three/drei';
 
 // Fetch the star catalog data
 const fetchStarData = async (url: string) => {
@@ -16,7 +17,7 @@ const parseRaDecToCartesian = (ra: string, dec: string, distance = 25000) => {
   const raSeconds = parseFloat(raParts[3]);
   const raDegrees = 15 * (raHours + raMinutes / 60 + raSeconds / 3600);
 
-  const decParts = dec.match(/([+-]?\d+)° (\d+)′ (\d+)″/);
+  const decParts = dec.match(/([+-]?\d+)\u00b0 (\d+)\u2032 (\d+)\u2033/);
   const decDegrees = parseFloat(decParts[1]) + parseFloat(decParts[2]) / 60 + parseFloat(decParts[3]) / 3600;
 
   const raRadians = (raDegrees * Math.PI) / 180; // Convert to radians
@@ -59,8 +60,11 @@ const starSizeByMagnitude = (magnitude: number) => {
 // Exoplanet stars visualization component
 const ExoplanetStars = () => {
   const [starData, setStarData] = useState<any[]>([]); // Initialize starData as an empty array
+  const [hoveredStar, setHoveredStar] = useState<any | null>(null); // Track the currently hovered star
   const instancedRef = useRef<InstancedMesh>(null); // Ref for InstancedMesh
-  const { camera } = useThree(); // Get the camera from useThree to track position
+  const raycaster = useRef<Raycaster>(new Raycaster()); // Ref for Raycaster
+  const mouse = useRef({ x: 0, y: 0 });
+  const { camera, gl } = useThree(); // Get the camera and renderer from useThree
 
   // Fetch star data on component mount
   useEffect(() => {
@@ -72,22 +76,10 @@ const ExoplanetStars = () => {
     });
   }, []);
 
-  // REMOVE TO DEBUG STARS Shuffle the star array
-  function shuffleArray(array: any[]) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
   // Calculate star positions and properties
   const starPositions = useMemo(() => {
     if (!starData || starData.length === 0) return []; // Return empty array if starData isn't available yet
 
-    // Uncomment the row below to shuffle the stars
-    // const shuffledStarData = shuffleArray([...starData]); // spread to avoid mutating original array
-    // Slice 850 random stars from the shuffled array
     const selectedStars = starData.slice(0, 9000);
     
     return selectedStars.map(star => {
@@ -96,7 +88,7 @@ const ExoplanetStars = () => {
       const color = colorTemperatureToRGB(K);
       const scale = starSizeByMagnitude(V);
       
-      return { position, scale, color };
+      return { position, scale, color, ...star };
     });
   }, [starData]);
 
@@ -130,16 +122,54 @@ const ExoplanetStars = () => {
         instancedRef.current!.instanceColor.needsUpdate = true;
       }
     });
+
+    // Perform raycasting to detect hovered star
+    raycaster.current.setFromCamera(mouse.current, camera);
+    const intersects = raycaster.current.intersectObject(instancedRef.current!, true);
+    if (intersects.length > 0) {
+      const instanceId = intersects[0].instanceId;
+      if (instanceId !== undefined) {
+        setHoveredStar(starPositions[instanceId]);
+      } else {
+        setHoveredStar(null);
+      }
+    } else {
+      setHoveredStar(null);
+    }
   });
+
+  // Handle mouse move to update raycasting coordinates
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+    gl.domElement.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      gl.domElement.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [gl.domElement]);
 
   // Return null if no stars are available
   if (starPositions.length === 0) return null;
 
   return (
-    <instancedMesh ref={instancedRef} args={[null, null, starPositions.length]}>
-      <sphereGeometry args={[9, 16, 16]} />
-      <meshStandardMaterial emissiveIntensity={1} emissive={new Color(0, 0, 1)} /> {/* Adjust emissiveIntensity for glow */}
-    </instancedMesh>
+    <>
+      <instancedMesh ref={instancedRef} args={[null, null, starPositions.length]}>
+        <sphereGeometry args={[9, 16, 16]} />
+        <meshStandardMaterial emissiveIntensity={1} emissive={new Color(0, 0, 1)} /> {/* Adjust emissiveIntensity for glow */}
+      </instancedMesh>
+      {hoveredStar && (
+        <Html position={hoveredStar.position}>
+          <div style={{ color: 'white', backgroundColor: 'black', padding: '5px', borderRadius: '5px' }}>
+            <strong>{hoveredStar.name}</strong><br />
+            RA: {hoveredStar.RA}<br />
+            Dec: {hoveredStar.Dec}<br />
+            Magnitude: {hoveredStar.V}
+          </div>
+        </Html>
+      )}
+    </>
   );
 };
 
