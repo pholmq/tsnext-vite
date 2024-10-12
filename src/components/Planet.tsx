@@ -61,7 +61,7 @@ export function Planet(props: any) {
     Uranus: {
       innerRadius: props.size + 0.4,
       outerRadius: props.size + 4.9,
-      texture: "/textures/uranus_ring.jpg",
+      texture: "/textures/uranus_ring.png",
     },
     Neptune: {
       innerRadius: props.size + 1.8,

@@ -9,10 +9,12 @@ export function PlanetRings({ innerRadius, outerRadius, texture }) {
   // Ensure the texture repeats itself
   ringTexture.wrapS = THREE.RepeatWrapping;
   ringTexture.wrapT = THREE.RepeatWrapping;
-  ringTexture.repeat.set(1, 1); // Adjust the values as needed
+
+  // Set how many times you want the texture to repeat around the ring
+  ringTexture.repeat.set(4, 1);  // 4 repetitions around, adjust as needed
 
   const ringGeometry = useMemo(() => {
-    const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 128);
+    const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 64);
 
     // Access the UV attribute safely
     const uvAttribute = geometry.attributes.uv as THREE.BufferAttribute;
@@ -27,7 +29,7 @@ export function PlanetRings({ innerRadius, outerRadius, texture }) {
       const radius = Math.sqrt((u - 0.5) ** 2 + (v - 0.5) ** 2);  // Radial distance
 
       // Remap UV coordinates to follow the circular ring
-      uvAttribute.setXY(i, radius, (angle + Math.PI) / (2 * Math.PI));  // Update UV
+      uvAttribute.setXY(i, radius, angle / (2 * Math.PI));  // Correct UV mapping for repeating texture
     }
 
     // Mark the UV attribute as updated
