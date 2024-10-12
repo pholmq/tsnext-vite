@@ -35,7 +35,7 @@ export const Controls = () => {
   const posRef = useStore((s) => s.posRef);
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
-  
+
   /* Mobile responsiveness breakpoint */
   const [showMenu, setShowMenu] = useState(window.innerWidth >= 768);
 
@@ -107,6 +107,9 @@ export const Controls = () => {
   }, [run]);
 
   function dateKeyDown(e) {
+    //Prevent planet camera from moving
+    e.stopPropagation();
+
     if (e.key !== "Enter") {
       return;
     }
@@ -126,14 +129,9 @@ export const Controls = () => {
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
-  function LeftArrowKeyDown(e) {
-    if (e.key !== "ArrowLeft") {
-      return;
-    }
-    console.log("LeftArrowKey Pressed");
-  }
-
   function timeKeyDown(e) {
+    //Prevent planet camera from moving
+    e.stopPropagation();
     if (e.key !== "Enter") {
       return;
     }
@@ -314,9 +312,14 @@ export const Controls = () => {
         <div
           hidden={!showMenu}
           className="mt-2 overflow-auto text-lg custom-leva leva"
+          onKeyDown={(e) => {
+            //Prevent planet camera from moving when we press keys in the leva menu
+            e.stopPropagation();
+          }}
         >
           <Leva /* Change the font font so that it is coherent to other panels */
             neverHide
+            hideCopyButton
             fill
             titleBar={false}
             theme={{
