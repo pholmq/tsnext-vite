@@ -168,7 +168,8 @@ export default function PlanetCamera({ planetRadius }) {
       <group ref={longRef} rotation={[0, longitude, 0]}>
         <group ref={latRef} rotation={[latitude, 0, 0]}>
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
-            {planetCamera ? null : (
+            {/* hide the box if planetcamera is active or if show camera pos is off  */}
+            {planetCamera || !planetCameraHelper ? null : (
               <mesh position={[0, 0.1, 0]}>
                 <boxGeometry args={[0.5, 0.5, 0.5]} />
                 <meshStandardMaterial color="red" />
