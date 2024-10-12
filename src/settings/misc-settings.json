@@ -206,7 +206,7 @@
     "rings": {
       "innerRadius": 0.4,
       "outerRadius": 4.9,
-      "texture": "/textures/uranus_ring.jpg"
+      "texture": "/textures/uranus_ring.png"
     }
   },
   {
