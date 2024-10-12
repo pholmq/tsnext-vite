@@ -7,7 +7,7 @@ export function PlanetRings({ innerRadius, outerRadius, texture }) {
   const [ringTexture] = useTexture([texture]);
 
   const ringGeometry = useMemo(() => {
-    const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 64);
+    const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 128);
 
     // Cast the UV attribute to BufferAttribute to access and modify it
     const uvAttribute = geometry.attributes.uv as THREE.BufferAttribute;
