@@ -56,19 +56,6 @@ const PlanetCameraInfo = () => {
       return;
     }
     (document.activeElement as HTMLElement).blur();
-    // if (!isValidDate(dateRef.current.value)) {
-    //   dateRef.current.value = posToDate(posRef.current);
-    //   return;
-    // }
-    // posRef.current = dateTimeToPos(
-    //   dateRef.current.value,
-    //   posToTime(posRef.current)
-    // );
-    // dateRef.current.value = posToDate(posRef.current);
-    // timeRef.current.value = posToTime(posRef.current);
-    // updateURL(dateRef.current.value, timeRef.current.value);
-
-    // useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
   return planetCamera || planetCameraHelper ? (
@@ -85,21 +72,21 @@ const PlanetCameraInfo = () => {
       <p>_</p>
       <div className="flex items-center justify-center m-1">
         <label className="text-base text-white mr-2 ml-1 flex-1">
-          Longitude:
-        </label>
-        <input
-          className="text-base text-white bg-gray-700 rounded p-1"
-          ref={longInputRef}
-          onKeyDown={longKeyDown}
-        />
-      </div>
-      <div className="flex items-center justify-center m-1">
-        <label className="text-base text-white mr-2 ml-1 flex-1">
           Latitude:
         </label>
         <input
           className="text-base text-white bg-gray-700 rounded p-1"
           ref={latInputRef}
+          onKeyDown={longKeyDown}
+        />
+      </div>
+      <div className="flex items-center justify-center m-1">
+        <label className="text-base text-white mr-2 ml-1 flex-1">
+          Longitude:
+        </label>
+        <input
+          className="text-base text-white bg-gray-700 rounded p-1"
+          ref={longInputRef}
           onKeyDown={longKeyDown}
         />
       </div>
