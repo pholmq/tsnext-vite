@@ -7,17 +7,17 @@ import { Vector3 } from "three";
 const OrbitCamera = () => {
   const cameraTarget = useStore((s) => s.cameraTarget);
   const cameraFollow = useStore((s) => s.cameraFollow);
-  // const cameraFollow = true;
+  const planetCamera = useStore((s) => s.planetCamera);
   const target = new Vector3();
-  const { scene } = useThree();
+  const { scene, camera } = useThree();
   const cameraControlsRef = useRef<CameraControls>(null);
   const targetObjRef = useRef(null);
-  
+
   useLayoutEffect(() => {
     targetObjRef.current = scene.getObjectByName(cameraTarget);
     targetObjRef.current.getWorldPosition(target);
     cameraControlsRef.current.setTarget(target.x, target.y, target.z, false);
-  }, [cameraTarget]);
+  }, [cameraTarget, camera]);
 
   useLayoutEffect(() => {
     cameraControlsRef.current.smoothTime = 2;
@@ -31,11 +31,20 @@ const OrbitCamera = () => {
     }
   });
 
-  return <CameraControls ref={cameraControlsRef} maxDistance={500000} />;
+  return (
+    <CameraControls
+      ref={cameraControlsRef}
+      maxDistance={80000}
+      // if planetCamera is active we camera controls should be diabled
+      enabled={!planetCamera}
+    />
+  );
 };
 
 export default function CustomCameraControls() {
-  const planetCamera = useStore((s) => s.planetCamera);
-
-  return <>{planetCamera ? null : <OrbitCamera />}</>;
+  return (
+    <>
+      <OrbitCamera />
+    </>
+  );
 }

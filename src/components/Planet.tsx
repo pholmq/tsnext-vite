@@ -10,28 +10,23 @@ import { PlanetRings } from "./PlanetRings";
 import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
 import { EffectsOnObj } from "./EffectsOnObj";
-
-
+import { useLevaControls } from "./useLevaControls";
 
 export function Planet(props: any) {
   const ref: any = useRef();
   const posRef: any = useStore((state) => state.posRef);
+  // const cameraTarget = useStore((state) => state.cameraTarget)
+  const { updateControls } = useLevaControls();
 
   const [hovered, setHover] = useState(false);
   const [contextMenu, setContextMenu] = useState(false);
-  const [cameraTarget, setCameraTarget] = useState(false);
+  // const [cameraTarget, setCameraTarget] = useState(false);
+  const cameraTarget: any = useStore((state) => state.cameraTarget);
 
   //Add the planet to the Planets meny
   useControls("Planets", {
     [props.name]: props.visible,
   });
-
-  useEffect(() => {
-    if (cameraTarget) {
-      useStore.setState({ cameraTarget: props.name });
-      setCameraTarget(false);
-    }
-  }, [cameraTarget]);
 
   const rotationSpeed = props.rotationSpeed || 0;
   const rotationStart = props.rotationStart || 0;
@@ -43,43 +38,16 @@ export function Planet(props: any) {
   const tilt = props.tilt || 0;
   const tiltb = props.tiltb || 0;
 
-  // Define ring parameters for planets with rings
-  const ringParams: Record<
-    string,
-    { innerRadius: number; outerRadius: number; texture: string }
-  > = {
-    Saturn: {
-      innerRadius: props.size + 0.7,
-      outerRadius: props.size + 5,
-      texture: "/textures/saturn_ring.jpg",
-    },
-    Jupiter: {
-      innerRadius: props.size + 10,
-      outerRadius: props.size + 1,
-      texture: "/textures/jupiter_ring.jpg",
-    },
-    Uranus: {
-      innerRadius: props.size + 0.4,
-      outerRadius: props.size + 4.9,
-      texture: "/textures/uranus_ring.png",
-    },
-    Neptune: {
-      innerRadius: props.size + 1.8,
-      outerRadius: props.size + 7,
-      texture: "/textures/neptune_ring.png",
-    },
-  };
-
- // This could be done in settings (misc + celes)
- // "effects": ["lensflare", "comet-trail", ""]
- // 
- // Determine the effect type based on the planet's name
- let effectType;
- if (props.name === "Sun") {
-   effectType = "sunGlow";
- } else if (props.name === "Halley") {
-   effectType = "cometTrail";
- }
+  // This could be done in settings (misc + celes)
+  // "effects": ["lensflare", "comet-trail", ""]
+  //
+  // Determine the effect type based on the planet's name
+  let effectType;
+  if (props.name === "Sun") {
+    effectType = "sunGlow";
+  } else if (props.name === "Halley") {
+    effectType = "cometTrail";
+  }
 
   return (
     <>
@@ -87,7 +55,7 @@ export function Planet(props: any) {
         {contextMenu ? (
           <ContextMenu
             setContextMenu={setContextMenu}
-            setCameraTarget={setCameraTarget}
+            planetName={props.name}
           />
         ) : (
           <PosWriter
@@ -118,7 +86,7 @@ export function Planet(props: any) {
           }}
           onDoubleClick={(e) => {
             e.stopPropagation();
-            setCameraTarget(true);
+            updateControls({ Target: props.name });
           }}
         >
           <sphereGeometry args={[props.size, 128, 128]} />
@@ -131,23 +99,23 @@ export function Planet(props: any) {
           {props.light && <pointLight intensity={3} />}
 
           {/* Add Rings for planets with rings */}
-          {props.name in ringParams && (
+          {props.rings && (
             <PlanetRings
-              innerRadius={ringParams[props.name].innerRadius}
-              outerRadius={ringParams[props.name].outerRadius}
-              planetSize={props.size}
-              texture={ringParams[props.name].texture}
+              innerRadius={props.rings.innerRadius + props.size}
+              outerRadius={props.rings.outerRadius + props.size}
+              texture={props.rings.texture}
             />
           )}
 
-
-          {props.name === "Earth" && <PlanetCamera />}
-          
+          {props.name === cameraTarget && (
+            <PlanetCamera planetRadius={props.size} />
+          )}
         </mesh>
 
-          {/* Add particle effects based on the planet's name */}
-        {effectType && <EffectsOnObj effectType={effectType} position={[0, 0, 0]} />}
-
+        {/* Add particle effects based on the planet's name */}
+        {effectType && (
+          <EffectsOnObj effectType={effectType} position={[0, 0, 0]} />
+        )}
       </group>
     </>
   );

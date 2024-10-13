@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { CameraHelper } from "three";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { CameraHelper, Vector3 } from "three";
 
 import { useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, useHelper, Html } from "@react-three/drei";
@@ -9,9 +9,8 @@ import { useGesture } from "@use-gesture/react";
 import useKeyPress from "../utils/useKeyPress";
 import { useStore } from "../store";
 
-export default function PlanetCamera() {
-  const earthRadius = 4;
-  let cameraHeight = earthRadius;
+export default function PlanetCamera({ planetRadius }) {
+  let cameraHeight = planetRadius + 0.1;
   const longitude = 0;
   const latitude = 0;
   const planetCamRef: any = useRef();
@@ -20,16 +19,48 @@ export default function PlanetCamera() {
   const camMountRef = useRef(null);
   const keyPressed = useKeyPress();
 
-  const { gl } = useThree();
-
-  let rotateX = 0;
-
+  const { camera, gl } = useThree();
   const planetCamera = useStore((s) => s.planetCamera);
-
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
+  const cameraTarget = useStore((s) => s.cameraTarget);
 
-  useHelper(planetCameraHelper ? planetCamRef : false, CameraHelper);
+  // useEffect(() => {
+  //   if (useStore.getState().planetCameraDirection) {
+  //     loadCameraPosition();
+  //   }
+  // }, [cameraTarget, planetCamera]);
 
+  useHelper(
+    //Only show helper if planetCamera is not active
+    planetCameraHelper && !planetCamera ? planetCamRef : false,
+    CameraHelper
+  );
+
+  function loadCameraPosition() {
+    const pCamDir = useStore.getState().planetCameraDirection;
+    planetCamRef.current.rotation.y = pCamDir.camRotationy;
+    planetCamRef.current.rotation.x = pCamDir.camRotationx;
+    planetCamRef.current.fov = pCamDir.camFov;
+    latRef.current.rotation.x = pCamDir.latRotationx;
+    longRef.current.rotation.y = pCamDir.longRotationy;
+    // camMountRef.current.position.y = pCamDir.camMountPosy;
+  }
+
+  function saveCameraPosition() {
+    useStore.setState((s) => ({
+      planetCameraDirection: {
+        camRotationy: planetCamRef.current.rotation.y,
+        camRotationx: planetCamRef.current.rotation.x,
+        camFov: planetCamRef.current.fov,
+        latRotationx: latRef.current.rotation.x,
+        longRotationy: longRef.current.rotation.y,
+        // camMountPosy: camMountRef.current.position.y,
+      },
+    }));
+  }
+
+  //Set touch action to none so useGesture doesn't complain
+  gl.domElement.style.touchAction = "none";
   useGesture(
     {
       onDrag: planetCamera //If planetCamera is true, then we hand it a function
@@ -41,8 +72,10 @@ export default function PlanetCamera() {
             if (rotationX < Math.PI / 2 && rotationX > -Math.PI / 2) {
               planetCamRef.current.rotation.x = rotationX;
             }
+            saveCameraPosition();
           }
         : () => {}, // and if not, it gets and empty function
+
       onWheel: planetCamera
         ? ({ delta: [, dy] }) => {
             //
@@ -53,6 +86,7 @@ export default function PlanetCamera() {
               planetCamRef.current.fov = fov;
               planetCamRef.current.updateProjectionMatrix();
             }
+            saveCameraPosition();
           }
         : () => {},
     },
@@ -62,10 +96,6 @@ export default function PlanetCamera() {
     }
   );
 
-  let startX = null;
-  let startY = 0;
-  let rotationY = 0;
-  let rotationX = 0;
   useFrame(() => {
     switch (keyPressed) {
       case "w":
@@ -84,7 +114,9 @@ export default function PlanetCamera() {
         camMountRef.current.position.y += 0.005;
         break;
       case "e":
-        camMountRef.current.position.y -= 0.005;
+        if (camMountRef.current.position.y > planetRadius + 0.007) {
+          camMountRef.current.position.y -= 0.005;
+        }
         break;
     }
     if (longRef.current.rotation.y > Math.PI * 2) {
@@ -107,12 +139,13 @@ export default function PlanetCamera() {
       }
     }
 
+    let rotationX = planetCamRef.current.rotation.x;
     switch (keyPressed) {
       case "ArrowUp":
-        planetCamRef.current.rotation.x += 0.01;
+        rotationX += 0.01;
         break;
       case "ArrowDown":
-        planetCamRef.current.rotation.x -= 0.01;
+        rotationX -= 0.01;
         break;
       case "ArrowLeft":
         planetCamRef.current.rotation.y += 0.01;
@@ -121,6 +154,13 @@ export default function PlanetCamera() {
         planetCamRef.current.rotation.y -= 0.01;
         break;
     }
+    if (rotationX < Math.PI / 2 && rotationX > -Math.PI / 2) {
+      planetCamRef.current.rotation.x = rotationX;
+    }
+
+    if (keyPressed) {
+      saveCameraPosition();
+    }
   });
 
   return (
@@ -128,10 +168,13 @@ export default function PlanetCamera() {
       <group ref={longRef} rotation={[0, longitude, 0]}>
         <group ref={latRef} rotation={[latitude, 0, 0]}>
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
-            <mesh position={[0, 0.1, 0]}>
-              <boxGeometry args={[0.05, 0.05, 0.05]} />
-              <meshStandardMaterial color="red" />
-            </mesh>
+            {/* hide the box if planetcamera is active or if show camera pos is off  */}
+            {planetCamera || !planetCameraHelper ? null : (
+              <mesh position={[0, 0.1, 0]}>
+                <boxGeometry args={[0.5, 0.5, 0.5]} />
+                <meshStandardMaterial color="red" />
+              </mesh>
+            )}
             <PerspectiveCamera
               near={0.00001}
               makeDefault={planetCamera}

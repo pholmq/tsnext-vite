@@ -2,6 +2,7 @@ import { createRef } from "react";
 import create from "zustand";
 import { getDefaultSpeedFact, sDay } from "./utils/time-date-functions";
 
+// Main simulation store using zustand
 export const useStore = create((set) => ({
   posRef: createRef(0),
   run: false,
@@ -12,6 +13,14 @@ export const useStore = create((set) => ({
   cameraFollow: false,
   planetCamera: false,
   planetCameraHelper: false,
+  planetCameraDirection: {
+    camRotationy: 0,
+    camRotationx: 0,
+    camFov: 0,
+    latRotationx: 0,
+    longRotationy: 0,
+  },
+
   trace: false,
   orbits: true,
   orbitsLinewidth: 1,
@@ -20,17 +29,21 @@ export const useStore = create((set) => ({
   traceDots: false,
   menuRight: false,
   showStats: false,
-  runPosWriter: false, //We flip this in controls to get PosWriter to update
-  // posWriterRef: createRef({}), //a ref obj that holds the PosWriters data
-  // posWriterPlanets: {},
+  runPosWriter: false,
+
+  // Setter functions
+  setCameraTarget: (cameraTarget) => set(() => ({ cameraTarget })),
+  setOrbits: (orbits) => set(() => ({ orbits })),
 }));
 
+// Plot-related store using zustand
 export const usePlotStore = create((set) => ({
   plotPos: 0,
   plotPosRef: createRef(0),
   plotObjects: [],
 }));
 
+// Trace-related store using zustand
 export const useTraceStore = create((set) => ({
   traceLength: 5000,
   traceStepInput: 4,
@@ -40,5 +53,8 @@ export const useTraceStore = create((set) => ({
   traceLinewidth: 2,
   traceStartPosRef: createRef(0),
   tracedObjects: [],
-  // pointsArrRef: createRef(),
+
+  // Setter functions for trace-specific values
+  setTraceLength: (traceLength) => set(() => ({ traceLength })),
+  setTraceLinewidth: (traceLinewidth) => set(() => ({ traceLinewidth })),
 }));
