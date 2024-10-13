@@ -18,7 +18,6 @@ import { Leva } from "leva";
 import { AsteroidBelt } from "./components/AstroidBelt";
 
 function TSNext() {
-
   return (
     <>
       <Loader />
@@ -41,14 +40,14 @@ function TSNext() {
           <PlotSolarSystem />
           <TraceController />
           <CopyPosToClipb />
-          <axesHelper args={[5]} position={[0, 0, 0]} />
-          {/* <ExoplanetStars />*/}
+          {/* <axesHelper args={[5]} position={[0, 0, 0]} /> */}
+          {/* <ExoplanetStars /> */}
           <AsteroidBelt />
         </Suspense>
       </Canvas>
       <Controls />
       <PlanetCameraInfo />
-      {/*<Sidebar /> */}
+      {/* <Sidebar /> */}
     </>
   );
 }
