@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
-import { Matrix4, Color, Vector3, InstancedMesh, Raycaster } from 'three';
-import { Html } from '@react-three/drei';
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
+import { Matrix4, Color, Vector3, InstancedMesh, Raycaster } from "three";
+import { Html } from "@react-three/drei";
 
 // Fetch the star catalog data
 const fetchStarData = async (url: string) => {
@@ -18,7 +18,10 @@ const parseRaDecToCartesian = (ra: string, dec: string, distance = 25000) => {
   const raDegrees = 15 * (raHours + raMinutes / 60 + raSeconds / 3600);
 
   const decParts = dec.match(/([+-]?\d+)\u00b0 (\d+)\u2032 (\d+)\u2033/);
-  const decDegrees = parseFloat(decParts[1]) + parseFloat(decParts[2]) / 60 + parseFloat(decParts[3]) / 3600;
+  const decDegrees =
+    parseFloat(decParts[1]) +
+    parseFloat(decParts[2]) / 60 +
+    parseFloat(decParts[3]) / 3600;
 
   const raRadians = (raDegrees * Math.PI) / 180; // Convert to radians
   const decRadians = (decDegrees * Math.PI) / 180; // Convert to radians
@@ -38,7 +41,10 @@ const colorTemperatureToRGB = (kelvin: number) => {
   if (temp <= 66) {
     red = 255;
     green = Math.max(99.4708025861 * Math.log(temp) - 161.1195681661, 0);
-    blue = temp <= 19 ? 0 : Math.max(138.5177312231 * Math.log(temp - 10) - 305.0447927307, 0);
+    blue =
+      temp <= 19
+        ? 0
+        : Math.max(138.5177312231 * Math.log(temp - 10) - 305.0447927307, 0);
   } else {
     red = Math.max(329.698727446 * Math.pow(temp - 60, -0.1332047592), 0);
     green = Math.max(288.1221695283 * Math.pow(temp - 60, -0.0755148492), 0);
@@ -46,7 +52,11 @@ const colorTemperatureToRGB = (kelvin: number) => {
   }
 
   // Return normalized RGB values (Clamp between 0 and 1)
-  return [Math.min(1, red / 255), Math.min(1, green / 255), Math.min(1, blue / 255)];
+  return [
+    Math.min(1, red / 255),
+    Math.min(1, green / 255),
+    Math.min(1, blue / 255),
+  ];
 };
 
 // Determine star size based on magnitude
@@ -68,8 +78,8 @@ const ExoplanetStars = () => {
 
   // Fetch star data on component mount
   useEffect(() => {
-    const url = 'exoplanets_positions.json';
-    fetchStarData(url).then(data => {
+    const url = "exoplanets_positions.json";
+    fetchStarData(url).then((data) => {
       if (data && data.length) {
         setStarData(data); // Set starData once the data is fetched
       }
@@ -81,13 +91,13 @@ const ExoplanetStars = () => {
     if (!starData || starData.length === 0) return []; // Return empty array if starData isn't available yet
 
     const selectedStars = starData.slice(0, 9000);
-    
-    return selectedStars.map(star => {
+
+    return selectedStars.map((star) => {
       const { RA, Dec, K, V } = star;
       const position = parseRaDecToCartesian(RA, Dec);
       const color = colorTemperatureToRGB(K);
       const scale = starSizeByMagnitude(V);
-      
+
       return { position, scale, color, ...star };
     });
   }, [starData]);
@@ -125,7 +135,10 @@ const ExoplanetStars = () => {
 
     // Perform raycasting to detect hovered star
     raycaster.current.setFromCamera(mouse.current, camera);
-    const intersects = raycaster.current.intersectObject(instancedRef.current!, true);
+    const intersects = raycaster.current.intersectObject(
+      instancedRef.current!,
+      true
+    );
     if (intersects.length > 0) {
       const instanceId = intersects[0].instanceId;
       if (instanceId !== undefined) {
@@ -144,9 +157,9 @@ const ExoplanetStars = () => {
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
-    gl.domElement.addEventListener('mousemove', handleMouseMove);
+    gl.domElement.addEventListener("mousemove", handleMouseMove);
     return () => {
-      gl.domElement.removeEventListener('mousemove', handleMouseMove);
+      gl.domElement.removeEventListener("mousemove", handleMouseMove);
     };
   }, [gl.domElement]);
 
@@ -155,16 +168,33 @@ const ExoplanetStars = () => {
 
   return (
     <>
-      <instancedMesh ref={instancedRef} args={[null, null, starPositions.length]}>
+      <instancedMesh
+        ref={instancedRef}
+        args={[null, null, starPositions.length]}
+      >
         <sphereGeometry args={[9, 16, 16]} />
-        <meshStandardMaterial emissiveIntensity={1} emissive={new Color(0, 0, 1)} /> {/* Adjust emissiveIntensity for glow */}
+        <meshStandardMaterial
+          emissiveIntensity={1}
+          emissive={new Color(0, 0, 1)}
+        />
+        {/* Adjust emissiveIntensity for glow */}
       </instancedMesh>
       {hoveredStar && (
         <Html position={hoveredStar.position}>
-          <div style={{ color: 'white', backgroundColor: 'black', padding: '5px', borderRadius: '5px' }}>
-            <strong>{hoveredStar.name}</strong><br />
-            RA: {hoveredStar.RA}<br />
-            Dec: {hoveredStar.Dec}<br />
+          <div
+            style={{
+              color: "white",
+              backgroundColor: "black",
+              padding: "5px",
+              borderRadius: "5px",
+            }}
+          >
+            <strong>{hoveredStar.name}</strong>
+            <br />
+            RA: {hoveredStar.RA}
+            <br />
+            Dec: {hoveredStar.Dec}
+            <br />
             Magnitude: {hoveredStar.V}
           </div>
         </Html>
