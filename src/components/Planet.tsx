@@ -11,8 +11,6 @@ import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
 import { EffectsOnObj } from "./EffectsOnObj";
 
-
-
 export function Planet(props: any) {
   const ref: any = useRef();
   const posRef: any = useStore((state) => state.posRef);
@@ -70,16 +68,16 @@ export function Planet(props: any) {
     },
   };
 
- // This could be done in settings (misc + celes)
- // "effects": ["lensflare", "comet-trail", ""]
- // 
- // Determine the effect type based on the planet's name
- let effectType;
- if (props.name === "Sun") {
-   effectType = "sunGlow";
- } else if (props.name === "Halley") {
-   effectType = "cometTrail";
- }
+  // This could be done in settings (misc + celes)
+  // "effects": ["lensflare", "comet-trail", ""]
+  //
+  // Determine the effect type based on the planet's name
+  let effectType;
+  if (props.name === "Sun") {
+    effectType = "sunGlow";
+  } else if (props.name === "Halley") {
+    effectType = "cometTrail";
+  }
 
   return (
     <>
@@ -135,19 +133,17 @@ export function Planet(props: any) {
             <PlanetRings
               innerRadius={ringParams[props.name].innerRadius}
               outerRadius={ringParams[props.name].outerRadius}
-              planetSize={props.size}
               texture={ringParams[props.name].texture}
             />
           )}
 
-
           {props.name === "Earth" && <PlanetCamera />}
-          
         </mesh>
 
-          {/* Add particle effects based on the planet's name */}
-        {effectType && <EffectsOnObj effectType={effectType} position={[0, 0, 0]} />}
-
+        {/* Add particle effects based on the planet's name */}
+        {effectType && (
+          <EffectsOnObj effectType={effectType} position={[0, 0, 0]} />
+        )}
       </group>
     </>
   );
