@@ -24,11 +24,11 @@ export default function PlanetCamera({ planetRadius }) {
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
   const cameraTarget = useStore((s) => s.cameraTarget);
 
-  useEffect(() => {
-    if (useStore.getState().planetCameraDirection) {
-      loadCameraPosition();
-    }
-  }, [cameraTarget, planetCamera]);
+  // useEffect(() => {
+  //   if (useStore.getState().planetCameraDirection) {
+  //     loadCameraPosition();
+  //   }
+  // }, [cameraTarget, planetCamera]);
 
   useHelper(
     //Only show helper if planetCamera is not active
