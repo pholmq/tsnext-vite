@@ -14,7 +14,7 @@ export function PlanetRings({ innerRadius, outerRadius, texture }) {
   ringTexture.repeat.set(4, 1); // 4 repetitions around, adjust as needed
 
   const ringGeometry = useMemo(() => {
-    const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 64);
+    const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 128);
 
     // Access the UV attribute safely
     const uvAttribute = geometry.attributes.uv as THREE.BufferAttribute;
