@@ -6,61 +6,42 @@ export function PlanetRings({ innerRadius, outerRadius, texture }) {
   const ringRef = useRef();
   const [ringTexture] = useTexture([texture]);
 
+  // Ensure the texture repeats itself
+  ringTexture.wrapS = THREE.RepeatWrapping;
+  ringTexture.wrapT = THREE.RepeatWrapping;
+
+  // Set how many times you want the texture to repeat around the ring
+  ringTexture.repeat.set(4, 1); // 4 repetitions around, adjust as needed
+
   const ringGeometry = useMemo(() => {
     const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 128);
 
-    // Cast the UV attribute to BufferAttribute to access and modify it
+    // Access the UV attribute safely
     const uvAttribute = geometry.attributes.uv as THREE.BufferAttribute;
 
-    // Loop through the UVs and modify them using getX, getY and setXY
+    // Modify the UVs using set methods, without direct array access
     for (let i = 0; i < uvAttribute.count; i++) {
       const u = uvAttribute.getX(i);
       const v = uvAttribute.getY(i);
 
-      // Compute angle and radial distance
-      const angle = Math.atan2(v - 0.5, u - 0.5);  // Convert UV to angle
-      const radius = Math.sqrt((u - 0.5) ** 2 + (v - 0.5) ** 2);  // Radial distance
+      // Convert UV coordinates to polar coordinates
+      const angle = Math.atan2(v - 0.5, u - 0.5); // Angle in radians
+      const radius = Math.sqrt((u - 0.5) ** 2 + (v - 0.5) ** 2); // Radial distance
 
-      // Set the modified UV values using the setXY() method
-      uvAttribute.setXY(i, (angle + Math.PI) / (2 * Math.PI), radius);
+      // Remap UV coordinates to follow the circular ring
+      uvAttribute.setXY(i, radius, angle / (2 * Math.PI)); // Correct UV mapping for repeating texture
     }
 
-    // Mark UV attribute as needing an update
+    // Mark the UV attribute as updated
     uvAttribute.needsUpdate = true;
 
     return geometry;
   }, [innerRadius, outerRadius]);
 
-  // Shader material with fading effect based on distance
+  // Standard material with texture applied
   const ringMaterial = useMemo(() => {
-    return new THREE.ShaderMaterial({
-      uniforms: {
-        uTexture: { value: ringTexture },
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D uTexture;
-        varying vec2 vUv;
-        void main() {
-          // Sample the texture
-          vec4 color = texture2D(uTexture, vUv);
-
-          // Calculate the radial distance from an arbitrary point (0.4, 0.2) for testing
-          float dist = distance(vUv, vec2(0.4, 0.2));
-
-          // Fade alpha based on distance from center (inner and outer edges)
-          float alpha = smoothstep(0.1, 0.99, dist) * smoothstep(0.8, 0.7, dist);
-
-          // Apply the alpha fading
-          gl_FragColor = vec4(color.rgb, color.a * alpha * 1.9);
-        }
-      `,
+    return new THREE.MeshStandardMaterial({
+      map: ringTexture, // Apply the texture
       transparent: true,
       side: THREE.DoubleSide,
     });
