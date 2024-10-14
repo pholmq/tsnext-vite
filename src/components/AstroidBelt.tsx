@@ -7,7 +7,7 @@ export function AsteroidBelt({ numAsteroids = 1000, innerRadius = 5, outerRadius
   const meshRef = useRef<THREE.InstancedMesh | null>(null);
 
   const [asteroidTexture] = useTexture(["/textures/asteroid.webp"]);
-
+  /* Kommentar!  */
   // Memoize asteroid data (positions, scales, rotations)
   const asteroids = useMemo(() => {
     const positions = [];
