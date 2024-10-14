@@ -24,6 +24,11 @@ export default function PlanetCamera({ planetRadius }) {
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
   const cameraTarget = useStore((s) => s.cameraTarget);
 
+  // useLayoutEffect(() => {
+  //   latAxisRef.current.rotation.x -= Math.PI / 2;
+  //   longAxisRef.current.rotation.y -= Math.PI / 2;
+  // }, []);
+
   // useEffect(() => {
   //   if (useStore.getState().planetCameraDirection) {
   //     loadCameraPosition();
@@ -151,15 +156,23 @@ export default function PlanetCamera({ planetRadius }) {
       if (camRotationX < Math.PI / 2 && camRotationX > -Math.PI / 2) {
         planetCamRef.current.rotation.x = camRotationX;
       }
+      // planetCamRef.current.up.set(0, 1, 0); // Reset up vector
+      // planetCamRef.current.updateProjectionMatrix();
+      // (did not fix the up/down problem )
       saveCameraPosition();
     }
   });
 
+  /*2024-10-14 Weird bug/problem
+It seems that the cameras up/down is only maintained properly when the camera
+is active, which means that when it's moved in the system camera view it's 
+up/down is messed up. The fix (to be done) for now is to not allow it to be moved if not on.
+*/
   return (
     <>
       {/* We put the camera system in two groups and rotate it so that lat and long are at 0 */}
-      <group ref={longAxisRef} rotation={[0, -Math.PI / 2, 0]}>
-        <group ref={latAxisRef} rotation={[-Math.PI / 2, 0, 0]}>
+      <group ref={longAxisRef} rotation={[0, 0, 0]}>
+        <group ref={latAxisRef} rotation={[0, 0, 0]}>
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
             {/* hide the box if planetcamera is active or if show camera pos is off  */}
             {planetCamera || !planetCameraHelper ? null : (
