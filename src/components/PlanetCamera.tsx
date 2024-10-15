@@ -24,17 +24,6 @@ export default function PlanetCamera({ planetRadius }) {
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
   const cameraTarget = useStore((s) => s.cameraTarget);
 
-  // useLayoutEffect(() => {
-  //   latAxisRef.current.rotation.x -= Math.PI / 2;
-  //   longAxisRef.current.rotation.y -= Math.PI / 2;
-  // }, []);
-
-  // useEffect(() => {
-  //   if (useStore.getState().planetCameraDirection) {
-  //     loadCameraPosition();
-  //   }
-  // }, [cameraTarget, planetCamera]);
-
   useHelper(
     //Only show helper if planetCamera is not active
     planetCameraHelper && !planetCamera ? planetCamRef : false,
@@ -100,16 +89,16 @@ export default function PlanetCamera({ planetRadius }) {
     }
     switch (keyPressed) {
       case "w":
-        latRotationX += 0.005;
+        latRotationX += 0.05;
         break;
       case "s":
-        latRotationX -= 0.005;
+        latRotationX -= 0.05;
         break;
       case "a":
-        longAxisRef.current.rotation.y -= 0.005;
+        longAxisRef.current.rotation.y -= 0.05;
         break;
       case "d":
-        longAxisRef.current.rotation.y += 0.005;
+        longAxisRef.current.rotation.y += 0.05;
         break;
       case "q":
         camMountRef.current.position.y += 0.005;
