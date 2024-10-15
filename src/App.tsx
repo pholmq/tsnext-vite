@@ -1,6 +1,5 @@
 import { Canvas } from "@react-three/fiber";
 import { Loader, Preload, Sphere, Stars } from "@react-three/drei";
-import CustomCameraControls from "./components/CustomCameraControls";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import PlotSolarSystem from "./components/PlotSolarSystem";
@@ -32,7 +31,6 @@ function TSNext() {
         }}
       >
         <Suspense>
-          {/* <CustomCameraControls /> */}
           <SystemCamera />
           <ambientLight intensity={0.5} />
           {/* Remove this comment below? */}
