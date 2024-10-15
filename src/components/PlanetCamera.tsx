@@ -8,7 +8,15 @@ import { useGesture } from "@use-gesture/react";
 
 import useKeyPress from "../utils/useKeyPress";
 import { useStore } from "../store";
-
+/*2024-10-14 Weird bug/problem
+It seems that the cameras up/down is only maintained properly when the camera
+is active, which means that when it's moved in the system camera view it's 
+up/down is messed up.
+*/
+/*2024-10-15 Solved! By rewriting the camera system. Short story if the default canvas camera is 
+  used and connected to Drei Camera controls, weird things happen. So I made a new SystemCamera component
+  with a PerspectiveCamera camera as default
+  */
 export default function PlanetCamera({ planetRadius }) {
   let cameraHeight = planetRadius + 0.1;
   const longitude = 0;
@@ -152,11 +160,6 @@ export default function PlanetCamera({ planetRadius }) {
     }
   });
 
-  /*2024-10-14 Weird bug/problem
-It seems that the cameras up/down is only maintained properly when the camera
-is active, which means that when it's moved in the system camera view it's 
-up/down is messed up. The fix (to be done) for now is to not allow it to be moved if not on.
-*/
   return (
     <>
       {/* We put the camera system in two groups and rotate it so that lat and long are at 0 */}

@@ -29,7 +29,9 @@ export const useStore = create((set) => ({
   traceDots: false,
   menuRight: false,
   showStats: false,
+  //Trigger update flags
   runPosWriter: false,
+  resetClicked: false,
 
   // Setter functions
   setCameraTarget: (cameraTarget) => set(() => ({ cameraTarget })),

@@ -16,6 +16,7 @@ import LoadingBar from "./components/LoadingBar"; // Import the loading bar
 import { useProgress } from "@react-three/drei"; // Import useProgress to detect when loading is complete
 import { Leva } from "leva";
 import { AsteroidBelt } from "./components/AstroidBelt";
+import SystemCamera from "./components/SystemCamera";
 
 function TSNext() {
   return (
@@ -31,7 +32,8 @@ function TSNext() {
         }}
       >
         <Suspense>
-          <CustomCameraControls />
+          {/* <CustomCameraControls /> */}
+          <SystemCamera />
           <ambientLight intensity={0.5} />
           {/* Remove this comment below? */}
           {/* <Stars count={800} radius={100000} /> */}
