@@ -4,13 +4,13 @@ import { useTexture } from "@react-three/drei";
 import { PosWriter } from "./PosWriter";
 import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
-import PlanetCamera from "./PlanetCamera";
 import { ContextMenu } from "./ContextMenu";
 import { PlanetRings } from "./PlanetRings";
 import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
 import { EffectsOnObj } from "./EffectsOnObj";
 import { useLevaControls } from "./useLevaControls";
+import PlanetCamera from "./PlanetCamera";
 
 export function Planet(props: any) {
   const ref: any = useRef();

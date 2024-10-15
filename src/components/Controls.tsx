@@ -192,6 +192,7 @@ export const Controls = () => {
                 timeRef.current.value = posToTime(posRef.current);
                 updateURL(dateRef.current.value, timeRef.current.value);
                 useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
+                useStore.setState((s) => ({ resetClicked: !s.resetClicked }));
               }}
             >
               Reset

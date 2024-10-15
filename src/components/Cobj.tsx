@@ -8,6 +8,7 @@ import { Vector3 } from "three";
 
 import { Orbit } from "./Orbit";
 import { Planet } from "./Planet";
+import { Earth } from "./Earth";
 
 type Props = {
   name: string;
@@ -128,7 +129,6 @@ export const Cobj = ({ name, children }: Props) => {
             {/* {s.earth ? <Earth {...s} /> : null} */}
             {s.type === "planet" ? <Planet {...s} /> : null}
             {children}
-
           </group>
         </group>
       </group>
