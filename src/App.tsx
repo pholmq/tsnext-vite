@@ -42,7 +42,7 @@ function TSNext() {
           <CopyPosToClipb />
           {/* <axesHelper args={[5]} position={[0, 0, 0]} /> */}
           <ExoplanetStars />
-          <AsteroidBelt />
+          {/* <AsteroidBelt /> */}
         </Suspense>
       </Canvas>
       <Controls />
