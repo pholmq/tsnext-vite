@@ -22,7 +22,8 @@ export default function PlanetCamera({ planetRadius }) {
   let cameraHeight = planetRadius + 0.1;
   const longitude = 0;
   const latitude = 0;
-  const planetCamRef: any = useRef();
+  const planetCamRef = useRef(null);
+  const camBoxRef = useRef(null);
   const longAxisRef = useRef(null);
   const latAxisRef = useRef(null);
   const camMountRef = useRef(null);
@@ -68,6 +69,8 @@ export default function PlanetCamera({ planetRadius }) {
             if (camRotationX < Math.PI / 2 && camRotationX > -Math.PI / 2) {
               planetCamRef.current.rotation.x = camRotationX;
             }
+            camBoxRef.current.rotation.y = planetCamRef.current.rotation.y;
+            camBoxRef.current.rotation.x = planetCamRef.current.rotation.x;
             saveCameraPosition();
           }
         : () => {}, // and if not, it gets and empty function
@@ -111,11 +114,11 @@ export default function PlanetCamera({ planetRadius }) {
         longAxisRef.current.rotation.y += 0.05;
         break;
       case "q":
-        camMountRef.current.position.y += 0.005;
+        camMountRef.current.position.y += 0.05;
         break;
       case "e":
-        if (camMountRef.current.position.y > planetRadius + 0.006) {
-          camMountRef.current.position.y -= 0.005;
+        if (camMountRef.current.position.y >= planetRadius + 0.04) {
+          camMountRef.current.position.y -= 0.05;
         }
         break;
     }
@@ -157,9 +160,8 @@ export default function PlanetCamera({ planetRadius }) {
       if (camRotationX < Math.PI / 2 && camRotationX > -Math.PI / 2) {
         planetCamRef.current.rotation.x = camRotationX;
       }
-      // planetCamRef.current.up.set(0, 1, 0); // Reset up vector
-      // planetCamRef.current.updateProjectionMatrix();
-      // (did not fix the up/down problem )
+      camBoxRef.current.rotation.y = planetCamRef.current.rotation.y;
+      camBoxRef.current.rotation.x = planetCamRef.current.rotation.x;
       saveCameraPosition();
     }
   });
@@ -170,17 +172,19 @@ export default function PlanetCamera({ planetRadius }) {
       <group ref={longAxisRef} rotation={[0, 0, 0]}>
         <group ref={latAxisRef} rotation={[0, 0, 0]}>
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
-            {/* hide the box if planetcamera is active or if show camera pos is off  */}
-            {planetCamera || !planetCameraHelper ? null : (
-              <group>
-                <mesh position={[0, 0.1, 0]}>
-                  <boxGeometry args={[0.5, 0.5, 0.5]} />
-                  <meshStandardMaterial color="red" />
-                </mesh>
-                <Arrow />
-                {/* <Arrow start={[0, 0, 0]} end={[0, 20, 0]} color="red" /> */}
-              </group>
-            )}
+            <group
+              ref={camBoxRef}
+              rotation={[0, Math.PI, 0]}
+              rotation-order={"YXZ"}
+              // show the box if planetcamera is not active and show camera pos is on
+              visible={!planetCamera && planetCameraHelper}
+            >
+              <mesh>
+                <boxGeometry args={[0.2, 0.2, 0.2]} />
+                <meshStandardMaterial color="red" />
+              </mesh>
+              <Arrow size={0.2} length={0.5} />
+            </group>
             <PerspectiveCamera
               rotation={[0, Math.PI, 0]}
               near={0.0001}
