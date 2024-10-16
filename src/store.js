@@ -16,7 +16,7 @@ export const useStore = create((set) => ({
   planetCameraDirection: {
     camRotationy: 0,
     camRotationx: 0,
-    camFov: 0,
+    camFov: 15,
     latRotationx: 0,
     longRotationy: 0,
   },
