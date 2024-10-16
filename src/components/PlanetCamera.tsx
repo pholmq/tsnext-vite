@@ -2,12 +2,13 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { CameraHelper, Vector3 } from "three";
 
 import { useFrame, useThree } from "@react-three/fiber";
-import { PerspectiveCamera, useHelper, Html } from "@react-three/drei";
+import { PerspectiveCamera, useHelper } from "@react-three/drei";
 
 import { useGesture } from "@use-gesture/react";
 
 import useKeyPress from "../utils/useKeyPress";
 import { useStore } from "../store";
+import Arrow from "../utils/Arrow";
 /*2024-10-14 Weird bug/problem
 It seems that the cameras up/down is only maintained properly when the camera
 is active, which means that when it's moved in the system camera view it's 
@@ -21,7 +22,8 @@ export default function PlanetCamera({ planetRadius }) {
   let cameraHeight = planetRadius + 0.1;
   const longitude = 0;
   const latitude = 0;
-  const planetCamRef: any = useRef();
+  const planetCamRef = useRef(null);
+  const camBoxRef = useRef(null);
   const longAxisRef = useRef(null);
   const latAxisRef = useRef(null);
   const camMountRef = useRef(null);
@@ -59,13 +61,16 @@ export default function PlanetCamera({ planetRadius }) {
     {
       onDrag: planetCamera //If planetCamera is true, then we hand it a function
         ? ({ delta: [dx, dy] }) => {
-            const sensitivity = 0.01;
+            //Multiplute by fov to make the movement less sensitive when we're zoomed in
+            const sensitivity = 0.0001 * planetCamRef.current.fov;
             planetCamRef.current.rotation.y += dx * sensitivity;
             const camRotationX =
               planetCamRef.current.rotation.x + dy * sensitivity;
             if (camRotationX < Math.PI / 2 && camRotationX > -Math.PI / 2) {
               planetCamRef.current.rotation.x = camRotationX;
             }
+            camBoxRef.current.rotation.y = planetCamRef.current.rotation.y;
+            camBoxRef.current.rotation.x = planetCamRef.current.rotation.x;
             saveCameraPosition();
           }
         : () => {}, // and if not, it gets and empty function
@@ -73,7 +78,7 @@ export default function PlanetCamera({ planetRadius }) {
       onWheel: planetCamera
         ? ({ delta: [, dy] }) => {
             //
-            const sensitivity = 0.1;
+            const sensitivity = 0.01;
             const fov = planetCamRef.current.fov + dy * sensitivity;
 
             if (fov > 0 && fov < 120) {
@@ -109,16 +114,17 @@ export default function PlanetCamera({ planetRadius }) {
         longAxisRef.current.rotation.y += 0.05;
         break;
       case "q":
-        camMountRef.current.position.y += 0.005;
+        camMountRef.current.position.y += 0.05;
         break;
       case "e":
-        if (camMountRef.current.position.y > planetRadius + 0.007) {
-          camMountRef.current.position.y -= 0.005;
+        if (camMountRef.current.position.y >= planetRadius + 0.04) {
+          camMountRef.current.position.y -= 0.05;
         }
         break;
     }
+
     if (keyPressed === "PageUp") {
-      if (planetCamRef.current.fov > 0) {
+      if (planetCamRef.current.fov > 0.5) {
         planetCamRef.current.fov -= 0.5;
         planetCamRef.current.updateProjectionMatrix();
       }
@@ -129,20 +135,21 @@ export default function PlanetCamera({ planetRadius }) {
         planetCamRef.current.updateProjectionMatrix();
       }
     }
-
+    //Multiplute by fov to make the movement less sensitive when we're zoomed in
+    const rotationFact = 0.001 * planetCamRef.current.fov;
     camRotationX = planetCamRef.current.rotation.x;
     switch (keyPressed) {
       case "ArrowUp":
-        camRotationX += 0.01;
+        camRotationX += rotationFact;
         break;
       case "ArrowDown":
-        camRotationX -= 0.01;
+        camRotationX -= rotationFact;
         break;
       case "ArrowLeft":
-        planetCamRef.current.rotation.y += 0.01;
+        planetCamRef.current.rotation.y += rotationFact;
         break;
       case "ArrowRight":
-        planetCamRef.current.rotation.y -= 0.01;
+        planetCamRef.current.rotation.y -= rotationFact;
         break;
     }
 
@@ -153,9 +160,8 @@ export default function PlanetCamera({ planetRadius }) {
       if (camRotationX < Math.PI / 2 && camRotationX > -Math.PI / 2) {
         planetCamRef.current.rotation.x = camRotationX;
       }
-      // planetCamRef.current.up.set(0, 1, 0); // Reset up vector
-      // planetCamRef.current.updateProjectionMatrix();
-      // (did not fix the up/down problem )
+      camBoxRef.current.rotation.y = planetCamRef.current.rotation.y;
+      camBoxRef.current.rotation.x = planetCamRef.current.rotation.x;
       saveCameraPosition();
     }
   });
@@ -166,16 +172,22 @@ export default function PlanetCamera({ planetRadius }) {
       <group ref={longAxisRef} rotation={[0, 0, 0]}>
         <group ref={latAxisRef} rotation={[0, 0, 0]}>
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
-            {/* hide the box if planetcamera is active or if show camera pos is off  */}
-            {planetCamera || !planetCameraHelper ? null : (
-              <mesh position={[0, 0.1, 0]}>
-                <boxGeometry args={[0.5, 0.5, 0.5]} />
+            <group
+              ref={camBoxRef}
+              rotation={[0, Math.PI, 0]}
+              rotation-order={"YXZ"}
+              // show the box if planetcamera is not active and show camera pos is on
+              visible={!planetCamera && planetCameraHelper}
+            >
+              <mesh>
+                <boxGeometry args={[0.2, 0.2, 0.2]} />
                 <meshStandardMaterial color="red" />
               </mesh>
-            )}
+              <Arrow size={0.2} length={0.5} />
+            </group>
             <PerspectiveCamera
               rotation={[0, Math.PI, 0]}
-              near={0.00001}
+              near={0.0001}
               makeDefault={planetCamera}
               ref={planetCamRef}
               rotation-order={"YXZ"}
