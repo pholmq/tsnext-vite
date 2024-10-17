@@ -65,7 +65,7 @@ export default function PlanetCamera({ planetRadius }) {
       },
     }));
     const planetCameraDirection = useStore.getState().planetCameraDirection;
-    console.log(planetCameraDirection);
+    // console.log(planetCameraDirection);
   }
 
   useHelper(
