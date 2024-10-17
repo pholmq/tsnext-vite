@@ -111,11 +111,6 @@ export function Planet(props: any) {
             <PlanetCamera planetRadius={props.size} />
           )}
         </mesh>
-
-        {/* Add particle effects based on the planet's name */}
-        {effectType && (
-          <EffectsOnObj effectType={effectType} position={[0, 0, 0]} />
-        )}
       </group>
     </>
   );
