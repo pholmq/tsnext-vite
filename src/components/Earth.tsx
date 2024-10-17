@@ -22,7 +22,7 @@ export function Earth(props: any) {
   useEffect(() => {
     if (doubleClick) {
       useStore.setState({ cameraTarget: props.name });
-      console.log("doubleClick");
+      // console.log("doubleClick");
       setDoubleClick(false);
     }
   }, [doubleClick]);

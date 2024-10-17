@@ -177,7 +177,7 @@ export const Controls = () => {
           >
             {showMenu ? <FaTimes /> : <FaBars />}
             <span className="p-1 ml-2 text-2xl font-cambria text-white text-center font-bold">
-              The TYCHOSIUM
+              TYCHOSIUM (Beta version)
             </span>
           </button>
         </div>
@@ -192,6 +192,7 @@ export const Controls = () => {
                 timeRef.current.value = posToTime(posRef.current);
                 updateURL(dateRef.current.value, timeRef.current.value);
                 useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
+                useStore.setState((s) => ({ resetClicked: !s.resetClicked }));
               }}
             >
               Reset

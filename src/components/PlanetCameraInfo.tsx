@@ -5,11 +5,29 @@ const PlanetCameraInfo = () => {
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
   const menuRight = useStore((s) => s.menuRight);
   const longInputRef = useRef(null);
-  const long = useStore((s) => s.planetCameraDirection.longRotationy);
+  const { longRotationy, latRotationx, camRotationx, camRotationy } = useStore(
+    (s) => s.planetCameraDirection
+  );
   const latInputRef = useRef(null);
-  const lat = useStore((s) => s.planetCameraDirection.latRotationx);
-  // const lat = useStore((s) => s.planetCameraPosition.lat);
+  const azimuthInputRef = useRef(null);
+  const elevationInputRef = useRef(null);
   const intervalRef = useRef(null);
+
+  function radiansToAzimuth(radians) {
+    // Convert radians to degrees
+    let degrees = radians * (180 / Math.PI);
+
+    // Adjust to azimuth convention
+    let azimuth = (degrees - 90) % 360;
+
+    // Ensure the result is positive
+    if (azimuth < 0) {
+      azimuth += 360;
+    }
+
+    // Round to two decimal places for practical use
+    return Math.round(azimuth * 100) / 100;
+  }
 
   function rad2lat(rad: number) {
     // Convert radians to degrees
@@ -43,10 +61,21 @@ const PlanetCameraInfo = () => {
 
   useLayoutEffect(() => {
     if (planetCamera || planetCameraHelper) {
-      longInputRef.current.value = rad2lon(long);
-      latInputRef.current.value = rad2lat(lat);
+      longInputRef.current.value = rad2lon(longRotationy);
+      latInputRef.current.value = rad2lat(latRotationx);
+      elevationInputRef.current.value = camRotationx * (180 / Math.PI);
+      azimuthInputRef.current.value = radiansToAzimuth(
+        -camRotationy + Math.PI / 2
+      );
     }
-  }, [long, lat, planetCamera, planetCameraHelper]);
+  }, [
+    longRotationy,
+    latRotationx,
+    camRotationx,
+    camRotationy,
+    planetCamera,
+    planetCameraHelper,
+  ]);
 
   function longKeyDown(e) {
     //Prevent planet camera from moving
@@ -56,19 +85,6 @@ const PlanetCameraInfo = () => {
       return;
     }
     (document.activeElement as HTMLElement).blur();
-    // if (!isValidDate(dateRef.current.value)) {
-    //   dateRef.current.value = posToDate(posRef.current);
-    //   return;
-    // }
-    // posRef.current = dateTimeToPos(
-    //   dateRef.current.value,
-    //   posToTime(posRef.current)
-    // );
-    // dateRef.current.value = posToDate(posRef.current);
-    // timeRef.current.value = posToTime(posRef.current);
-    // updateURL(dateRef.current.value, timeRef.current.value);
-
-    // useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
   }
 
   return planetCamera || planetCameraHelper ? (
@@ -85,6 +101,16 @@ const PlanetCameraInfo = () => {
       <p>_</p>
       <div className="flex items-center justify-center m-1">
         <label className="text-base text-white mr-2 ml-1 flex-1">
+          Latitude:
+        </label>
+        <input
+          className="text-base text-white bg-gray-700 rounded p-1"
+          ref={latInputRef}
+          onKeyDown={longKeyDown}
+        />
+      </div>
+      <div className="flex items-center justify-center m-1">
+        <label className="text-base text-white mr-2 ml-1 flex-1">
           Longitude:
         </label>
         <input
@@ -95,11 +121,21 @@ const PlanetCameraInfo = () => {
       </div>
       <div className="flex items-center justify-center m-1">
         <label className="text-base text-white mr-2 ml-1 flex-1">
-          Latitude:
+          Azimuth:
         </label>
         <input
           className="text-base text-white bg-gray-700 rounded p-1"
-          ref={latInputRef}
+          ref={azimuthInputRef}
+          onKeyDown={longKeyDown}
+        />
+      </div>
+      <div className="flex items-center justify-center m-1">
+        <label className="text-base text-white mr-2 ml-1 flex-1">
+          Altitude:
+        </label>
+        <input
+          className="text-base text-white bg-gray-700 rounded p-1"
+          ref={elevationInputRef}
           onKeyDown={longKeyDown}
         />
       </div>

@@ -4,16 +4,16 @@ import { useTexture } from "@react-three/drei";
 import { PosWriter } from "./PosWriter";
 import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
-import PlanetCamera from "./PlanetCamera";
 import { ContextMenu } from "./ContextMenu";
 import { PlanetRings } from "./PlanetRings";
 import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
 import { EffectsOnObj } from "./EffectsOnObj";
 import { useLevaControls } from "./useLevaControls";
+import PlanetCamera from "./PlanetCamera";
 
 export function Planet(props: any) {
-  const ref: any = useRef();
+  const planetRef: any = useRef();
   const posRef: any = useStore((state) => state.posRef);
   // const cameraTarget = useStore((state) => state.cameraTarget)
   const { updateControls } = useLevaControls();
@@ -32,7 +32,8 @@ export function Planet(props: any) {
   const rotationStart = props.rotationStart || 0;
 
   useFrame(() => {
-    ref.current.rotation.y = rotationStart + rotationSpeed * posRef.current;
+    planetRef.current.rotation.y =
+      rotationStart + rotationSpeed * posRef.current;
   });
 
   const tilt = props.tilt || 0;
@@ -70,7 +71,7 @@ export function Planet(props: any) {
         <mesh
           name={props.name}
           visible={props.visible}
-          ref={ref}
+          ref={planetRef}
           scale={1}
           onPointerOver={(e) => {
             e.stopPropagation();

@@ -2,20 +2,32 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { CameraHelper, Vector3 } from "three";
 
 import { useFrame, useThree } from "@react-three/fiber";
-import { PerspectiveCamera, useHelper, Html } from "@react-three/drei";
+import { PerspectiveCamera, useHelper } from "@react-three/drei";
 
 import { useGesture } from "@use-gesture/react";
 
 import useKeyPress from "../utils/useKeyPress";
 import { useStore } from "../store";
+import Arrow from "../utils/Arrow";
+import Ballrod from "../utils/Ballrod";
 
+/*2024-10-14 Weird bug/problem
+It seems that the cameras up/down is only maintained properly when the camera
+is active, which means that when it's moved in the system camera view it's 
+up/down is messed up.
+*/
+/*2024-10-15 Solved! By rewriting the camera system. Short story if the default canvas camera is 
+  used and connected to Drei Camera controls, weird things happen. So I made a new SystemCamera component
+  with a PerspectiveCamera camera as default
+  */
 export default function PlanetCamera({ planetRadius }) {
   let cameraHeight = planetRadius + 0.1;
   const longitude = 0;
   const latitude = 0;
-  const planetCamRef: any = useRef();
-  const longRef = useRef(null);
-  const latRef = useRef(null);
+  const planetCamRef = useRef(null);
+  const camBoxRef = useRef(null);
+  const longAxisRef = useRef(null);
+  const latAxisRef = useRef(null);
   const camMountRef = useRef(null);
   const keyPressed = useKeyPress();
 
@@ -24,11 +36,37 @@ export default function PlanetCamera({ planetRadius }) {
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
   const cameraTarget = useStore((s) => s.cameraTarget);
 
-  // useEffect(() => {
-  //   if (useStore.getState().planetCameraDirection) {
-  //     loadCameraPosition();
-  //   }
-  // }, [cameraTarget, planetCamera]);
+  useEffect(() => {
+    loadCameraPosition();
+    planetCamRef.current.updateProjectionMatrix();
+  }, [cameraTarget]);
+
+  function loadCameraPosition() {
+    const planetCameraDirection = useStore.getState().planetCameraDirection;
+    planetCamRef.current.rotation.y =
+      planetCameraDirection.camRotationy + Math.PI;
+    planetCamRef.current.rotation.x = planetCameraDirection.camRotationx;
+    planetCamRef.current.fov = planetCameraDirection.camFov;
+    latAxisRef.current.rotation.x =
+      planetCameraDirection.latRotationx - Math.PI / 2;
+    longAxisRef.current.rotation.y =
+      planetCameraDirection.longRotationy - Math.PI / 2;
+  }
+
+  function saveCameraPosition() {
+    useStore.setState((s) => ({
+      planetCameraDirection: {
+        camRotationy: planetCamRef.current.rotation.y - Math.PI,
+        camRotationx: planetCamRef.current.rotation.x,
+        camFov: planetCamRef.current.fov,
+        latRotationx: latAxisRef.current.rotation.x + Math.PI / 2,
+        longRotationy: longAxisRef.current.rotation.y + Math.PI / 2,
+        // camMountPosy: camMountRef.current.position.y,
+      },
+    }));
+    const planetCameraDirection = useStore.getState().planetCameraDirection;
+    // console.log(planetCameraDirection);
+  }
 
   useHelper(
     //Only show helper if planetCamera is not active
@@ -36,42 +74,22 @@ export default function PlanetCamera({ planetRadius }) {
     CameraHelper
   );
 
-  function loadCameraPosition() {
-    const pCamDir = useStore.getState().planetCameraDirection;
-    planetCamRef.current.rotation.y = pCamDir.camRotationy;
-    planetCamRef.current.rotation.x = pCamDir.camRotationx;
-    planetCamRef.current.fov = pCamDir.camFov;
-    latRef.current.rotation.x = pCamDir.latRotationx;
-    longRef.current.rotation.y = pCamDir.longRotationy;
-    // camMountRef.current.position.y = pCamDir.camMountPosy;
-  }
-
-  function saveCameraPosition() {
-    useStore.setState((s) => ({
-      planetCameraDirection: {
-        camRotationy: planetCamRef.current.rotation.y,
-        camRotationx: planetCamRef.current.rotation.x,
-        camFov: planetCamRef.current.fov,
-        latRotationx: latRef.current.rotation.x,
-        longRotationy: longRef.current.rotation.y,
-        // camMountPosy: camMountRef.current.position.y,
-      },
-    }));
-  }
-
   //Set touch action to none so useGesture doesn't complain
   gl.domElement.style.touchAction = "none";
   useGesture(
     {
       onDrag: planetCamera //If planetCamera is true, then we hand it a function
         ? ({ delta: [dx, dy] }) => {
-            const sensitivity = 0.01;
+            //Multiplute by fov to make the movement less sensitive when we're zoomed in
+            const sensitivity = 0.0001 * planetCamRef.current.fov;
             planetCamRef.current.rotation.y += dx * sensitivity;
-            const rotationX =
+            let camRotationX =
               planetCamRef.current.rotation.x + dy * sensitivity;
-            if (rotationX < Math.PI / 2 && rotationX > -Math.PI / 2) {
-              planetCamRef.current.rotation.x = rotationX;
-            }
+            if (camRotationX > Math.PI / 2) camRotationX = Math.PI / 2;
+            if (camRotationX < -Math.PI / 2) camRotationX = -Math.PI / 2;
+            planetCamRef.current.rotation.x = camRotationX;
+            camBoxRef.current.rotation.y = planetCamRef.current.rotation.y;
+            camBoxRef.current.rotation.x = planetCamRef.current.rotation.x;
             saveCameraPosition();
           }
         : () => {}, // and if not, it gets and empty function
@@ -79,7 +97,7 @@ export default function PlanetCamera({ planetRadius }) {
       onWheel: planetCamera
         ? ({ delta: [, dy] }) => {
             //
-            const sensitivity = 0.1;
+            const sensitivity = 0.01;
             const fov = planetCamRef.current.fov + dy * sensitivity;
 
             if (fov > 0 && fov < 120) {
@@ -95,39 +113,37 @@ export default function PlanetCamera({ planetRadius }) {
       eventOptions: { passive: false },
     }
   );
-
+  let latRotationX;
+  let camRotationX;
   useFrame(() => {
+    if (keyPressed) {
+      latRotationX = latAxisRef.current.rotation.x;
+    }
     switch (keyPressed) {
       case "w":
-        latRef.current.rotation.x += 0.005;
+        latRotationX += 0.05;
         break;
       case "s":
-        latRef.current.rotation.x -= 0.005;
+        latRotationX -= 0.05;
         break;
       case "a":
-        longRef.current.rotation.y += 0.005;
+        longAxisRef.current.rotation.y -= 0.05;
         break;
       case "d":
-        longRef.current.rotation.y -= 0.005;
+        longAxisRef.current.rotation.y += 0.05;
         break;
       case "q":
-        camMountRef.current.position.y += 0.005;
+        camMountRef.current.position.y += 0.05;
         break;
       case "e":
-        if (camMountRef.current.position.y > planetRadius + 0.007) {
-          camMountRef.current.position.y -= 0.005;
+        if (camMountRef.current.position.y >= planetRadius + 0.1) {
+          camMountRef.current.position.y -= 0.05;
         }
         break;
     }
-    if (longRef.current.rotation.y > Math.PI * 2) {
-      longRef.current.rotation.y = 0;
-    }
-    if (longRef.current.rotation.y < 0) {
-      longRef.current.rotation.y = 2 * Math.PI;
-    }
 
     if (keyPressed === "PageUp") {
-      if (planetCamRef.current.fov > 0) {
+      if (planetCamRef.current.fov > 0.5) {
         planetCamRef.current.fov -= 0.5;
         planetCamRef.current.updateProjectionMatrix();
       }
@@ -138,45 +154,61 @@ export default function PlanetCamera({ planetRadius }) {
         planetCamRef.current.updateProjectionMatrix();
       }
     }
-
-    let rotationX = planetCamRef.current.rotation.x;
+    //Multiplute by fov to make the movement less sensitive when we're zoomed in
+    const rotationFact = 0.001 * planetCamRef.current.fov;
+    camRotationX = planetCamRef.current.rotation.x;
     switch (keyPressed) {
       case "ArrowUp":
-        rotationX += 0.01;
+        camRotationX += rotationFact;
         break;
       case "ArrowDown":
-        rotationX -= 0.01;
+        camRotationX -= rotationFact;
         break;
       case "ArrowLeft":
-        planetCamRef.current.rotation.y += 0.01;
+        planetCamRef.current.rotation.y += rotationFact;
         break;
       case "ArrowRight":
-        planetCamRef.current.rotation.y -= 0.01;
+        planetCamRef.current.rotation.y -= rotationFact;
         break;
-    }
-    if (rotationX < Math.PI / 2 && rotationX > -Math.PI / 2) {
-      planetCamRef.current.rotation.x = rotationX;
     }
 
     if (keyPressed) {
+      if (latRotationX > 0) latRotationX = 0;
+      if (latRotationX < -Math.PI) latRotationX = -Math.PI;
+
+      latAxisRef.current.rotation.x = latRotationX;
+      if (camRotationX > Math.PI / 2) camRotationX = Math.PI / 2;
+      if (camRotationX < -Math.PI / 2) camRotationX = -Math.PI / 2;
+      planetCamRef.current.rotation.x = camRotationX;
+
+      camBoxRef.current.rotation.y = planetCamRef.current.rotation.y;
+      camBoxRef.current.rotation.x = planetCamRef.current.rotation.x;
       saveCameraPosition();
     }
   });
 
   return (
     <>
-      <group ref={longRef} rotation={[0, longitude, 0]}>
-        <group ref={latRef} rotation={[latitude, 0, 0]}>
+      {/* We put the camera system in a group and rotate it so that lat and long are at 0 */}
+      <group ref={longAxisRef}>
+        <group ref={latAxisRef}>
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
-            {/* hide the box if planetcamera is active or if show camera pos is off  */}
-            {planetCamera || !planetCameraHelper ? null : (
-              <mesh position={[0, 0.1, 0]}>
-                <boxGeometry args={[0.5, 0.5, 0.5]} />
+            <group
+              ref={camBoxRef}
+              rotation={[0, Math.PI, 0]}
+              rotation-order={"YXZ"}
+              // show the box if planetcamera is not active and show camera pos is on
+              visible={!planetCamera && planetCameraHelper}
+            >
+              <mesh>
+                <boxGeometry args={[0.2, 0.2, 0.2]} />
                 <meshStandardMaterial color="red" />
               </mesh>
-            )}
+              <Ballrod size={0.2} length={0.5} />
+            </group>
             <PerspectiveCamera
-              near={0.00001}
+              rotation={[0, Math.PI, 0]}
+              near={0.01}
               makeDefault={planetCamera}
               ref={planetCamRef}
               rotation-order={"YXZ"}

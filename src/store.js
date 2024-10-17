@@ -16,7 +16,7 @@ export const useStore = create((set) => ({
   planetCameraDirection: {
     camRotationy: 0,
     camRotationx: 0,
-    camFov: 0,
+    camFov: 15,
     latRotationx: 0,
     longRotationy: 0,
   },
@@ -29,7 +29,9 @@ export const useStore = create((set) => ({
   traceDots: false,
   menuRight: false,
   showStats: false,
+  //Trigger update flags
   runPosWriter: false,
+  resetClicked: false,
 
   // Setter functions
   setCameraTarget: (cameraTarget) => set(() => ({ cameraTarget })),
