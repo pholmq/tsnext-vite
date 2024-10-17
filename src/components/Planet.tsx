@@ -8,7 +8,6 @@ import { ContextMenu } from "./ContextMenu";
 import { PlanetRings } from "./PlanetRings";
 import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
-import { EffectsOnObj } from "./EffectsOnObj";
 import { useLevaControls } from "./useLevaControls";
 import PlanetCamera from "./PlanetCamera";
 
