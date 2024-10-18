@@ -5,14 +5,17 @@ import { getRaDecDistance } from "../utils/celestial-functions";
 import { useThree } from "@react-three/fiber";
 import { useStore } from "../store";
 import { posToDate, posToTime } from "../utils/time-date-functions";
+import { useLevaControls } from "./useLevaControls";
 
-export function PosWriter({ hovered, name, symbol = "*" }) {
+export function PosWriter({ hovered, name, symbol = "*", tracked }) {
   const labelRef = useRef(null);
   const intervalRef = useRef(null);
   const { scene, camera } = useThree();
   const run = useStore((s) => s.run);
   const posRef = useStore((s) => s.posRef);
   const runPosWriter = useStore((s) => s.runPosWriter);
+  const { values, updateControls } = useLevaControls();
+
   function updateLabel() {
     if (!labelRef.current) return;
 
@@ -63,23 +66,52 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       elongation +
       "\xB0";
   }
-  const { [name]: on } = useControls("Positions", {
-    [name]: {
-      value: false,
-    },
-  });
+  // const { [name]: on } = useControls("Positions", {
+  //   [name]: {
+  //     value: false,
+  //   },
+  // });
 
-  useEffect(() => {
-    updateLabel();
-  }, [runPosWriter]);
+  // useEffect(() => {
+  //   updateLabel();
+  //   const { ra, dec, elongation, distKm, distAU, x, y, z } = getRaDecDistance(
+  //     name,
+  //     scene,
+  //     camera
+  //   );
+  //   // console.log(values, `${name}_RA`);
+  //   if (tracked) {
+  //     updateControls({ [`${name}_RA`]: ra });
+  //   }
+  //   console.log("useffect");
+  // }, [runPosWriter]);
 
   clearInterval(intervalRef.current);
   updateLabel();
+  // if (tracked && name && name && camera) {
+  //   console.log(name, scene, camera);
+  //   const { ra, dec, elongation, distKm, distAU, x, y, z } = getRaDecDistance(
+  //     name,
+  //     scene,
+  //     camera
+  //   );
+  //   updateControls({ [`${name}_RA`]: 6 });
+  // }
 
   if (run) {
-    if (hovered || on) {
+    if (hovered) {
       intervalRef.current = setInterval(() => {
         updateLabel();
+      }, 1000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+
+    if (tracked) {
+      intervalRef.current = setInterval(() => {
+        const { ra, dec, elongation, distKm, distAU, x, y, z } =
+          getRaDecDistance(name, scene, camera);
+        updateControls({ [`${name}_RA`]: ra });
       }, 1000);
     } else {
       clearInterval(intervalRef.current);
@@ -89,7 +121,7 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
   return (
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
       <div
-        hidden={hovered || on ? false : true}
+        hidden={hovered ? false : true}
         className="p-1 text-white text-opacity-100 bg-gray-900 
         bg-opacity-50 rounded-md select-none"
       >
