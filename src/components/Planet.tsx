@@ -62,6 +62,7 @@ export function Planet(props: any) {
             hovered={hovered}
             name={props.name}
             symbol={props.unicodeSymbol}
+            tracked={props.posTracked}
           />
         )}
 

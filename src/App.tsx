@@ -39,7 +39,7 @@ function TSNext() {
           <SolarSystem />
           <PlotSolarSystem />
           <TraceController />
-          <CopyPosToClipb />
+          {/* <CopyPosToClipb /> */}
           {/* <axesHelper args={[5]} position={[0, 0, 0]} /> */}
           <ExoplanetStars />
           {/* <AsteroidBelt /> */}

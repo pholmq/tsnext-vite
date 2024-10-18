@@ -5,7 +5,6 @@ import celestialSettings from "../settings/celestial-settings.json";
 import miscSettings from "../settings/misc-settings.json";
 import { usePlotStore, useTraceStore } from "../store";
 
-
 // PObj == plot object
 type Props = {
   name: string;
@@ -34,7 +33,6 @@ type Settings = {
   reverseArrows: boolean;
   rotationArrows: number;
   earth: boolean;
-  traceable?: boolean;
 };
 
 export const Pobj = ({ name, children }: Props) => {

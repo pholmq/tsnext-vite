@@ -5,8 +5,7 @@
     "type": "planet",
     "visible": true,
     "texture": "",
-    "unicodeSymbol": "",
-    "traceable": true
+    "unicodeSymbol": ""
   },
   {
     "name": "Earth",
@@ -42,7 +41,7 @@
     "axesHelper": false,
     "texture": "/textures/planets/2k_moon.jpg",
     "unicodeSymbol": "&#x263D;",
-    "traceable": true
+    "posTracked": true
   },
   {
     "name": "Sun deferent",
@@ -61,53 +60,7 @@
     "light": true,
     "glow": true,
     "unicodeSymbol": "&#x2609;",
-    "traceable": true
-  },
-  {
-    "name": "Mercury def A",
-    "color": "gray",
-    "type": "deferent",
-    "visible": false
-  },
-  {
-    "name": "Mercury def B",
-    "color": "gray",
-    "type": "deferent",
-    "visible": false
-  },
-  {
-    "name": "Mercury",
-    "color": "gray",
-    "type": "planet",
-    "visible": true,
-    "axesHelper": false,
-    "arrows": true,
-    "texture": "/textures/planets/2k_mercury.jpg",
-    "unicodeSymbol": "&#x263F;",
-    "traceable": true
-  },
-  {
-    "name": "Venus deferent A",
-    "color": "orange",
-    "type": "deferent",
-    "visible": false
-  },
-  {
-    "name": "Venus deferent B",
-    "color": "orange",
-    "type": "deferent",
-    "visible": false
-  },
-  {
-    "name": "Venus",
-    "color": "orange",
-    "type": "planet",
-    "visible": true,
-    "axesHelper": false,
-    "arrows": true,
-    "texture": "/textures/planets/2k_venus.jpg",
-    "unicodeSymbol": "&#x2640;",
-    "traceable": true
+    "posTracked": true
   },
   {
     "name": "Mars E deferent",
@@ -132,7 +85,53 @@
     "rotationArrows": -6.67,
     "texture": "/textures/planets/2k_mars.jpg",
     "unicodeSymbol": "&#x2642;",
-    "traceable": true
+    "posTracked": true
+  },
+  {
+    "name": "Mercury def A",
+    "color": "gray",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Mercury def B",
+    "color": "gray",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Mercury",
+    "color": "gray",
+    "type": "planet",
+    "visible": true,
+    "axesHelper": false,
+    "arrows": true,
+    "texture": "/textures/planets/2k_mercury.jpg",
+    "unicodeSymbol": "&#x263F;",
+    "posTracked": true
+  },
+  {
+    "name": "Venus deferent A",
+    "color": "orange",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Venus deferent B",
+    "color": "orange",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Venus",
+    "color": "orange",
+    "type": "planet",
+    "visible": true,
+    "axesHelper": false,
+    "arrows": true,
+    "texture": "/textures/planets/2k_venus.jpg",
+    "unicodeSymbol": "&#x2640;",
+    "posTracked": true
   },
   {
     "name": "Phobos",
@@ -140,8 +139,7 @@
     "color": "grey",
     "visible": false,
     "texture": "",
-    "unicodeSymbol": "",
-    "traceable": true
+    "unicodeSymbol": ""
   },
   {
     "name": "Deimos",
@@ -149,8 +147,7 @@
     "color": "grey",
     "visible": false,
     "texture": "",
-    "unicodeSymbol": "",
-    "traceable": true
+    "unicodeSymbol": ""
   },
   {
     "name": "Jupiter deferent",
@@ -164,7 +161,7 @@
     "visible": true,
     "texture": "/textures/planets/2k_jupiter.jpg",
     "unicodeSymbol": "&#x2643;",
-    "traceable": true,
+    "posTracked": true,
     "rings": {
       "innerRadius": 10,
       "outerRadius": 1,
@@ -183,7 +180,7 @@
     "visible": true,
     "texture": "/textures/planets/2k_saturn.jpg",
     "unicodeSymbol": "&#x2644;",
-    "traceable": true,
+    "posTracked": true,
     "rings": {
       "innerRadius": 0.7,
       "outerRadius": 5,
@@ -202,7 +199,7 @@
     "visible": true,
     "texture": "/textures/planets/2k_uranus.jpg",
     "unicodeSymbol": "&#x2645;",
-    "traceable": true,
+    "posTracked": true,
     "rings": {
       "innerRadius": 0.4,
       "outerRadius": 4.9,
@@ -221,7 +218,7 @@
     "visible": true,
     "texture": "/textures/planets/2k_neptune.jpg",
     "unicodeSymbol": "&#x2646;",
-    "traceable": true,
+    "posTracked": true,
     "rings": {
       "innerRadius": 1.8,
       "outerRadius": 7,
@@ -241,7 +238,7 @@
     "planet": true,
     "texture": "",
     "unicodeSymbol": "",
-    "traceable": true
+    "posTracked": true
   },
   {
     "name": "Eros deferent A",
@@ -260,6 +257,6 @@
     "visible": false,
     "texture": "",
     "unicodeSymbol": "",
-    "traceable": true
+    "posTracked": true
   }
 ]
