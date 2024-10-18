@@ -1,27 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useStore, useTraceStore } from "../store";
-import {
-  FaPlay,
-  FaPause,
-  FaStepBackward,
-  FaStepForward,
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
-import {
-  posToDate,
-  posToTime,
-  isValidDate,
-  dateTimeToPos,
-  dateToDays,
-  addYears,
-  addMonths,
-  timeToPos,
-  isValidTime,
-  sDay,
-  sMonth,
-  sYear,
-} from "../utils/time-date-functions";
+import { FaPlay, FaPause, FaStepBackward, FaStepForward, FaBars, FaTimes } from "react-icons/fa";
+import { posToDate, posToTime, isValidDate, dateTimeToPos, dateToDays, addYears, addMonths, timeToPos, isValidTime, sDay, sMonth, sYear } from "../utils/time-date-functions";
 import { Stats } from "@react-three/drei";
 import { Leva } from "leva";
 import { useLevaControls } from "./useLevaControls";
@@ -30,33 +10,25 @@ function updateURL(date: string, time: string) {
   history.pushState({}, "", `?date=${date}&time=${time}`);
 }
 
-export const Controls = () => {
+const Controls = () => {
   const run = useStore((s) => s.run);
   const posRef = useStore((s) => s.posRef);
   const speedFact = useStore((s) => s.speedFact);
-  const speedmultiplier: number = useStore((s) => s.speedmultiplier);
-
-  /* Mobile responsiveness breakpoint */
-  const [showMenu, setShowMenu] = useState(window.innerWidth >= 768);
-
+  const speedMultiplier = useStore((s) => s.speedmultiplier);
   const stepFact = useTraceStore((s) => s.stepFact);
-  const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
-
-  const dateRef = useRef(null);
-  const timeRef = useRef(null);
-
-  const intervalRef = useRef(null);
-
+  const stepMultiplier = useTraceStore((s) => s.stepMultiplier);
   const menuRight = useStore((s) => s.menuRight);
   const showStats = useStore((s) => s.showStats);
 
-  // Sidebar.tsx coupling, local storage
+  const [showMenu, setShowMenu] = useState(window.innerWidth >= 768);
   const [isLeft, setIsLeft] = useState(true);
 
-  //A custom hook for the leva controls with an update function
+  const intervalRef = useRef(null);
+  const dateRef = useRef(null);
+  const timeRef = useRef(null);
+
   useLevaControls();
 
-  // Load `isLeft` state from local storage
   useEffect(() => {
     const savedIsLeft = localStorage.getItem("sidebarPosition");
     if (savedIsLeft) {
@@ -65,7 +37,6 @@ export const Controls = () => {
   }, []);
 
   useEffect(() => {
-    //Get date & time from the URL
     const searchParams = new URLSearchParams(document.location.search);
     const urlDate = searchParams.get("date");
     const urlTime = searchParams.get("time");
@@ -81,11 +52,8 @@ export const Controls = () => {
 
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
-      //We need to wait a little so that the
-      //posref is updated
       dateRef.current.value = posToDate(posRef.current);
       timeRef.current.value = posToTime(posRef.current);
-
       if (!run) {
         updateURL(dateRef.current.value, timeRef.current.value);
       }
@@ -103,236 +71,153 @@ export const Controls = () => {
     } else {
       clearInterval(intervalRef.current);
     }
+
     return () => clearTimeout(timeout);
   }, [run]);
 
-  function dateKeyDown(e) {
-    //Prevent planet camera from moving
+  const handleDateKeyDown = (e) => {
     e.stopPropagation();
-
-    if (e.key !== "Enter") {
-      return;
-    }
-    (document.activeElement as HTMLElement).blur();
+    if (e.key !== "Enter") return;
+    document.activeElement.blur();
     if (!isValidDate(dateRef.current.value)) {
       dateRef.current.value = posToDate(posRef.current);
       return;
     }
-    posRef.current = dateTimeToPos(
-      dateRef.current.value,
-      posToTime(posRef.current)
-    );
-    dateRef.current.value = posToDate(posRef.current);
-    timeRef.current.value = posToTime(posRef.current);
-    updateURL(dateRef.current.value, timeRef.current.value);
-
+    posRef.current = dateTimeToPos(dateRef.current.value, posToTime(posRef.current));
+    updateInputsAndURL();
     useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
-  }
+  };
 
-  function timeKeyDown(e) {
-    //Prevent planet camera from moving
+  const handleTimeKeyDown = (e) => {
     e.stopPropagation();
-    if (e.key !== "Enter") {
-      return;
-    }
-    (document.activeElement as HTMLElement).blur();
+    if (e.key !== "Enter") return;
+    document.activeElement.blur();
     if (!isValidTime(timeRef.current.value)) {
       timeRef.current.value = posToTime(posRef.current);
       return;
     }
-    posRef.current = dateTimeToPos(
-      posToDate(posRef.current),
-      timeRef.current.value
-    );
+    posRef.current = dateTimeToPos(posToDate(posRef.current), timeRef.current.value);
+    updateInputsAndURL();
+    useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
+  };
+
+  const updateInputsAndURL = () => {
     dateRef.current.value = posToDate(posRef.current);
     timeRef.current.value = posToTime(posRef.current);
     updateURL(dateRef.current.value, timeRef.current.value);
-    useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
-  }
+  };
 
-  function changeScale(newScale) {
-    let div = document.getElementById("controls");
-    /* Use tailwind scales instead?*/
-    div.style.transform = "scale(" + 0.5 + "," + 0.5 + ")";
-  }
+  const handleStep = (direction) => {
+    if (speedFact === sYear) {
+      posRef.current = dateToDays(addYears(dateRef.current.value, direction * speedMultiplier)) * sDay + timeToPos(timeRef.current.value);
+    } else if (speedFact === sMonth) {
+      posRef.current = dateToDays(addMonths(dateRef.current.value, direction * speedMultiplier)) * sDay + timeToPos(timeRef.current.value);
+    } else {
+      posRef.current += direction * speedFact * speedMultiplier;
+    }
+    updateInputsAndURL();
+    useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
+  };
 
   return (
     <>
-      {showStats ? <Stats /> : null}
+      {showStats && <Stats />}
       <div
         id="controls"
-        className={`flex flex-col max-h-[95vh] absolute top-0
-          ${menuRight ? "right-0" : "left-0"}
-          m-1 bg-gray-900 opacity-80 rounded-md select-none`}
+        className={`flex flex-col max-h-[95vh] absolute top-0 ${menuRight ? "right-0" : "left-0"} m-1 bg-gray-900 opacity-80 rounded-md select-none`}
       >
         <div className="flex items-center">
           <button
             className="flex items-center text-2xl text-white px-1 py-2"
-            onLoad={() => {
-              setShowMenu(!showMenu);
-            }}
-            onClick={() => {
-              setShowMenu(!showMenu);
-            }}
+            onClick={() => setShowMenu(!showMenu)}
           >
             {showMenu ? <FaTimes /> : <FaBars />}
-            <span className="p-1 ml-2 text-2xl font-cambria text-white text-center font-bold">
+            <span className="p-1 ml-2 text-2xl font-cambria text-white font-bold">
               TYCHOSIUM (Beta version)
             </span>
           </button>
         </div>
 
-        <div>
-          <div className="flex justify-end m-1 my-1 mr-1 text-1xl">
-            <button
-              className="bg-gray-700 text-white rounded ml-2 px-3"
-              onClick={() => {
-                posRef.current = 0;
-                dateRef.current.value = posToDate(posRef.current);
-                timeRef.current.value = posToTime(posRef.current);
-                updateURL(dateRef.current.value, timeRef.current.value);
-                useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
-                useStore.setState((s) => ({ resetClicked: !s.resetClicked }));
-              }}
-            >
-              Reset
-            </button>
-            <button
-              className="bg-gray-700 text-white rounded ml-2 px-4"
-              onClick={() => {
-                const todayPos =
-                  sDay *
-                  dateToDays(
-                    new Intl.DateTimeFormat("sv-SE", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    }).format(Date.now())
-                  );
-                posRef.current = todayPos;
-                dateRef.current.value = posToDate(posRef.current);
-                timeRef.current.value = posToTime(posRef.current);
-                updateURL(dateRef.current.value, timeRef.current.value);
-                useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
-              }}
-            >
-              Today
-            </button>
-            <button
-              className="bg-gray-700 text-white rounded ml-2 px-4"
-              onClick={() => {
-                if (speedFact === sYear) {
-                  //If it is a year, we need some special logic
-
-                  posRef.current =
-                    dateToDays(
-                      addYears(dateRef.current.value, -speedmultiplier)
-                    ) *
-                      sDay +
-                    timeToPos(timeRef.current.value);
-                } else {
-                  if (speedFact === sMonth) {
-                    posRef.current =
-                      dateToDays(
-                        addMonths(dateRef.current.value, -speedmultiplier)
-                      ) *
-                        sDay +
-                      timeToPos(timeRef.current.value);
-                  } else {
-                    posRef.current -= speedFact * speedmultiplier;
-                  }
-                }
-
-                dateRef.current.value = posToDate(posRef.current);
-                timeRef.current.value = posToTime(posRef.current);
-                updateURL(dateRef.current.value, timeRef.current.value);
-                useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
-              }}
-            >
-              <FaStepBackward />
-            </button>
-            <button
-              className="bg-gray-700 text-white rounded ml-2 px-4"
-              onClick={() => {
-                useStore.setState((state) => ({ run: !state.run }));
-              }}
-            >
-              {run ? <FaPause /> : <FaPlay />}
-            </button>
-            <button className="bg-gray-700 text-white rounded ml-2 px-4">
-              <FaStepForward
-                onClick={() => {
-                  if (speedFact === sYear) {
-                    //If it is a year, we need some special logic
-
-                    posRef.current =
-                      dateToDays(
-                        addYears(dateRef.current.value, speedmultiplier)
-                      ) *
-                        sDay +
-                      timeToPos(timeRef.current.value);
-                  } else {
-                    if (speedFact === sMonth) {
-                      posRef.current =
-                        dateToDays(
-                          addMonths(dateRef.current.value, speedmultiplier)
-                        ) *
-                          sDay +
-                        timeToPos(timeRef.current.value);
-                    } else {
-                      posRef.current += speedFact * speedmultiplier;
-                    }
-                  }
-                  dateRef.current.value = posToDate(posRef.current);
-                  timeRef.current.value = posToTime(posRef.current);
-                  updateURL(dateRef.current.value, timeRef.current.value);
-                  useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
-                }}
-              />
-            </button>
-          </div>
+        <div className="flex justify-end m-1 my-1 mr-1 text-1xl">
+          <button
+            className="bg-gray-700 text-white rounded ml-2 px-3"
+            onClick={() => {
+              posRef.current = 0;
+              updateInputsAndURL();
+              useStore.setState((s) => ({ runPosWriter: !s.runPosWriter, resetClicked: !s.resetClicked }));
+            }}
+          >
+            Reset
+          </button>
+          <button
+            className="bg-gray-700 text-white rounded ml-2 px-4"
+            onClick={() => {
+              posRef.current = sDay * dateToDays(new Intl.DateTimeFormat("sv-SE", { year: "numeric", month: "2-digit", day: "2-digit" }).format(Date.now()));
+              updateInputsAndURL();
+              useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
+            }}
+          >
+            Today
+          </button>
+          <button
+            className="bg-gray-700 text-white rounded ml-2 px-4"
+            onClick={() => handleStep(-1)}
+          >
+            <FaStepBackward />
+          </button>
+          <button
+            className="bg-gray-700 text-white rounded ml-2 px-4"
+            onClick={() => useStore.setState((state) => ({ run: !state.run }))}
+          >
+            {run ? <FaPause /> : <FaPlay />}
+          </button>
+          <button
+            className="bg-gray-700 text-white rounded ml-2 px-4"
+            onClick={() => handleStep(1)}
+          >
+            <FaStepForward />
+          </button>
         </div>
+
         <div className="flex items-center justify-center m-1">
           <label className="text-base text-white mr-2 ml-1 flex-1">Date:</label>
           <input
             className="text-base text-white bg-gray-700 rounded p-1"
             ref={dateRef}
-            onKeyDown={dateKeyDown}
+            onKeyDown={handleDateKeyDown}
           />
         </div>
         <div className="flex items-center justify-center m-1">
-          <label className="text-base text-white mr-2 ml-1 flex-1">
-            Time (UTC):
-          </label>
+          <label className="text-base text-white mr-2 ml-1 flex-1">Time (UTC):</label>
           <input
             className="text-base text-white bg-gray-700 rounded p-1"
             ref={timeRef}
-            onKeyDown={timeKeyDown}
+            onKeyDown={handleTimeKeyDown}
           />
         </div>
-        <div
-          hidden={!showMenu}
-          className="mt-2 overflow-auto text-lg custom-leva leva"
-          onKeyDown={(e) => {
-            //Prevent planet camera from moving when we press keys in the leva menu
-            e.stopPropagation();
-          }}
-        >
-          <Leva /* Change the font font so that it is coherent to other panels */
-            neverHide
-            hideCopyButton
-            fill
-            titleBar={false}
-            theme={{
-              colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
-              fonts: {
-                mono: "'Roboto', sans-serif",
-              },
-            }}
-          />
-        </div>
-        {/* ) : null} */}
+
+        {showMenu && (
+          <div
+            className="mt-2 overflow-auto text-lg custom-leva leva"
+            onKeyDown={(e) => e.stopPropagation()}
+          >
+            <Leva
+              neverHide
+              hideCopyButton
+              fill
+              titleBar={false}
+              theme={{
+                colors: { highlight1: "#FFFFFF", highlight2: "#FFFFFF" },
+                fonts: { mono: "'Roboto', sans-serif" },
+              }}
+            />
+          </div>
+        )}
       </div>
     </>
   );
 };
+
+export { Controls };
+
+export default Controls;

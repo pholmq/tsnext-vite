@@ -8,119 +8,62 @@ type ArrowProps = {
   radius: number;
   color: string;
   reverse?: boolean;
-  scale?: number;
 };
 
-function Arrow({
-  rotation,
-  radius,
-  color,
-  reverse = false,
-  scale = 3,
-}: ArrowProps) {
+const Arrow = ({ rotation, radius, color, reverse = false }: ArrowProps) => {
   const arrowScale = useStore((s) => s.arrowScale);
+  const arrowDirection = reverse ? Math.PI : 0;
 
-  let arrowDirection = 0;
-  if (reverse) {
-    arrowDirection = Math.PI;
-  }
   return (
     <group rotation={[0, 0, rotation]}>
-      <mesh
-        position={[radius, 0, 0]}
-        rotation={[0, 0, arrowDirection]}
-        scale={arrowScale}
-      >
+      <mesh position={[radius, 0, 0]} rotation={[0, 0, arrowDirection]} scale={arrowScale}>
         <coneGeometry args={[3, 8]} />
         <meshBasicMaterial color={color} opacity={0.8} transparent />
       </mesh>
     </group>
   );
-}
+};
 
 type OrbitProps = {
   radius: number;
   color: string;
   lineWidth: number;
-  arrows: boolean;
-  reverse: boolean;
-  rotation: number;
+  arrows?: boolean;
+  reverse?: boolean;
+  rotation?: number;
 };
 
-export function Orbit({
+export const Orbit = ({
   radius,
   color,
   lineWidth,
   arrows = false,
   reverse = false,
-  rotation = 0,
-}: OrbitProps) {
-  const orbitRef: any = useRef();
-  const posRef: any = useStore((state) => state.posRef);
-
+}: OrbitProps) => {
+  const orbitRef = useRef();
   const showArrows = useStore((s) => s.arrows);
   const showOrbits = useStore((s) => s.orbits);
   const orbitsLinewidth = useStore((s) => s.orbitsLinewidth);
 
-  let points: any[] = [];
-  let arrowPoints = [];
-  let arrowStepSize = 45;
+  const points: [number, number, number][] = Array.from({ length: 361 }, (_, i) => [
+    Math.sin(i * (Math.PI / 180)) * radius,
+    Math.cos(i * (Math.PI / 180)) * radius,
+    0,
+  ]);
 
-  // // 360 full circle will be drawn clockwise
-  for (let i = 0; i <= 360; i++) {
-    points.push([
-      Math.sin(i * (Math.PI / 180)) * radius,
-      Math.cos(i * (Math.PI / 180)) * radius,
-      0,
-    ]);
-    if (i === arrowStepSize) {
-      arrowPoints.push([
-        Math.sin(i * (Math.PI / 180)) * radius,
-        Math.cos(i * (Math.PI / 180)) * radius,
-        0,
-      ]);
-      arrowStepSize += arrowStepSize;
-    }
-  }
+  const arrowRotations = Array.from({ length: 4 }, (_, i) => (Math.PI / 4) * (2 * i + 1));
 
   return (
-    <>
-      <group ref={orbitRef} visible={showOrbits}>
-        <group visible={arrows && showArrows}>
-          <Arrow
-            rotation={Math.PI / 4}
-            radius={radius}
-            color={color}
-            reverse={reverse}
-          />
-          <Arrow
-            rotation={(Math.PI / 4) * 3}
-            radius={radius}
-            color={color}
-            reverse={reverse}
-          />
-          <Arrow
-            rotation={(Math.PI / 4) * 5}
-            radius={radius}
-            color={color}
-            reverse={reverse}
-          />
-          <Arrow
-            rotation={(Math.PI / 4) * 7}
-            radius={radius}
-            color={color}
-            reverse={reverse}
-          />
+    <group ref={orbitRef} visible={showOrbits}>
+      {arrows && showArrows && (
+        <group>
+          {arrowRotations.map((rot, idx) => (
+            <Arrow key={idx} rotation={rot} radius={radius} color={color} reverse={reverse} />
+          ))}
         </group>
+      )}
 
-        <Line
-          points={points} // Array of points
-          color={color} // Default
-          lineWidth={orbitsLinewidth} // In pixels (default)
-          dashed={false}
-        />
-      </group>
-      {/* )} */}
-    </>
+      <Line points={points} color={color} lineWidth={orbitsLinewidth} dashed={false} />
+    </group>
   );
-}
+};
