@@ -14,8 +14,6 @@ export function PosWriter({ hovered, name, symbol = "*", tracked }) {
   const { updateControls } = useLevaControls();
 
   function updateLabelAndPositions() {
-    if (!labelRef.current) return;
-
     const { ra, dec, elongation, distKm, distAU, x, y, z } = getRaDecDistance(
       name,
       scene,
@@ -25,6 +23,7 @@ export function PosWriter({ hovered, name, symbol = "*", tracked }) {
       updateControls({ [`${name}_RA`]: ra });
     }
 
+    if (!labelRef.current) return;
     labelRef.current.innerHTML =
       name +
       " " +
@@ -45,7 +44,6 @@ export function PosWriter({ hovered, name, symbol = "*", tracked }) {
       elongation +
       "\xB0";
   }
-
   useEffect(() => {
     if (run) {
       intervalRef.current = setInterval(() => {
@@ -55,7 +53,11 @@ export function PosWriter({ hovered, name, symbol = "*", tracked }) {
       updateLabelAndPositions();
       clearInterval(intervalRef.current);
     }
-  }, [run, hovered]);
+  }, [run]);
+
+  useEffect(() => {
+    updateLabelAndPositions();
+  }, [hovered]);
 
   return (
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
