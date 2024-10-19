@@ -11,7 +11,7 @@ function createPosFolders(folderNames) {
       //Each key have to be unique all over Leva, so we apply some template string jiujitsu here :-)
       [`${name}_RA`]: {
         label: "RA",
-        value: 0,
+        value: "",
       },
     });
   });
@@ -108,7 +108,7 @@ export const useLevaControls = () => {
         // }),
         tip: {
           label: "Tip:",
-          value: "You can hover a planet to see its position",
+          value: "Hover a planet to see its position",
           editable: false,
         },
         ...posFolders,
