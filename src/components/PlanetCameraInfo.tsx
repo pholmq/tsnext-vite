@@ -88,58 +88,64 @@ const PlanetCameraInfo = () => {
   }
 
   return planetCamera || planetCameraHelper ? (
-    <div
-      id="controls"
-      className={`flex flex-col max-h-[95vh] absolute top-0
+    <>
+      <div
+        id=""
+        className={`flex flex-col max-h-[95vh] absolute top-0
       ${menuRight ? "left-0" : "right-0"}
       m-1 bg-gray-900 opacity-80 rounded-md select-none`}
-    >
-      {/* <div className="select-none pointer-events-none absolute top-4 right-4 p-4 bg-white bg-opacity-75 rounded shadow"> */}
-      {/* <p>Planet Camera</p> */}
-      <p className="text-sm">Change latutude and longitude with W,A,S,D</p>
-      <p className="text-sm">Height with Q,E</p>
-      <p>_</p>
-      <div className="flex items-center justify-center m-1">
-        <label className="text-base text-white mr-2 ml-1 flex-1">
-          Latitude:
-        </label>
-        <input
-          className="text-base text-white bg-gray-700 rounded p-1"
-          ref={latInputRef}
-          onKeyDown={longKeyDown}
-        />
+      >
+        {/* <div className="select-none pointer-events-none absolute top-4 right-4 p-4 bg-white bg-opacity-75 rounded shadow"> */}
+        {/* <p>Planet Camera</p> */}
+        <p className="text-sm">Planet camera</p>
+        <p className="text-sm">Change latutude and longitude with W,A,S,D</p>
+        <p className="text-sm">Height with Q,E</p>
+        <p>_</p>
+        <div className="flex items-center justify-center m-1">
+          <label className="text-base text-white mr-2 ml-1 flex-1">
+            Latitude:
+          </label>
+          <input
+            className="text-base text-white bg-gray-700 rounded p-1"
+            ref={latInputRef}
+            onKeyDown={longKeyDown}
+          />
+        </div>
+        <div className="flex items-center justify-center m-1">
+          <label className="text-base text-white mr-2 ml-1 flex-1">
+            Longitude:
+          </label>
+          <input
+            className="text-base text-white bg-gray-700 rounded p-1"
+            ref={longInputRef}
+            onKeyDown={longKeyDown}
+          />
+        </div>
+        <div className="flex items-center justify-center m-1">
+          <label className="text-base text-white mr-2 ml-1 flex-1">
+            Azimuth:
+          </label>
+          <input
+            className="text-base text-white bg-gray-700 rounded p-1"
+            ref={azimuthInputRef}
+            onKeyDown={longKeyDown}
+          />
+        </div>
+        <div className="flex items-center justify-center m-1">
+          <label className="text-base text-white mr-2 ml-1 flex-1">
+            Altitude:
+          </label>
+          <input
+            className="text-base text-white bg-gray-700 rounded p-1"
+            ref={elevationInputRef}
+            onKeyDown={longKeyDown}
+          />
+        </div>
+        <div>
+          <p className="text-sm">Positions</p>
+        </div>
       </div>
-      <div className="flex items-center justify-center m-1">
-        <label className="text-base text-white mr-2 ml-1 flex-1">
-          Longitude:
-        </label>
-        <input
-          className="text-base text-white bg-gray-700 rounded p-1"
-          ref={longInputRef}
-          onKeyDown={longKeyDown}
-        />
-      </div>
-      <div className="flex items-center justify-center m-1">
-        <label className="text-base text-white mr-2 ml-1 flex-1">
-          Azimuth:
-        </label>
-        <input
-          className="text-base text-white bg-gray-700 rounded p-1"
-          ref={azimuthInputRef}
-          onKeyDown={longKeyDown}
-        />
-      </div>
-      <div className="flex items-center justify-center m-1">
-        <label className="text-base text-white mr-2 ml-1 flex-1">
-          Altitude:
-        </label>
-        <input
-          className="text-base text-white bg-gray-700 rounded p-1"
-          ref={elevationInputRef}
-          onKeyDown={longKeyDown}
-        />
-      </div>
-    </div>
+    </>
   ) : null;
 };
 
