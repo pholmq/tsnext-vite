@@ -9,6 +9,7 @@ export const useStore = create((set) => ({
   run: false,
   speedFact: getDefaultSpeedFact(),
   speedmultiplier: 1,
+  showPositions: false,
   activeCamera: "orbit",
   cameraTarget: "Earth",
   cameraFollow: false,
@@ -16,7 +17,7 @@ export const useStore = create((set) => ({
   planetCameraHelper: false,
   planetCameraDirection: {
     camRotationy: 0,
-    camRotationx: 0,
+    camRotationx: -0.2,
     camFov: 15,
     latRotationx: 0,
     longRotationy: 0,
