@@ -89,7 +89,7 @@ const PlanetCameraInfo = () => {
 
   return (
     <>
-      <p className="text-sm">Planet camera</p>
+      <p className="">Planet camera</p>
       <p className="text-sm">Change latutude and longitude with W,A,S,D</p>
       <p className="text-sm">Height with Q,E</p>
       <p>_</p>
