@@ -5,7 +5,8 @@
     "type": "planet",
     "visible": true,
     "texture": "",
-    "unicodeSymbol": ""
+    "unicodeSymbol": "",
+    "traceable": true
   },
   {
     "name": "Earth",
@@ -60,32 +61,7 @@
     "light": true,
     "glow": true,
     "unicodeSymbol": "&#x2609;",
-    "posTracked": true
-  },
-  {
-    "name": "Mars E deferent",
-    "color": "red",
-    "type": "deferent",
-    "visible": false
-  },
-  {
-    "name": "Mars S deferent",
-    "color": "red",
-    "type": "deferent",
-    "visible": false
-  },
-  {
-    "name": "Mars",
-    "color": "red",
-    "type": "planet",
-    "visible": true,
-    "axesHelper": false,
-    "arrows": true,
-    "reverseArrows": true,
-    "rotationArrows": -6.67,
-    "texture": "/textures/planets/2k_mars.jpg",
-    "unicodeSymbol": "&#x2642;",
-    "posTracked": true
+    "posMenuOrder": 20
   },
   {
     "name": "Mercury def A",
@@ -131,7 +107,32 @@
     "arrows": true,
     "texture": "/textures/planets/2k_venus.jpg",
     "unicodeSymbol": "&#x2640;",
-    "posTracked": true
+    "posMenuOrder": 40
+  },
+  {
+    "name": "Mars E deferent",
+    "color": "red",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Mars S deferent",
+    "color": "red",
+    "type": "deferent",
+    "visible": false
+  },
+  {
+    "name": "Mars",
+    "color": "red",
+    "type": "planet",
+    "visible": true,
+    "axesHelper": false,
+    "arrows": true,
+    "reverseArrows": true,
+    "rotationArrows": -6.67,
+    "texture": "/textures/planets/2k_mars.jpg",
+    "unicodeSymbol": "&#x2642;",
+    "posMenuOrder": 30
   },
   {
     "name": "Phobos",
