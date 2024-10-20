@@ -18,14 +18,19 @@
 
 ## Bugs
 
-- [ ] `follow` and `planetView` and functions alike should be cancelable by using `ESC` key
+- [x] `follow` and `planetView` and functions alike should be cancelable by using `ESC` key
+      The reset button now stops the simulation, turns off planet camera and follow
 - [ ] Mobile version
 - [ ] Settings are not mobile-friendly, and the `close` button is inaccessible.
+      Lets wait with the mobile stuff
   - [ ] Unable to double-click or right-click on planets; this only occurs in Chrome's viewer.
+        Seems to be working for me
 - [ ] There's no easy way to stop focusing on an object (not to be confused with `Camera: follow`).
+
 - [ ] Neptune lacks texture, which might be intentional due to the lack of high-resolution images for all planets.
-- [ ] Missing a loading bar for long loading times.
+- [x] Missing a loading bar for long loading times.
 - [ ] Simulation stutters when running (could be an issue with my computer).
+      This is something we need to address. It's usually too many React re-renders that kills performance.
 
 ## Features
 
@@ -45,8 +50,6 @@
   - [ ] Create an .icon that displays when opening a new tab.
 - [ ] Glow on hover over object/planet.
 
-# Patriks noteringar
-
 ## Trace
 
 Funktionen bör ha ett antal presets som den i gamla Tychosium
@@ -62,3 +65,7 @@ group som inte roterar. Dvs man får en planetkamera som inte följer med i plan
 
 Fungerar nu MEN vi får titta på en annan lösning. Rerender hell.. Prestandan dyker.
 Vi gör istället en panel, som med PlanetCamera info där vi visar positions
+
+## ToDo
+
+Funktioner som gör om Azimuth, Altitude, Lat, Long och tid till RA och Dec så att det kan visas i planetkamerapanelen

@@ -111,6 +111,12 @@ export const useLevaControls = () => {
           value: "Hover a planet to see its position",
           editable: false,
         },
+
+        "Show positions": {
+          value: useStore.getState().showPositions,
+          onChange: (v) => useStore.setState({ showPositions: v }),
+        },
+
         ...posFolders,
       },
       { collapsed: true }

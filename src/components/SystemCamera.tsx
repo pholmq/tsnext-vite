@@ -25,8 +25,10 @@ export default function SystemCamera() {
     }, 1);
   }, []);
   useEffect(() => {
-    //Reset camera when the Reset button is clicked
+    //Reset camera and stop when the Reset button is clicked
+    useStore.setState((state) => ({ run: false }));
     updateControls({ "Planet camera": false });
+    updateControls({ Follow: false });
     cameraControlsRef.current.setPosition(-3000, 0, 0, false);
     updateControls({ Target: "Earth" });
 
