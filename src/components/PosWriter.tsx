@@ -45,8 +45,6 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
       "\xB0";
   }
 
-  const trackedPlanets = useLevaControls().values.Positions;
-  console.log(trackedPlanets);
   useEffect(() => {
     if (run) {
       if (hovered) {
