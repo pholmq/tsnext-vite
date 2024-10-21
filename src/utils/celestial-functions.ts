@@ -1,5 +1,5 @@
 import { Vector3, Spherical, Scene, Camera } from "three";
-
+//
 export function decFromAzAltLat(az: number, alt: number, lat: number): number {
   // Convert degrees to radians
   const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
