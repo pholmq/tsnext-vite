@@ -6,7 +6,7 @@
     "visible": true,
     "texture": "",
     "unicodeSymbol": "",
-    "traceable": true
+    "planetCamera": true
   },
   {
     "name": "Earth",
@@ -18,7 +18,8 @@
     "arrows": true,
     "reverseArrows": true,
     "texture": "/textures/8k_earth_daymap.jpg",
-    "unicodeSymbol": "&#x1F728;"
+    "unicodeSymbol": "&#x1F728;",
+    "planetCamera": true
   },
   {
     "name": "Moon deferent A",
@@ -42,6 +43,8 @@
     "axesHelper": false,
     "texture": "/textures/planets/2k_moon.jpg",
     "unicodeSymbol": "&#x263D;",
+    "planetCamera": true,
+    "traceable": true,
     "posTracked": true
   },
   {
@@ -61,7 +64,9 @@
     "light": true,
     "glow": true,
     "unicodeSymbol": "&#x2609;",
-    "posMenuOrder": 20
+    "planetCamera": true,
+    "traceable": true,
+    "posTracked": true
   },
   {
     "name": "Mercury def A",
@@ -84,6 +89,8 @@
     "arrows": true,
     "texture": "/textures/planets/2k_mercury.jpg",
     "unicodeSymbol": "&#x263F;",
+    "planetCamera": true,
+    "traceable": true,
     "posTracked": true
   },
   {
@@ -107,7 +114,9 @@
     "arrows": true,
     "texture": "/textures/planets/2k_venus.jpg",
     "unicodeSymbol": "&#x2640;",
-    "posMenuOrder": 40
+    "planetCamera": true,
+    "traceable": true,
+    "posTracked": true
   },
   {
     "name": "Mars E deferent",
@@ -132,7 +141,9 @@
     "rotationArrows": -6.67,
     "texture": "/textures/planets/2k_mars.jpg",
     "unicodeSymbol": "&#x2642;",
-    "posMenuOrder": 30
+    "planetCamera": true,
+    "traceable": true,
+    "posTracked": true
   },
   {
     "name": "Phobos",
@@ -162,6 +173,8 @@
     "visible": true,
     "texture": "/textures/planets/2k_jupiter.jpg",
     "unicodeSymbol": "&#x2643;",
+    "planetCamera": true,
+    "traceable": true,
     "posTracked": true,
     "rings": {
       "innerRadius": 10,
@@ -181,6 +194,8 @@
     "visible": true,
     "texture": "/textures/planets/2k_saturn.jpg",
     "unicodeSymbol": "&#x2644;",
+    "planetCamera": true,
+    "traceable": true,
     "posTracked": true,
     "rings": {
       "innerRadius": 0.7,
@@ -200,6 +215,8 @@
     "visible": true,
     "texture": "/textures/planets/2k_uranus.jpg",
     "unicodeSymbol": "&#x2645;",
+    "planetCamera": true,
+    "traceable": true,
     "posTracked": true,
     "rings": {
       "innerRadius": 0.4,
@@ -219,6 +236,8 @@
     "visible": true,
     "texture": "/textures/planets/2k_neptune.jpg",
     "unicodeSymbol": "&#x2646;",
+    "planetCamera": true,
+    "traceable": true,
     "posTracked": true,
     "rings": {
       "innerRadius": 1.8,
@@ -239,6 +258,7 @@
     "planet": true,
     "texture": "",
     "unicodeSymbol": "",
+    "traceable": true,
     "posTracked": true
   },
   {
@@ -258,6 +278,7 @@
     "visible": false,
     "texture": "",
     "unicodeSymbol": "",
+    "traceable": true,
     "posTracked": true
   }
 ]
