@@ -3,15 +3,15 @@ import { useEffect, useRef } from "react";
 import { getRaDecDistance } from "../utils/celestial-functions";
 import { useThree } from "@react-three/fiber";
 import { useStore } from "../store";
-import { posToDate, posToTime } from "../utils/time-date-functions";
+import { useControls } from "leva";
+import miscSettings from "../settings/misc-settings.json";
 import { useLevaControls } from "./useLevaControls";
 
-export function PosWriter({ hovered, name, symbol = "*", tracked }) {
+export function PosWriter({ hovered, name, symbol = "*" }) {
   const labelRef = useRef(null);
   const intervalRef = useRef(null);
   const { scene, camera } = useThree();
   const run = useStore((s) => s.run);
-  const { updateControls } = useLevaControls();
 
   function updateLabelAndPositions() {
     if (!labelRef.current) return;
@@ -44,6 +44,9 @@ export function PosWriter({ hovered, name, symbol = "*", tracked }) {
       elongation +
       "\xB0";
   }
+
+  const trackedPlanets = useLevaControls().values.Positions;
+  console.log(trackedPlanets);
   useEffect(() => {
     if (run) {
       if (hovered) {

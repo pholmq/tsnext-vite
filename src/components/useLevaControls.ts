@@ -22,11 +22,6 @@ export const useLevaControls = () => {
     .filter((item) => item.posTracked)
     .map((item) => item.name);
   const posMenuCheckboxes = createCheckboxObjects(posMenuArray);
-  const traceMenuArray = miscSettings
-    .filter((item) => item.traceable)
-    .map((item) => item.name);
-  const traceMenuCheckboxes: any = createCheckboxObjects(traceMenuArray);
-  traceMenuCheckboxes.Mars = true;
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
@@ -110,21 +105,24 @@ export const useLevaControls = () => {
         //   getAllPositions()
         //   alert("!");
         // }),
-        "Show positions": {
-          value: useStore.getState().showPositions,
-          onChange: (v) => useStore.setState({ showPositions: v }),
-        },
-        "Tracked planets": folder(
-          { ...posMenuCheckboxes },
-          { collapsed: false }
-        ),
         tip: {
           label: "Tip:",
           value: "Hover a planet to see its position",
           editable: false,
         },
+        "Show positions": {
+          value: useStore.getState().showPositions,
+          onChange: (v) => useStore.setState({ showPositions: v }),
+        },
+        Planets: folder(
+          {
+            ...posMenuCheckboxes,
+          },
+          { collapsed: false }
+        ),
 
-        // ...posFolders,
+        // "Planets:": { value: "", editable: false },
+        // ...posMenuCheckboxes,
       },
       { collapsed: true }
     ),
