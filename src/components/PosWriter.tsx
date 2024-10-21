@@ -13,7 +13,7 @@ export function PosWriter({ hovered, name, symbol = "*", tracked }) {
   const run = useStore((s) => s.run);
   const { updateControls } = useLevaControls();
 
-  function updateLabelAndPositions() {
+  function updateLabel() {
     if (!labelRef.current) return;
     const { ra, dec, elongation, distKm, distAU, x, y, z } = getRaDecDistance(
       name,
@@ -48,14 +48,14 @@ export function PosWriter({ hovered, name, symbol = "*", tracked }) {
     if (run) {
       if (hovered) {
         intervalRef.current = setInterval(() => {
-          updateLabelAndPositions();
+          updateLabel();
         }, 1000);
       } else {
         clearInterval(intervalRef.current);
       }
     } else {
     }
-    updateLabelAndPositions();
+    updateLabel();
   }, [run, hovered]);
 
   return (
