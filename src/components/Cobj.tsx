@@ -44,7 +44,7 @@ export const Cobj = ({ name, children }: Props) => {
   const cSettings =
     celestialSettings[celestialSettings.findIndex((p) => p.name === name)];
   const aSettings =
-    miscSettings[celestialSettings.findIndex((p) => p.name === name)];
+    miscSettings[miscSettings.findIndex((p) => p.name === name)];
 
   //and merge them into s
   const s = { ...cSettings, ...aSettings };

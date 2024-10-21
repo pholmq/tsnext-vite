@@ -87,15 +87,9 @@ const PlanetCameraInfo = () => {
     (document.activeElement as HTMLElement).blur();
   }
 
-  return planetCamera || planetCameraHelper ? (
-    <div
-      id="controls"
-      className={`flex flex-col max-h-[95vh] absolute top-0
-      ${menuRight ? "left-0" : "right-0"}
-      m-1 bg-gray-900 opacity-80 rounded-md select-none`}
-    >
-      {/* <div className="select-none pointer-events-none absolute top-4 right-4 p-4 bg-white bg-opacity-75 rounded shadow"> */}
-      {/* <p>Planet Camera</p> */}
+  return (
+    <>
+      <p className="">Planet camera</p>
       <p className="text-sm">Change latutude and longitude with W,A,S,D</p>
       <p className="text-sm">Height with Q,E</p>
       <p>_</p>
@@ -139,8 +133,8 @@ const PlanetCameraInfo = () => {
           onKeyDown={longKeyDown}
         />
       </div>
-    </div>
-  ) : null;
+    </>
+  );
 };
 
 export default PlanetCameraInfo;

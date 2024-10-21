@@ -8,7 +8,6 @@ import { ContextMenu } from "./ContextMenu";
 import { PlanetRings } from "./PlanetRings";
 import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
-import { EffectsOnObj } from "./EffectsOnObj";
 import { useLevaControls } from "./useLevaControls";
 import PlanetCamera from "./PlanetCamera";
 
@@ -63,6 +62,7 @@ export function Planet(props: any) {
             hovered={hovered}
             name={props.name}
             symbol={props.unicodeSymbol}
+            tracked={props.posTracked}
           />
         )}
 
@@ -112,11 +112,6 @@ export function Planet(props: any) {
             <PlanetCamera planetRadius={props.size} />
           )}
         </mesh>
-
-        {/* Add particle effects based on the planet's name */}
-        {effectType && (
-          <EffectsOnObj effectType={effectType} position={[0, 0, 0]} />
-        )}
       </group>
     </>
   );
