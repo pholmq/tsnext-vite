@@ -1,3 +1,4 @@
+//
 import { decFromAzAltLat } from "../src/utils/celestial-functions";
 
 describe("calculateDeclination", () => {
