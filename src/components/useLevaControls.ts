@@ -4,29 +4,28 @@ import { speedFactOpts } from "../utils/time-date-functions";
 import { useCallback, useEffect, useRef } from "react";
 import miscSettings from "../settings/misc-settings.json";
 
-function createPosFolders(folderNames) {
-  const folders = {};
-  folderNames.forEach((name) => {
-    folders[name] = folder({
-      //Each key have to be unique all over Leva, so we apply some template string jiujitsu here :-)
-      [`${name}_RA`]: {
-        label: "RA",
-        value: "",
-      },
-    });
+function createCheckboxObjects(items) {
+  const checkboxObject = {};
+
+  items.forEach((item) => {
+    checkboxObject[item] = false;
   });
-  return folders;
+
+  return checkboxObject;
 }
 
 export const useLevaControls = () => {
-  const planetsArray = useStore((s) => s.planetsArray);
-  const posMenuArray = useStore((s) => s.posMenuArray);
+  const planetCameraArray = miscSettings
+    .filter((item) => item.planetCamera)
+    .map((item) => item.name);
+  const posMenuArray = miscSettings
+    .filter((item) => item.posTracked)
+    .map((item) => item.name);
+  const posMenuCheckboxes = createCheckboxObjects(posMenuArray);
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
   const stepFact = useTraceStore((s) => s.stepFact);
-  //We create a folder for each planet and use that when creating the Positions folder
-  const posFolders = createPosFolders(posMenuArray);
 
   const [values, setControls] = useControls(() => ({
     "1 sec/step equals": {
@@ -111,13 +110,19 @@ export const useLevaControls = () => {
           value: "Hover a planet to see its position",
           editable: false,
         },
-
         "Show positions": {
           value: useStore.getState().showPositions,
           onChange: (v) => useStore.setState({ showPositions: v }),
         },
+        Planets: folder(
+          {
+            ...posMenuCheckboxes,
+          },
+          { collapsed: false }
+        ),
 
-        ...posFolders,
+        // "Planets:": { value: "", editable: false },
+        // ...posMenuCheckboxes,
       },
       { collapsed: true }
     ),
@@ -132,7 +137,7 @@ export const useLevaControls = () => {
         Target: {
           value: useStore.getState().cameraTarget,
           // options: ["Earth", "Sun", "Mars"],
-          options: planetsArray,
+          options: planetCameraArray,
           onChange: (v) => {
             useStore.setState({ cameraTarget: v });
             // console.log(v);

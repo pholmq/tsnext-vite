@@ -31,16 +31,6 @@ export const useStore = create((set) => ({
   traceDots: false,
   menuRight: false,
   showStats: false,
-  planetsArray: miscSettings
-    .filter((item) => item.type === "planet")
-    .map((item) => item.name),
-  posMenuArray: miscSettings
-    .filter((item) => item.posTracked)
-    .map((item) => item.name),
-  // const posMenuArray = miscSettings
-  //   .filter((item) => item.posTracked)
-  //   .map((item) => item.name);
-  // console.log(posMenuArray);
 
   //Trigger update flags
   runPosWriter: false,

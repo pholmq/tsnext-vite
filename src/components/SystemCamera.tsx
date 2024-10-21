@@ -22,7 +22,7 @@ export default function SystemCamera() {
     setTimeout(() => {
       cameraControlsRef.current.smoothTime = 2;
       cameraControlsRef.current.rotatePolarTo(Math.PI / 3, true);
-    }, 1);
+    }, 0);
   }, []);
   useEffect(() => {
     //Reset camera and stop when the Reset button is clicked
