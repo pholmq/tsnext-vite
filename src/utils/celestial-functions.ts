@@ -1,4 +1,90 @@
 import { Vector3, Spherical, Scene, Camera } from "three";
+
+export function decFromAzAltLat(az: number, alt: number, lat: number): number {
+  // Convert degrees to radians
+  const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
+  const toDegrees = (radians: number) => (radians * 180) / Math.PI;
+
+  // Convert inputs to radians
+  const azRad = toRadians(az);
+  const altRad = toRadians(alt);
+  const latRad = toRadians(lat);
+
+  // Calculate declination
+  const sinDec =
+    Math.sin(altRad) * Math.sin(latRad) +
+    Math.cos(altRad) * Math.cos(latRad) * Math.cos(azRad);
+  const dec = Math.asin(sinDec);
+
+  // Convert declination to degrees and return
+  return toDegrees(dec);
+}
+
+export function rAandDecFromLocal(lat, lon, time, az, alt) {
+  // Convert degrees to radians
+  const toRadians = (deg) => deg * (Math.PI / 180);
+  const toDegrees = (rad) => rad * (180 / Math.PI);
+
+  // Convert input to radians
+  lat = toRadians(lat);
+  lon = toRadians(lon);
+  az = toRadians(az);
+  alt = toRadians(alt);
+
+  // Calculate Local Sidereal Time (LST)
+  const date = new Date(time);
+  const utc =
+    date.getUTCHours() +
+    date.getUTCMinutes() / 60 +
+    date.getUTCSeconds() / 3600;
+  const jd = date.getTime() / 86400000 + 2440587.5;
+  const t = (jd - 2451545.0) / 36525;
+  const gmst =
+    280.46061837 +
+    360.98564736629 * (jd - 2451545.0) +
+    0.000387933 * t * t -
+    (t * t * t) / 38710000;
+  let lst = (gmst + lon * (180 / Math.PI)) % 360;
+  lst = toRadians(lst);
+
+  // Calculate declination
+  const sinDec =
+    Math.sin(lat) * Math.sin(alt) +
+    Math.cos(lat) * Math.cos(alt) * Math.cos(az);
+  const decRad = Math.asin(sinDec);
+
+  // Calculate hour angle
+  const cosH =
+    (Math.sin(alt) - Math.sin(lat) * Math.sin(decRad)) /
+    (Math.cos(lat) * Math.cos(decRad));
+  let h = Math.acos(cosH);
+  if (Math.sin(az) > 0) {
+    h = 2 * Math.PI - h;
+  }
+
+  // Calculate right ascension
+  let ra = lst - h;
+  if (ra < 0) ra += 2 * Math.PI;
+  if (ra > 2 * Math.PI) ra -= 2 * Math.PI;
+
+  // Convert RA to hours and Dec to degrees
+  ra = toDegrees(ra) / 15; // 15 degrees per hour
+  const dec = toDegrees(decRad);
+
+  return { ra, dec };
+  /* Example usage
+const lat = 40.7128; // New York City latitude
+const lon = -74.0060; // New York City longitude
+const time = new Date(); // Current time
+const az = 180; // Azimuth in degrees
+const alt = 45; // Altitude in degrees
+
+const result = calculateRAandDec(lat, lon, time, az, alt);
+console.log(`Right Ascension: ${result.ra.toFixed(4)} hours`);
+console.log(`Declination: ${result.dec.toFixed(4)} degrees`);
+*/
+}
+
 export function getAllPositions() {}
 export function getRaDecDistance(name: string, scene: Scene, camera: Camera) {
   //Returns Right Ascension, Declination and Distance for an object
