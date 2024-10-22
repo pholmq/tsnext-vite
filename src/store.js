@@ -41,6 +41,10 @@ export const useStore = create((set) => ({
   setOrbits: (orbits) => set(() => ({ orbits })),
 }));
 
+export const usePosStore = create((set) => ({
+  posObjects: [],
+}));
+
 // Plot-related store using zustand
 export const usePlotStore = create((set) => ({
   plotPos: 0,

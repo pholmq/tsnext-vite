@@ -17,6 +17,7 @@ import { Leva } from "leva";
 import { AsteroidBelt } from "./components/AstroidBelt";
 import SystemCamera from "./components/SystemCamera";
 import InfoPanel from "./components/InfoPanel";
+import PosWriterController from "./components/PosWriterController";
 
 function TSNext() {
   return (
@@ -40,6 +41,7 @@ function TSNext() {
           <SolarSystem />
           <PlotSolarSystem />
           <TraceController />
+          <PosWriterController />
           {/* <CopyPosToClipb /> */}
           {/* <axesHelper args={[5]} position={[0, 0, 0]} /> */}
           <ExoplanetStars />
