@@ -10,6 +10,7 @@ import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
 import { useLevaControls } from "./useLevaControls";
 import PlanetCamera from "./PlanetCamera";
+import { Clouds } from "./Clouds";
 
 export function Planet(props: any) {
   const planetRef: any = useRef();
@@ -73,19 +74,19 @@ export function Planet(props: any) {
           ref={planetRef}
           scale={1}
           onPointerOver={(e) => {
-            e.stopPropagation();
+            // e.stopPropagation();
             setHover(true);
           }}
           onPointerLeave={(e) => {
-            e.stopPropagation();
+            // e.stopPropagation();
             setHover(false);
           }}
           onContextMenu={(e: any) => {
-            e.stopPropagation();
+            // e.stopPropagation();
             setContextMenu(true);
           }}
           onDoubleClick={(e) => {
-            e.stopPropagation();
+            // e.stopPropagation();
             updateControls({ Target: props.name });
           }}
         >
@@ -95,6 +96,8 @@ export function Planet(props: any) {
           ) : (
             <meshStandardMaterial color={props.color} />
           )}
+          {/* Add clouds to Earth */}
+          {props.name === "Earth" && <Clouds size={props.size} />}
 
           {props.light && <pointLight intensity={3} />}
 
