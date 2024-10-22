@@ -1,27 +1,14 @@
-import { useStore, useTraceStore } from "../store";
+import { useStore, useTraceStore, usePosStore } from "../store";
 import { folder, useControls } from "leva";
 import { speedFactOpts } from "../utils/time-date-functions";
 import { useCallback, useEffect, useRef } from "react";
 import miscSettings from "../settings/misc-settings.json";
 
-function createCheckboxObjects(items) {
-  const checkboxObject = {};
-
-  items.forEach((item) => {
-    checkboxObject[item] = false;
-  });
-
-  return checkboxObject;
-}
-
 export const useLevaControls = () => {
   const planetCameraArray = miscSettings
     .filter((item) => item.planetCamera)
     .map((item) => item.name);
-  const posMenuArray = miscSettings
-    .filter((item) => item.posTracked)
-    .map((item) => item.name);
-  const posMenuCheckboxes = createCheckboxObjects(posMenuArray);
+
   const speedFact = useStore((s) => s.speedFact);
   const speedmultiplier: number = useStore((s) => s.speedmultiplier);
   const stepMultiplier: number = useTraceStore((s) => s.stepMultiplier);
@@ -114,12 +101,6 @@ export const useLevaControls = () => {
           value: useStore.getState().showPositions,
           onChange: (v) => useStore.setState({ showPositions: v }),
         },
-        Planets: folder(
-          {
-            ...posMenuCheckboxes,
-          },
-          { collapsed: false }
-        ),
 
         // "Planets:": { value: "", editable: false },
         // ...posMenuCheckboxes,

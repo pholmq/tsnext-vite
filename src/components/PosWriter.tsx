@@ -2,7 +2,8 @@ import { Html } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import { getRaDecDistance } from "../utils/celestial-functions";
 import { useThree } from "@react-three/fiber";
-import { useStore } from "../store";
+import { useStore, usePosStore } from "../store";
+
 import { useControls } from "leva";
 import miscSettings from "../settings/misc-settings.json";
 import { useLevaControls } from "./useLevaControls";
@@ -12,6 +13,11 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
   const intervalRef = useRef(null);
   const { scene, camera } = useThree();
   const run = useStore((s) => s.run);
+  const trackedPlanets = usePosStore((s) => s.posObjects);
+
+  useEffect(() => {
+    console.log(trackedPlanets);
+  }, [trackedPlanets]);
 
   function updateLabelAndPositions() {
     if (!labelRef.current) return;
