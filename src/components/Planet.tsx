@@ -74,19 +74,18 @@ export function Planet(props: any) {
           ref={planetRef}
           scale={1}
           onPointerOver={(e) => {
-            // e.stopPropagation();
             setHover(true);
           }}
           onPointerLeave={(e) => {
-            // e.stopPropagation();
             setHover(false);
           }}
           onContextMenu={(e: any) => {
-            // e.stopPropagation();
             setContextMenu(true);
           }}
           onDoubleClick={(e) => {
-            // e.stopPropagation();
+            //Bugfix. Triggerers a rerender of the system camera so that a doubleclick on a planet
+            //thats already the target will retarget the camera
+            updateControls({ Target: "SystemCenter" });
             updateControls({ Target: props.name });
           }}
         >

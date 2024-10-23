@@ -1,5 +1,5 @@
 import { Html } from "@react-three/drei";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getRaDecDistance } from "../utils/celestial-functions";
 import { useThree } from "@react-three/fiber";
 import { useStore, usePosStore } from "../store";
@@ -10,25 +10,29 @@ import { useLevaControls } from "./useLevaControls";
 
 export function PosWriter({ hovered, name, symbol = "*" }) {
   const labelRef = useRef(null);
-  const intervalRef = useRef(null);
+  const hoveredIntervalRef = useRef(null);
+  const trackedIntervalRef = useRef(null);
   const { scene, camera } = useThree();
   const run = useStore((s) => s.run);
-  const trackedPlanets = usePosStore((s) => s.posObjects);
+  const trackedPlanets = usePosStore((s) => s.trackedObjects);
+  const addPositionRef = usePosStore((s) => s.addPositionRef);
+  const positionRef = useRef(null);
 
-  useEffect(() => {
-    console.log(trackedPlanets);
-  }, [trackedPlanets]);
+  const runPosWriter = useStore((s) => s.runPosWriter);
+  // const [tracked, setTracked] = useState(false);
+  const tracked = trackedPlanets.includes(name);
+  function updatePos() {
+    //We use a ref thats added to the store to update the position because of performance
+    positionRef.current = getRaDecDistance(name, scene, camera);
+  }
 
-  function updateLabelAndPositions() {
+  function updateLabel() {
     if (!labelRef.current) return;
     const { ra, dec, elongation, distKm, distAU, x, y, z } = getRaDecDistance(
       name,
       scene,
       camera
     );
-    // if (tracked) {
-    //   updateControls({ [`${name}_RA`]: ra });
-    // }
 
     labelRef.current.innerHTML =
       name +
@@ -52,18 +56,35 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
   }
 
   useEffect(() => {
+    if (tracked) {
+      addPositionRef({ name: name, ref: positionRef });
+      updatePos();
+    }
+    // console.log(usePosStore.getState().positionRefs);
+  }, [trackedPlanets]);
+
+  useEffect(() => {
     if (run) {
       if (hovered) {
-        intervalRef.current = setInterval(() => {
-          updateLabelAndPositions();
+        hoveredIntervalRef.current = setInterval(() => {
+          updateLabel();
         }, 1000);
       } else {
-        clearInterval(intervalRef.current);
+        clearInterval(hoveredIntervalRef.current);
+      }
+      if (tracked) {
+        trackedIntervalRef.current = setInterval(() => {
+          updatePos();
+        }, 1000);
       }
     } else {
+      clearInterval(trackedIntervalRef.current);
     }
-    updateLabelAndPositions();
-  }, [run, hovered]);
+    updateLabel();
+    if (tracked) {
+      updatePos();
+    }
+  }, [run, hovered, runPosWriter]);
 
   return (
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>

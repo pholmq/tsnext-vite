@@ -22,12 +22,20 @@ export default function PosWriterController() {
     ...checkboxes,
   });
   //Put selected planets into an array.
-  const trackedPlanetsArray = Object.entries(trackedPlanets)
-    .filter(([_, value]) => value === true)
-    .map(([key, _]) => key);
-  //Update the store when planets are selected (used by poswriter and PosInfo)
+  // const trackedPlanetsArray = Object.entries(trackedPlanets)
+  //   .filter(([_, value]) => value === true)
+  //   .map(([key, _]) => key);
+  // usePosStore.setState((s) => ({ trackedObjects: trackedPlanetsArray }));
+
+  // console.table(usePosStore.getState().trackedObjects);
+
   useEffect(() => {
-    usePosStore.setState((s) => ({ posObjects: trackedPlanetsArray }));
+    //Update the store when planets are selected/deselected (used by poswriter and PosInfo)
+    const trackedPlanetsArray = Object.entries(trackedPlanets)
+      .filter(([_, value]) => value === true)
+      .map(([key, _]) => key);
+    usePosStore.setState((s) => ({ trackedObjects: trackedPlanetsArray }));
+    // console.table(usePosStore.getState().trackedObjects);
   }, [trackedPlanets]);
 
   return null;
