@@ -27,7 +27,7 @@ export default function PosWriterController() {
     .map(([key, _]) => key);
   //Update the store when planets are selected (used by poswriter and PosInfo)
   useEffect(() => {
-    usePosStore.setState((s) => ({ posObjects: trackedPlanetsArray }));
+    usePosStore.setState((s) => ({ trackedObjects: trackedPlanetsArray }));
   }, [trackedPlanets]);
 
   return null;

@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useStore } from "../store";
-const PlanetCameraInfo = () => {
+const PositionsInfo = () => {
   const planetCamera = useStore((s) => s.planetCamera);
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
   const menuRight = useStore((s) => s.menuRight);
@@ -28,4 +28,4 @@ const PlanetCameraInfo = () => {
   );
 };
 
-export default PlanetCameraInfo;
+export default PositionsInfo;

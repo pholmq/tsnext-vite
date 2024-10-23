@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { useStore } from "../store";
+import { useStore, usePosStore } from "../store";
 import PlanetCameraInfo from "./PlanetCameraInfo";
 import PositionsInfo from "./PositionsInfo";
 const InfoPanel = () => {
@@ -7,7 +7,11 @@ const InfoPanel = () => {
   const planetCamera = useStore((s) => s.planetCamera);
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
   const showPositions = useStore((s) => s.showPositions);
+  const positionRefs = usePosStore((s) => s.positionRefs);
 
+  for (const posRef of positionRefs) {
+    console.log(posRef);
+  }
   return (
     <>
       <div
