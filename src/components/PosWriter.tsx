@@ -16,13 +16,11 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
   const run = useStore((s) => s.run);
   const trackedPlanets = usePosStore((s) => s.trackedObjects);
   const addPositionRef = usePosStore((s) => s.addPositionRef);
-  const positionRefs = usePosStore((s) => s.positionRefs);
   const positionRef = useRef(null);
-  const showPositions = useStore((s) => s.showPositions);
 
   const runPosWriter = useStore((s) => s.runPosWriter);
-  const [tracked, setTracked] = useState(false);
-
+  // const [tracked, setTracked] = useState(false);
+  const tracked = trackedPlanets.includes(name);
   function updatePos() {
     //We use a ref thats added to the store to update the position because of performance
     positionRef.current = getRaDecDistance(name, scene, camera);
@@ -58,11 +56,12 @@ export function PosWriter({ hovered, name, symbol = "*" }) {
   }
 
   useEffect(() => {
-    if (trackedPlanets.includes(name)) {
-      setTracked(true);
+    if (tracked) {
       addPositionRef({ name: name, ref: positionRef });
+      updatePos();
     }
-  }, [trackedPlanets, showPositions]);
+    // console.log(usePosStore.getState().positionRefs);
+  }, [trackedPlanets]);
 
   useEffect(() => {
     if (run) {

@@ -54,8 +54,12 @@ export const usePosStore = create((set) => ({
         // If it doesn't exist, add it to the array
         return { positionRefs: [...state.positionRefs, positionRef] };
       }
-      // If it exists, return the state unchanged
-      return state;
+      // If it exists, update the ref
+      return {
+        positionRefs: state.positionRefs.map((item) =>
+          item.name === positionRef.name ? positionRef : item
+        ),
+      };
     }),
 }));
 
