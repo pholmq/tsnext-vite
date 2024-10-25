@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "../store";
 import { useTexture } from "@react-three/drei";
-import { PosWriter } from "./PosWriter";
+import { HoverMenu } from "./HoverMenu";
 import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
 import { ContextMenu } from "./ContextMenu";
@@ -59,7 +59,7 @@ export function Planet(props: any) {
             planetName={props.name}
           />
         ) : (
-          <PosWriter
+          <HoverMenu
             hovered={hovered}
             name={props.name}
             symbol={props.unicodeSymbol}
