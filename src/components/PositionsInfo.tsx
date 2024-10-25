@@ -15,31 +15,26 @@ export default function PositionsInfo() {
 }
 
 function Position({ name }) {
-  const posRefs = usePosStore((s) => s.positionRefs);
-
-  const posRef = posRefs.find((item) => item.name === name);
-  console.log(
-    "name: ",
-    name,
-    "posRef.name: ",
-    posRef.name,
-    "posRef.ref.current.ra: " + posRef.ref.current.ra
-  );
   const raRef = useRef(null);
   const trackedIntervalRef = useRef(null);
+  const positions = usePosStore((s) => s.positions);
+  const { [name]: position } = positions;
+  // const { ra, dec, elongation, distKm, distAU, x, y, z } = position;
+
+  // useEffect(() => {
+  //   trackedIntervalRef.current = setInterval(() => {
+  //     const { ra, dec, elongation, distKm, distAU, x, y, z } = position;
+  //     raRef.current.value = ra;
+  //   }, 100);
+  //   return () => {
+  //     // Cleanup code
+  //     clearInterval(trackedIntervalRef.current);
+  //   };
+  // }, []);
   useEffect(() => {
-    trackedIntervalRef.current = setInterval(() => {
-      if (raRef.current) {
-        const { ra, dec, elongation, distKm, distAU, x, y, z } =
-          posRef.ref.current;
-        raRef.current.value = ra;
-      }
-    }, 100);
-    return () => {
-      // Cleanup code
-      clearInterval(trackedIntervalRef.current);
-    };
-  }, []);
+    const { ra, dec, elongation, distKm, distAU, x, y, z } = position;
+    raRef.current.value = ra;
+  }, [positions]);
 
   return (
     <>
@@ -49,6 +44,7 @@ function Position({ name }) {
         <input
           className="text-base text-white bg-gray-700 rounded p-1"
           ref={raRef}
+          // value={ra}
         />
       </div>
       <div className="flex items-center justify-center m-1">

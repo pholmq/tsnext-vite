@@ -86,6 +86,7 @@ console.log(`Declination: ${result.dec.toFixed(4)} degrees`);
 }
 
 export function getAllPositions() {}
+
 export function getRaDecDistance(name: string, scene: Scene, camera: Camera) {
   //Returns Right Ascension, Declination and Distance for an object
 
@@ -113,11 +114,11 @@ export function getRaDecDistance(name: string, scene: Scene, camera: Camera) {
   let distAU;
   if (name === "Moon") {
     // Moon is furher away from Earth in the model than in reality (to be visible)
-    distKm = (((sphericalPos.radius / 100) * 149597871) / 39.2078).toFixed(2);
-    distAU = (sphericalPos.radius / 100 / 39.2078).toFixed(8);
+    distKm = (((sphericalPos.radius / 100) * 149597871) / 39.2078).toFixed(0);
+    distAU = (sphericalPos.radius / 100 / 39.2078).toFixed(2);
   } else {
-    distKm = ((sphericalPos.radius / 100) * 149597871).toFixed(2);
-    distAU = (sphericalPos.radius / 100).toFixed(8);
+    distKm = ((sphericalPos.radius / 100) * 149597871).toFixed(0);
+    distAU = (sphericalPos.radius / 100).toFixed(2);
   }
 
   //Elongation
@@ -131,13 +132,20 @@ export function getRaDecDistance(name: string, scene: Scene, camera: Camera) {
     Math.pow(sunTargetPlanetDistance, 2);
   const denominator = 2.0 * earthSunDistance * earthTargetPlanetDistance;
   const elongationRadians = Math.acos(numerator / denominator);
-  const elongation = ((180.0 * elongationRadians) / Math.PI).toFixed(3);
+  const elongation = ((180.0 * elongationRadians) / Math.PI).toFixed(2);
+
+  let dist = distAU;
+  if (distAU < 0.01) {
+    dist = distKm + " km";
+  } else {
+    dist = distAU + " AU";
+  }
 
   return {
     ra: ra,
     dec: dec,
     elongation: elongation,
-    distKm: distKm,
+    dist: dist,
     distAU: distAU,
     x: objectPos.x,
     y: objectPos.y,

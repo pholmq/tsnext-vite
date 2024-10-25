@@ -43,24 +43,7 @@ export const useStore = create((set) => ({
 
 export const usePosStore = create((set) => ({
   trackedObjects: [],
-  positionRefs: [],
-  addPositionRef: (positionRef) =>
-    set((state) => {
-      // Check if an item with the same id already exists
-      const exists = state.positionRefs.some(
-        (item) => item.name === positionRef.name
-      );
-      if (!exists) {
-        // If it doesn't exist, add it to the array
-        return { positionRefs: [...state.positionRefs, positionRef] };
-      }
-      // If it exists, update the ref
-      return {
-        positionRefs: state.positionRefs.map((item) =>
-          item.name === positionRef.name ? positionRef : item
-        ),
-      };
-    }),
+  positions: {},
 }));
 
 // Plot-related store using zustand

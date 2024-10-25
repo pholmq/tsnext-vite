@@ -255,6 +255,7 @@ export const Controls = () => {
               className="bg-gray-700 text-white rounded ml-2 px-4"
               onClick={() => {
                 useStore.setState((state) => ({ run: !state.run }));
+                useStore.setState((s) => ({ runPosWriter: !s.runPosWriter }));
               }}
             >
               {run ? <FaPause /> : <FaPlay />}
