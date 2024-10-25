@@ -16,22 +16,10 @@ export default function PositionsInfo() {
 
 function Position({ name }) {
   const raRef = useRef(null);
-  const trackedIntervalRef = useRef(null);
   const positions = usePosStore((s) => s.positions);
-  const { [name]: position } = positions;
-  // const { ra, dec, elongation, distKm, distAU, x, y, z } = position;
-
-  // useEffect(() => {
-  //   trackedIntervalRef.current = setInterval(() => {
-  //     const { ra, dec, elongation, distKm, distAU, x, y, z } = position;
-  //     raRef.current.value = ra;
-  //   }, 100);
-  //   return () => {
-  //     // Cleanup code
-  //     clearInterval(trackedIntervalRef.current);
-  //   };
-  // }, []);
   useEffect(() => {
+    const { [name]: position } = positions;
+    if (!position) return;
     const { ra, dec, elongation, distKm, distAU, x, y, z } = position;
     raRef.current.value = ra;
   }, [positions]);
@@ -44,7 +32,6 @@ function Position({ name }) {
         <input
           className="text-base text-white bg-gray-700 rounded p-1"
           ref={raRef}
-          // value={ra}
         />
       </div>
       <div className="flex items-center justify-center m-1">
