@@ -69,3 +69,5 @@ Vi gör istället en panel, som med PlanetCamera info där vi visar positions
 ## ToDo
 
 Funktioner som gör om Azimuth, Altitude, Lat, Long och tid till RA och Dec så att det kan visas i planetkamerapanelen
+
+Layer Planets, so that planet camera see a different size than the system camera. Three has a layer system where you assign objects to layers. So the idea is to assign differently sized planets to a layer and then make the camera see those layers.
