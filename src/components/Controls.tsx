@@ -161,7 +161,7 @@ export const Controls = () => {
       {showStats ? <Stats /> : null}
       <div
         id="controls"
-        className={`flex flex-col max-h-[95vh] absolute top-0
+        className={`flex flex-col max-h-[99vh] absolute top-0
           ${menuRight ? "right-0" : "left-0"}
           m-1 bg-gray-900 opacity-80 rounded-md select-none`}
       >

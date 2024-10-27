@@ -11,7 +11,7 @@ const InfoPanel = () => {
     <>
       <div
         id=""
-        className={`flex flex-col max-h-[95vh] absolute top-0
+        className={`overflow-auto flex flex-col max-h-[99vh] absolute top-0
       ${menuRight ? "left-0" : "right-0"}
       m-1 bg-gray-900 opacity-80 rounded-md select-none`}
       >
