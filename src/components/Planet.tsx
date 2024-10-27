@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "../store";
 import { useTexture } from "@react-three/drei";
-import { PosWriter } from "./PosWriter";
+import { HoverMenu } from "./HoverMenu";
 import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
 import { ContextMenu } from "./ContextMenu";
@@ -10,6 +10,7 @@ import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
 import { useLevaControls } from "./useLevaControls";
 import PlanetCamera from "./PlanetCamera";
+import { Clouds } from "./Clouds";
 
 export function Planet(props: any) {
   const planetRef: any = useRef();
@@ -58,11 +59,10 @@ export function Planet(props: any) {
             planetName={props.name}
           />
         ) : (
-          <PosWriter
+          <HoverMenu
             hovered={hovered}
             name={props.name}
             symbol={props.unicodeSymbol}
-            tracked={props.posTracked}
           />
         )}
 
@@ -74,19 +74,18 @@ export function Planet(props: any) {
           ref={planetRef}
           scale={1}
           onPointerOver={(e) => {
-            e.stopPropagation();
             setHover(true);
           }}
           onPointerLeave={(e) => {
-            e.stopPropagation();
             setHover(false);
           }}
           onContextMenu={(e: any) => {
-            e.stopPropagation();
             setContextMenu(true);
           }}
           onDoubleClick={(e) => {
-            e.stopPropagation();
+            //Bugfix. Triggerers a rerender of the system camera so that a doubleclick on a planet
+            //thats already the target will retarget the camera
+            updateControls({ Target: "SystemCenter" });
             updateControls({ Target: props.name });
           }}
         >
@@ -96,6 +95,8 @@ export function Planet(props: any) {
           ) : (
             <meshStandardMaterial color={props.color} />
           )}
+          {/* Add clouds to Earth */}
+          {props.name === "Earth" && <Clouds size={props.size} />}
 
           {props.light && <pointLight intensity={3} />}
 

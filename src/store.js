@@ -31,16 +31,6 @@ export const useStore = create((set) => ({
   traceDots: false,
   menuRight: false,
   showStats: false,
-  planetsArray: miscSettings
-    .filter((item) => item.type === "planet")
-    .map((item) => item.name),
-  posMenuArray: miscSettings
-    .filter((item) => item.posTracked)
-    .map((item) => item.name),
-  // const posMenuArray = miscSettings
-  //   .filter((item) => item.posTracked)
-  //   .map((item) => item.name);
-  // console.log(posMenuArray);
 
   //Trigger update flags
   runPosWriter: false,
@@ -49,6 +39,11 @@ export const useStore = create((set) => ({
   // Setter functions
   setCameraTarget: (cameraTarget) => set(() => ({ cameraTarget })),
   setOrbits: (orbits) => set(() => ({ orbits })),
+}));
+
+export const usePosStore = create((set) => ({
+  trackedObjects: [],
+  positions: {},
 }));
 
 // Plot-related store using zustand

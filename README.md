@@ -50,22 +50,26 @@
   - [ ] Create an .icon that displays when opening a new tab.
 - [ ] Glow on hover over object/planet.
 
+## Positions menu
+
+Is now working. Some details left to do.
+The function consists of two components:
+PosWriter that is inside the canvvas and writes the positions to a Zustand store.
+PositionsInfo that is outside the canvas and displays the positions from the store.
+
 ## Trace
 
 Funktionen bör ha ett antal presets som den i gamla Tychosium
 Dvs Mars, Solen osv har egna trace konfigurationer som är detsamma som i gamla Tychosium (då blir Simon nöjd :-)
-Men det går att bocka ur "presets". Och då kan man "freebasea". Dvs konfigurera hur lång tracen ska vara, hur många punkter den ska ha osv.
+Men det går att bocka ur "presets" alt heter den "Custom trace on/off". Och då kan man "freebasea". Dvs konfigurera hur lång tracen ska vara, hur många punkter den ska ha osv.
 
 ## PlanetCamera
 
 Tar sig. Åntligen! Men funderar på att skriva om den så att den är en egen komponent precis som SystemCamera. Fördelen med det är att då kan man attacha den med useThree och getObjectByName till en planet och kan attacha den till planetens
 group som inte roterar. Dvs man får en planetkamera som inte följer med i planetens dagliga rotation
 
-## Positions menu
-
-Fungerar nu MEN vi får titta på en annan lösning. Rerender hell.. Prestandan dyker.
-Vi gör istället en panel, som med PlanetCamera info där vi visar positions
-
 ## ToDo
 
 Funktioner som gör om Azimuth, Altitude, Lat, Long och tid till RA och Dec så att det kan visas i planetkamerapanelen
+
+Layer Planets, so that planet camera see a different size than the system camera. Three has a layer system where you assign objects to layers. So the idea is to assign differently sized planets to a layer and then make the camera see those layers.

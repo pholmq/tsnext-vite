@@ -1,11 +1,11 @@
 //test
-import { createRef, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+import { createRef, useEffect, useRef } from "react";
 import { useStore, usePlotStore, useTraceStore } from "../store";
 import { Vector3 } from "three";
 import TraceLine from "./TraceLine";
 import { useControls } from "leva";
 import { useFrameInterval } from "../utils/useFrameInterval";
+import miscSettings from "../settings/misc-settings.json";
 
 function moveModel(plotObjects: any, plotPos: any) {
   plotObjects.forEach((pObj) => {
@@ -40,19 +40,23 @@ export default function TraceController() {
 
   const plotObjectsReady = plotObjects.length > 0;
 
+  //Filter out the traceable planets from the miscSettings
+  const traceablePlanets = miscSettings
+    .filter((item) => item.traceable)
+    .map((item) => item.name);
+
+  //Create a leva checkbox object for each traceable planet
+  const checkboxes: any = {};
+  traceablePlanets.forEach((item) => {
+    checkboxes[item] = false;
+  });
+  //Mars should be on by default
+  checkboxes.Mars = true;
+
+  //Insert it into the leva controls
   const tracePlanets = useControls("Trace settings", {
     "Planets:": { value: "", editable: false },
-    Moon: false,
-    Sun: false,
-    Mars: true,
-    Venus: false,
-    Mercury: false,
-    Jupiter: false,
-    Saturn: false,
-    Uranus: false,
-    Neptune: false,
-    Halleys: false,
-    Eros: false,
+    ...checkboxes,
   });
 
   plotPosRef.current = traceStartPosRef.current;

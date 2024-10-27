@@ -17,12 +17,20 @@ export default function SystemCamera() {
   const targetObjRef = useRef(null);
   const { updateControls } = useLevaControls();
 
+  //Bugfix. Always set the camera target when the component rerenders so that a doubleclick on a planet
+  //thats already the target will retarget the camera
+  if (targetObjRef.current && cameraControlsRef.current) {
+    targetObjRef.current = scene.getObjectByName(cameraTarget);
+    targetObjRef.current.getWorldPosition(target);
+    cameraControlsRef.current.setTarget(target.x, target.y, target.z, false);
+  }
+
   useEffect(() => {
     //Wait for camera to load
     setTimeout(() => {
       cameraControlsRef.current.smoothTime = 2;
       cameraControlsRef.current.rotatePolarTo(Math.PI / 3, true);
-    }, 1);
+    }, 0);
   }, []);
   useEffect(() => {
     //Reset camera and stop when the Reset button is clicked
