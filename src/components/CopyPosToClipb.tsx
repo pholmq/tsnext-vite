@@ -31,8 +31,7 @@ export function CopyPosToClipb() {
         result += "\n" + e + "\n";
         result += "RA: " + v.ra + "\n";
         result += "Dec: " + v.dec + "\n";
-        result += "Km: " + v.distKm + "\n";
-        result += "AU: " + v.distAU + "\n";
+        result += "Dist: " + v.dist + "\n";
         result += "Elongation: " + v.elongation + "\n";
       });
       navigator.clipboard.writeText(result);

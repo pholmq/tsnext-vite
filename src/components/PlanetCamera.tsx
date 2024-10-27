@@ -209,6 +209,7 @@ export default function PlanetCamera({ planetRadius }) {
             <PerspectiveCamera
               rotation={[0, Math.PI, 0]}
               near={0.01}
+              far={10000000}
               makeDefault={planetCamera}
               ref={planetCamRef}
               rotation-order={"YXZ"}
