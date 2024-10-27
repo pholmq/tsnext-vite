@@ -70,7 +70,7 @@ export default function PosWriter() {
       // Cleanup code
       clearInterval(intervalRef.current);
     };
-  }, [run]);
+  }, [run, showPositions, trackedPlanets]);
 
   return null;
 }
