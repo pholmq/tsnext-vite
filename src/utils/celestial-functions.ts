@@ -160,7 +160,7 @@ console.log(`Declination: ${result.dec.toFixed(4)} degrees`);
 
 export function getAllPositions() {}
 
-export function getRaDecDistance(name: string, scene: Scene, camera: Camera) {
+export function getRaDecDistance(name: string, scene: Scene) {
   //Returns Right Ascension, Declination and Distance for an object
 
   const objectPos = new Vector3();
@@ -169,10 +169,7 @@ export function getRaDecDistance(name: string, scene: Scene, camera: Camera) {
   const sphericalPos = new Spherical();
   const sunPos = new Vector3();
 
-  //Some geometrical gymnastics to get Right Ascension, Declination, distance and elongation
-  name === "Camera"
-    ? objectPos.set(camera.position.x, camera.position.y, camera.position.z)
-    : scene.getObjectByName(name).getWorldPosition(objectPos);
+  scene.getObjectByName(name).getWorldPosition(objectPos);
   scene.getObjectByName("CelestialSphere").getWorldPosition(csPos);
   const csLookAtObj = scene.getObjectByName("CSLookAtObj");
   csLookAtObj.lookAt(objectPos);

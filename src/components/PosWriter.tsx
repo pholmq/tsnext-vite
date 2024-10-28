@@ -45,7 +45,7 @@ export default function PosWriter() {
     for (const item of tracked) {
       positions = {
         ...positions,
-        [item]: getRaDecDistance(item, scene, camera),
+        [item]: getRaDecDistance(item, scene),
       };
     }
     //Update the store with positions. This will trigger a rerender of PositionInfo
@@ -60,7 +60,7 @@ export default function PosWriter() {
       for (const item of tracked) {
         positions = {
           ...positions,
-          [item]: getRaDecDistance(item, scene, camera),
+          [item]: getRaDecDistance(item, scene),
         };
       }
       //Update the store with positions. This will trigger a rerender of PositionInfo

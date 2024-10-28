@@ -37,7 +37,7 @@ function TSNext() {
           <SystemCamera />
           <ambientLight intensity={0.5} />
           {/* Remove this comment below? */}
-          {/* <Stars count={800} radius={100000} /> */}
+          <Stars count={800} radius={5000} />
           <AnimationController />
           <SolarSystem />
           <Ra0Dec0 />
@@ -46,7 +46,7 @@ function TSNext() {
           <PosWriter />
           {/* <CopyPosToClipb /> */}
           <axesHelper args={[5]} position={[0, 0, 0]} />
-          <ExoplanetStars />
+          {/* <ExoplanetStars /> */}
           {/* <AsteroidBelt /> */}
         </Suspense>
       </Canvas>

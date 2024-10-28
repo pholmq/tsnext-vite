@@ -12,11 +12,7 @@ export function HoverMenu({ hovered, name, symbol = "*" }) {
 
   function update() {
     if (!labelRef.current) return;
-    const { ra, dec, elongation, dist, distAU, x, y, z } = getRaDecDistance(
-      name,
-      scene,
-      camera
-    );
+    const { ra, dec, elongation, dist } = getRaDecDistance(name, scene);
 
     labelRef.current.innerHTML =
       name +
