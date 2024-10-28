@@ -8,8 +8,23 @@ import { useGesture } from "@use-gesture/react";
 
 import useKeyPress from "../utils/useKeyPress";
 import { useStore } from "../store";
-import Arrow from "../utils/Arrow";
 import Ballrod from "../utils/Ballrod";
+
+import {
+  posToDate,
+  posToTime,
+  isValidDate,
+  dateTimeToPos,
+  dateToDays,
+  addYears,
+  addMonths,
+  timeToPos,
+  isValidTime,
+  sDay,
+  sMonth,
+  sYear,
+} from "../utils/time-date-functions";
+import { azEl2RaDec } from "../utils/celestial-functions";
 
 /*2024-10-14 Weird bug/problem
 It seems that the cameras up/down is only maintained properly when the camera
@@ -22,8 +37,9 @@ up/down is messed up.
   */
 export default function PlanetCamera({ planetRadius }) {
   let cameraHeight = planetRadius + 0.1;
-  const longitude = 0;
-  const latitude = 0;
+
+  const posRef = useStore((s) => s.posRef);
+
   const planetCamRef = useRef(null);
   const camBoxRef = useRef(null);
   const longAxisRef = useRef(null);
@@ -65,6 +81,7 @@ export default function PlanetCamera({ planetRadius }) {
       },
     }));
     const planetCameraDirection = useStore.getState().planetCameraDirection;
+
     // console.log(planetCameraDirection);
   }
 
