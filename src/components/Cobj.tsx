@@ -25,6 +25,7 @@ type Settings = {
   startPos: number;
   speed: number;
   rotationSpeed: number;
+  rotationStart: number;
   tilt: number;
   tiltb: number;
   orbitRadius: number;
