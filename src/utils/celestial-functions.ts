@@ -216,10 +216,6 @@ export function getRaDecDistance(name: string, scene: Scene) {
     dec: dec,
     elongation: elongation,
     dist: dist,
-    distAU: distAU,
-    x: objectPos.x,
-    y: objectPos.y,
-    z: objectPos.z,
   };
 }
 
