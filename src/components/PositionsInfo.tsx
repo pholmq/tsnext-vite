@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePosStore } from "../store";
+
 export default function PositionsInfo() {
   const trackedObjects = usePosStore((s) => s.trackedObjects);
 
@@ -23,7 +24,7 @@ function Position({ name }) {
   useEffect(() => {
     const { [name]: position } = positions;
     if (!position) return;
-    const { ra, dec, elongation, dist, distAU, x, y, z } = position;
+    const { ra, dec, elongation, dist } = position;
     raRef.current.value = ra;
     decRef.current.value = dec;
     distRef.current.value = dist;
