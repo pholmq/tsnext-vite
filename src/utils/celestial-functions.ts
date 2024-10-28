@@ -1,5 +1,78 @@
 import { Vector3, Spherical, Scene, Camera } from "three";
 
+export function azEl2RaDec(Az, El, lat, lon, time) {
+  // Convert date string to Date object
+  const date = new Date(time);
+
+  // Calculate Julian Date
+  function julianDate(year, month, day, hour, min, sec) {
+    const YearDur = 365.25;
+    if (month <= 2) {
+      year -= 1;
+      month += 12;
+    }
+    const A = Math.floor(YearDur * (year + 4716));
+    const B = Math.floor(30.6001 * (month + 1));
+    const C = 2;
+    const D = Math.floor(year / 100);
+    const E = Math.floor(Math.floor(year / 100) * 0.25);
+    const F = day - 1524.5;
+    const G = (hour + min / 60 + sec / 3600) / 24;
+    return A + B + C - D + E + F + G;
+  }
+
+  const JD = julianDate(
+    date.getUTCFullYear(),
+    date.getUTCMonth() + 1,
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+
+  // Calculate T_UT1
+  const T_UT1 = (JD - 2451545) / 36525;
+
+  // Calculate ThetaGMST
+  let ThetaGMST =
+    67310.54841 +
+    (876600 * 3600 + 8640184.812866) * T_UT1 +
+    0.093104 * T_UT1 ** 2 -
+    6.2e-6 * T_UT1 ** 3;
+  ThetaGMST = ((ThetaGMST % (86400 * Math.sign(ThetaGMST))) / 240) % 360;
+
+  // Calculate ThetaLST
+  const ThetaLST = ThetaGMST + lon;
+
+  // Calculate DEC
+  const DEC =
+    (Math.asin(
+      Math.sin((El * Math.PI) / 180) * Math.sin((lat * Math.PI) / 180) +
+        Math.cos((El * Math.PI) / 180) *
+          Math.cos((lat * Math.PI) / 180) *
+          Math.cos((Az * Math.PI) / 180)
+    ) *
+      180) /
+    Math.PI;
+
+  // Calculate LHA
+  const LHA =
+    (Math.atan2(
+      (-Math.sin((Az * Math.PI) / 180) * Math.cos((El * Math.PI) / 180)) /
+        Math.cos((DEC * Math.PI) / 180),
+      (Math.sin((El * Math.PI) / 180) -
+        Math.sin((DEC * Math.PI) / 180) * Math.sin((lat * Math.PI) / 180)) /
+        (Math.cos((DEC * Math.PI) / 180) * Math.cos((lat * Math.PI) / 180))
+    ) *
+      180) /
+    Math.PI;
+
+  // Calculate RA
+  const RA = (((ThetaLST - LHA) % 360) + 360) % 360;
+
+  return [RA, DEC];
+}
+
 export function decFromAzAltLat(az: number, alt: number, lat: number): number {
   // Convert degrees to radians
   const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
