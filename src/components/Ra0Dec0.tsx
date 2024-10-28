@@ -9,7 +9,7 @@ export default function Ra0Dec0() {
 
   return (
     <>
-      <group position={[37.869, -0.054, 10]}>
+      <group position={[37.846, -0.0454, 10]}>
         <HoverMenu hovered={hovered} name={"Ra0Dec0"} symbol={"X"} />
 
         <mesh
