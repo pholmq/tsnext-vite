@@ -10,6 +10,7 @@ import { addEffect } from "@react-three/fiber";
 import { useLevaControls } from "./useLevaControls";
 import PlanetCamera from "./PlanetCamera";
 import Clouds from "./Clouds";
+import { PlanetDescription } from "./PlanetDescription";
 
 export function Planet(props: any) {
   const planetRef: any = useRef();
@@ -19,8 +20,15 @@ export function Planet(props: any) {
 
   const [hovered, setHover] = useState(false);
   const [contextMenu, setContextMenu] = useState(false);
+  const [planetInfo, setPlanetInfo] = useState(false);
   // const [cameraTarget, setCameraTarget] = useState(false);
   const cameraTarget: any = useStore((state) => state.cameraTarget);
+
+
+  //Add the planet to the Planets meny
+  useControls("Planets", {
+    [props.name]: props.visible,
+  });
 
   const rotationSpeed = props.rotationSpeed || 0;
   const rotationStart = props.rotationStart || 0;
@@ -50,15 +58,24 @@ export function Planet(props: any) {
         {contextMenu ? (
           <ContextMenu
             setContextMenu={setContextMenu}
+            setPlanetInfo={setPlanetInfo}
             planetName={props.name}
           />
         ) : (
           <HoverMenu
             hovered={hovered}
+            planetInfo={planetInfo}
             name={props.name}
             symbol={props.unicodeSymbol}
           />
         )}
+
+        {planetInfo ? (
+          <PlanetDescription
+            planetName={props.name}
+            setPlanetInfo={setPlanetInfo}
+          />
+        ) : null}
 
         {props.name === "Earth" ? <CelestialSphere visible={false} /> : null}
 
