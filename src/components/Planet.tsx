@@ -24,12 +24,6 @@ export function Planet(props: any) {
   // const [cameraTarget, setCameraTarget] = useState(false);
   const cameraTarget: any = useStore((state) => state.cameraTarget);
 
-
-  //Add the planet to the Planets meny
-  useControls("Planets", {
-    [props.name]: props.visible,
-  });
-
   const rotationSpeed = props.rotationSpeed || 0;
   const rotationStart = props.rotationStart || 0;
 
