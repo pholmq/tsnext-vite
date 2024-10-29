@@ -1,7 +1,7 @@
-function Ballrod({ size = 0.4, length = 2, color = "red" }) {
+function Ballrod({ visible, size = 0.4, length = 2, color = "red" }) {
   return (
     <>
-      <group position={[0, length / 2, 0]}>
+      <group visible={visible} position={[0, length / 2, 0]}>
         {/* Arrow shaft */}
         <mesh position={[0, 0, 0]}>
           <cylinderGeometry args={[size / 10, size / 10, length, 32]} />

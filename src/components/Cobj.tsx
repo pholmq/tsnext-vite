@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { folder, useControls, button } from "leva";
 import celestialSettings from "../settings/celestial-settings.json";
@@ -54,7 +54,7 @@ export const Cobj = ({ name, children }: Props) => {
   const pivotRef: any = useRef();
   const orbitRef: any = useRef();
 
-  //We add all objects to the Celestial settings meny so that they can be modified at run tim
+  //We add all objects to the Celestial settings meny so that they can be modified at run time
   const {
     startPos,
     speed,
@@ -94,6 +94,15 @@ export const Cobj = ({ name, children }: Props) => {
     }),
   });
 
+  let visible = s.visible;
+  //If it's a planet, we add it to the Planets menu so that it can be toggled on/off
+  if (s.type === "planet") {
+    const { [s.name]: isVisible } = useControls("Planets", {
+      [s.name]: s.visible,
+    });
+    visible = isVisible;
+  }
+
   const posRef: any = useStore((state) => state.posRef);
 
   useFrame(() => {
@@ -112,7 +121,7 @@ export const Cobj = ({ name, children }: Props) => {
         rotation-z={orbitTiltb * (Math.PI / 180)}
       >
         {s.orbitRadius ? (
-          <group rotation-x={-Math.PI / 2} visible={s.visible}>
+          <group rotation-x={-Math.PI / 2} visible={visible}>
             {/* <group rotation-x={-Math.PI / 2} visible={true}> */}
             <Orbit
               radius={orbitRadius}
@@ -127,8 +136,9 @@ export const Cobj = ({ name, children }: Props) => {
         <group name="Orbit" ref={orbitRef}>
           <group name="Pivot" ref={pivotRef} position={[orbitRadius, 0, 0]}>
             {s.axesHelper ? <axesHelper args={[10]} /> : null}
-            {/* {s.earth ? <Earth {...s} /> : null} */}
-            {s.type === "planet" ? <Planet {...s} /> : null}
+            <group visible={visible}>
+              {s.type === "planet" ? <Planet {...s} /> : null}
+            </group>
             {children}
           </group>
         </group>

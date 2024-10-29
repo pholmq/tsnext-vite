@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Loader, Preload, Sphere, Stars } from "@react-three/drei";
+import { Loader, Preload, Sphere, Stars, useProgress } from "@react-three/drei";
 import AnimationController from "./components/AnimationController";
 import SolarSystem from "./components/SolarSystem";
 import PlotSolarSystem from "./components/PlotSolarSystem";
@@ -12,13 +12,13 @@ import PlanetCameraInfo from "./components/PlanetCameraInfo";
 import ExoplanetStars from "./components/ExoplanetStars";
 import { useState, Suspense } from "react";
 import LoadingBar from "./components/LoadingBar"; // Import the loading bar
-import { useProgress } from "@react-three/drei"; // Import useProgress to detect when loading is complete
 import { Leva } from "leva";
 import { AsteroidBelt } from "./components/AstroidBelt";
 import SystemCamera from "./components/SystemCamera";
 import InfoPanel from "./components/InfoPanel";
 import PosWriter from "./components/PosWriter";
 import Ra0Dec0 from "./components/Ra0Dec0";
+import Ra0Dec02 from "./components/Ra0Dec02";
 
 function TSNext() {
   return (
@@ -40,7 +40,6 @@ function TSNext() {
           <Stars count={800} radius={5000} />
           <AnimationController />
           <SolarSystem />
-          <Ra0Dec0 />
           <PlotSolarSystem />
           <TraceController />
           <PosWriter />

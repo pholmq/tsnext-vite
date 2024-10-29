@@ -6,11 +6,10 @@ import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
 import { ContextMenu } from "./ContextMenu";
 import { PlanetRings } from "./PlanetRings";
-import { useControls } from "leva";
 import { addEffect } from "@react-three/fiber";
 import { useLevaControls } from "./useLevaControls";
 import PlanetCamera from "./PlanetCamera";
-import { Clouds } from "./Clouds";
+import Clouds from "./Clouds";
 import { PlanetDescription } from "./PlanetDescription";
 
 export function Planet(props: any) {
@@ -24,13 +23,6 @@ export function Planet(props: any) {
   const [planetInfo, setPlanetInfo] = useState(false);
   // const [cameraTarget, setCameraTarget] = useState(false);
   const cameraTarget: any = useStore((state) => state.cameraTarget);
-
-  console.log(planetInfo);
-
-  //Add the planet to the Planets meny
-  useControls("Planets", {
-    [props.name]: props.visible,
-  });
 
   const rotationSpeed = props.rotationSpeed || 0;
   const rotationStart = props.rotationStart || 0;

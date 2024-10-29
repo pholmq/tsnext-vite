@@ -66,7 +66,7 @@ export default function SystemCamera() {
         position={[-3000, 0, 0]}
         fov={15}
         near={0.1}
-        far={10000000}
+        far={100000000}
       />
       <CameraControls ref={cameraControlsRef} camera={cameraRef.current} />
     </>

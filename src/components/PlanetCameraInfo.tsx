@@ -78,11 +78,11 @@ const PlanetCameraInfo = () => {
         -camRotationy + Math.PI / 2
       );
       const time = posToDate(posRef.current) + " " + posToTime(posRef.current);
-      console.log(azEl2RaDec(Az, El, lat, lon, time));
-      console.log(
-        "Az0, El90, Lat0, Lon0, time 2000-03-20 12:00:00",
-        azEl2RaDec(0, 90, 0, 0, "2000-03-20 12:00:00")
-      );
+      // console.log(azEl2RaDec(Az, El, lat, lon, time));
+      // console.log(
+      //   "Az0, El90, Lat0, Lon0, time 2000-03-20 12:00:00",
+      //   azEl2RaDec(0, 90, 0, 0, "2000-03-20 12:00:00")
+      // );
     }
   }, [
     longRotationy,
