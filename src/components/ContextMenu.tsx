@@ -4,7 +4,7 @@ import distanceFromHtmlElement from "../utils/distanceFromHtmlElement";
 import { useStore } from "../store";
 import { useControls } from "leva";
 import { useLevaControls } from "./useLevaControls";
-export function ContextMenu({ setContextMenu, planetName }) {
+export function ContextMenu({ setContextMenu, setPlanetInfo, planetName }) {
   // const [showH, setHelper] = useControls("Planet Camera", () => ({
   //   showHelper: true,
   // }));
@@ -58,6 +58,16 @@ export function ContextMenu({ setContextMenu, planetName }) {
           }}
         >
           Camera_follow
+        </button>
+        <button
+          className="m-1 hover:bg-sky-700"
+          id="Planet_Info"
+          onClick={(e) => {
+            setContextMenu(false);
+            setPlanetInfo(true);
+          }}
+        >
+          Planet_Info
         </button>
         <br />
       </div>
