@@ -169,7 +169,7 @@ export function getRaDecDistance(name: string, scene: Scene) {
   const sphericalPos = new Spherical();
   const sunPos = new Vector3();
 
-  scene.getObjectByName(name).getWorldPosition(objectPos);
+  scene.updateMatrixWorld();
   scene.getObjectByName("CelestialSphere").getWorldPosition(csPos);
   const csLookAtObj = scene.getObjectByName("CSLookAtObj");
   csLookAtObj.lookAt(objectPos);
@@ -204,7 +204,7 @@ export function getRaDecDistance(name: string, scene: Scene) {
   const elongationRadians = Math.acos(numerator / denominator);
   const elongation = ((180.0 * elongationRadians) / Math.PI).toFixed(2);
 
-  let dist = distAU;
+  let dist;
   if (distAU < 0.01) {
     dist = distKm + " km";
   } else {

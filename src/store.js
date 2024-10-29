@@ -2,6 +2,7 @@ import { createRef } from "react";
 import create from "zustand";
 import { getDefaultSpeedFact, sDay } from "./utils/time-date-functions";
 import miscSettings from "./settings/misc-settings.json";
+import { Vector3 } from "three";
 
 // Main simulation store using zustand
 export const useStore = create((set) => ({
@@ -31,6 +32,7 @@ export const useStore = create((set) => ({
   traceDots: false,
   menuRight: false,
   showStats: false,
+  planetCameraLookAt: new Vector3(),
 
   //Trigger update flags
   runPosWriter: false,

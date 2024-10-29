@@ -10,21 +10,10 @@ import useKeyPress from "../utils/useKeyPress";
 import { useStore } from "../store";
 import Ballrod from "../utils/Ballrod";
 
-import {
-  posToDate,
-  posToTime,
-  isValidDate,
-  dateTimeToPos,
-  dateToDays,
-  addYears,
-  addMonths,
-  timeToPos,
-  isValidTime,
-  sDay,
-  sMonth,
-  sYear,
-} from "../utils/time-date-functions";
-import { azEl2RaDec } from "../utils/celestial-functions";
+import { azEl2RaDec, getRaDecDistance } from "../utils/celestial-functions";
+import raDecFromDirection from "../utils/raDecFromDirection";
+import PlanCamLookAt from "../utils/PlanCamLookAt";
+// import { Spherical, Vector3, Scene, Camera } from "three";
 
 /*2024-10-14 Weird bug/problem
 It seems that the cameras up/down is only maintained properly when the camera
@@ -47,10 +36,11 @@ export default function PlanetCamera({ planetRadius }) {
   const camMountRef = useRef(null);
   const keyPressed = useKeyPress();
 
-  const { camera, gl } = useThree();
+  const { scene, camera, gl } = useThree();
   const planetCamera = useStore((s) => s.planetCamera);
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
   const cameraTarget = useStore((s) => s.cameraTarget);
+  let planetCameraLookAt = new Vector3();
 
   useEffect(() => {
     loadCameraPosition();
@@ -77,12 +67,8 @@ export default function PlanetCamera({ planetRadius }) {
         camFov: planetCamRef.current.fov,
         latRotationx: latAxisRef.current.rotation.x + Math.PI / 2,
         longRotationy: longAxisRef.current.rotation.y + Math.PI / 2,
-        // camMountPosy: camMountRef.current.position.y,
       },
     }));
-    const planetCameraDirection = useStore.getState().planetCameraDirection;
-
-    // console.log(planetCameraDirection);
   }
 
   useHelper(
@@ -206,31 +192,40 @@ export default function PlanetCamera({ planetRadius }) {
 
   return (
     <>
+      {/* <PlanCamDirMarker /> */}
       {/* We put the camera system in a group and rotate it so that lat and long are at 0 */}
       <group ref={longAxisRef}>
         <group ref={latAxisRef}>
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
             <group
+              name="CamBox"
               ref={camBoxRef}
               rotation={[0, Math.PI, 0]}
               rotation-order={"YXZ"}
               // show the box if planetcamera is not active and show camera pos is on
-              visible={!planetCamera && planetCameraHelper}
             >
-              <mesh>
+              <mesh visible={!planetCamera && planetCameraHelper}>
                 <boxGeometry args={[0.2, 0.2, 0.2]} />
                 <meshStandardMaterial color="red" />
               </mesh>
-              <Ballrod size={0.2} length={0.5} />
+              <Ballrod
+                visible={!planetCamera && planetCameraHelper}
+                size={0.2}
+                length={0.5}
+              />
+              <PlanCamLookAt position={[0, 0, -100000]} size={100} />
             </group>
-            <PerspectiveCamera
-              rotation={[0, Math.PI, 0]}
-              near={0.01}
-              far={10000000}
-              makeDefault={planetCamera}
-              ref={planetCamRef}
-              rotation-order={"YXZ"}
-            ></PerspectiveCamera>
+            <group>
+              <PerspectiveCamera
+                name="PlanetCamera"
+                rotation={[0, Math.PI, 0]}
+                near={0.01}
+                far={10000000}
+                makeDefault={planetCamera}
+                ref={planetCamRef}
+                rotation-order={"YXZ"}
+              ></PerspectiveCamera>
+            </group>
           </group>
         </group>
       </group>
