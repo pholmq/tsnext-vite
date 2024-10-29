@@ -10,8 +10,6 @@ import useKeyPress from "../utils/useKeyPress";
 import { useStore } from "../store";
 import Ballrod from "../utils/Ballrod";
 
-import { azEl2RaDec, getRaDecDistance } from "../utils/celestial-functions";
-import raDecFromDirection from "../utils/raDecFromDirection";
 import PlanCamLookAt from "../utils/PlanCamLookAt";
 // import { Spherical, Vector3, Scene, Camera } from "three";
 
