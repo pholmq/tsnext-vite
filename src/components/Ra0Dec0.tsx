@@ -10,7 +10,12 @@ export default function Ra0Dec0() {
   return (
     <>
       <group position={[37.846, -0.0454, 10]}>
-        <HoverMenu hovered={hovered} name={"Ra0Dec0"} symbol={"X"} />
+        <HoverMenu
+          hovered={hovered}
+          planetInfo={false}
+          name={"Ra0Dec0"}
+          symbol={"X"}
+        />
 
         <mesh
           name="Ra0Dec0"
