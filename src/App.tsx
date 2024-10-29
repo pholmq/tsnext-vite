@@ -18,6 +18,7 @@ import { AsteroidBelt } from "./components/AstroidBelt";
 import SystemCamera from "./components/SystemCamera";
 import InfoPanel from "./components/InfoPanel";
 import PosWriter from "./components/PosWriter";
+import Ra0Dec0 from "./components/Ra0Dec0";
 
 function TSNext() {
   return (
@@ -36,15 +37,16 @@ function TSNext() {
           <SystemCamera />
           <ambientLight intensity={0.5} />
           {/* Remove this comment below? */}
-          {/* <Stars count={800} radius={100000} /> */}
+          <Stars count={800} radius={5000} />
           <AnimationController />
           <SolarSystem />
+          <Ra0Dec0 />
           <PlotSolarSystem />
           <TraceController />
           <PosWriter />
           {/* <CopyPosToClipb /> */}
-          {/* <axesHelper args={[5]} position={[0, 0, 0]} /> */}
-          <ExoplanetStars />
+          <axesHelper args={[5]} position={[0, 0, 0]} />
+          {/* <ExoplanetStars /> */}
           {/* <AsteroidBelt /> */}
         </Suspense>
       </Canvas>

@@ -27,7 +27,7 @@ export function CopyPosToClipb() {
       result += "Time: " + posToTime(posRef.current) + "\n";
 
       planetsArr.forEach((e) => {
-        const v = getRaDecDistance(e, scene, camera);
+        const v = getRaDecDistance(e, scene);
         result += "\n" + e + "\n";
         result += "RA: " + v.ra + "\n";
         result += "Dec: " + v.dec + "\n";
