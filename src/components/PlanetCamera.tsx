@@ -11,6 +11,7 @@ import { useStore } from "../store";
 import Ballrod from "../utils/Ballrod";
 
 import PlanCamLookAt from "../utils/PlanCamLookAt";
+import Ground from "../utils/Ground";
 // import { Spherical, Vector3, Scene, Camera } from "three";
 
 /*2024-10-14 Weird bug/problem
@@ -137,7 +138,8 @@ export default function PlanetCamera({ planetRadius }) {
         camMountRef.current.position.y += 0.05;
         break;
       case "e":
-        if (camMountRef.current.position.y >= planetRadius + 0.1) {
+        // if (camMountRef.current.position.y >= planetRadius + 0.1) {
+        if (camMountRef.current.position.y >= 0.2) {
           camMountRef.current.position.y -= 0.05;
         }
         break;
@@ -194,6 +196,7 @@ export default function PlanetCamera({ planetRadius }) {
       {/* We put the camera system in a group and rotate it so that lat and long are at 0 */}
       <group ref={longAxisRef}>
         <group ref={latAxisRef}>
+          <Ground size={planetRadius} position={[0, 0, 0]} />
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
             <group
               name="CamBox"
@@ -211,7 +214,7 @@ export default function PlanetCamera({ planetRadius }) {
                 size={0.2}
                 length={0.5}
               />
-              <PlanCamLookAt position={[0, 0, -100000]} size={100} />
+              <PlanCamLookAt position={[0, 0, -100000]} size={10} />
             </group>
             <group>
               <PerspectiveCamera

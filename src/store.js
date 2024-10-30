@@ -41,6 +41,9 @@ export const useStore = create((set) => ({
   // Setter functions
   setCameraTarget: (cameraTarget) => set(() => ({ cameraTarget })),
   setOrbits: (orbits) => set(() => ({ orbits })),
+
+  //Developer stuff
+  squashFactor: 1,
 }));
 
 export const usePosStore = create((set) => ({

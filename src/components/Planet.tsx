@@ -78,8 +78,17 @@ export function Planet(props: any) {
           visible={props.visible}
           ref={planetRef}
           scale={1}
+          // onPointerOver={(e) => {
+          //   if (props.visible) {
+          //     setHover(true);
+          //   }
+          // }}
           onPointerOver={(e) => {
-            setHover(true);
+            (visible) => {
+              if (visible) {
+                setHover(true);
+              }
+            };
           }}
           onPointerLeave={(e) => {
             setHover(false);

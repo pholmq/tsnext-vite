@@ -187,14 +187,28 @@ export const useLevaControls = () => {
           value: useStore.getState().menuRight,
           onChange: (v) => useStore.setState({ menuRight: v }),
         },
+      },
+      { collapsed: true }
+    ),
+    "Developer settings": folder(
+      {
         "Show performance": {
           value: useStore.getState().showStats,
           onChange: (v) => useStore.setState({ showStats: v }),
         },
+        Squashfactor: {
+          value: useStore.getState().squashFactor,
+          min: 1,
+          max: 20,
+          step: 1,
+          onChange: (v) => useStore.setState({ squashFactor: v }),
+        },
+
+        "Parameters:": { value: "", editable: false },
+        "Celestial settings": folder({}, { collapsed: true }),
       },
       { collapsed: true }
     ),
-    "Celestial settings": folder({}, { collapsed: true }),
   }));
 
   // Store the setControls function in a ref to avoid unnecessary re-renders
