@@ -64,43 +64,46 @@ export const Cobj = ({ name, children }: Props) => {
     orbitCenterc,
     orbitTilta,
     orbitTiltb,
-  } = useControls("Celestial settings", {
-    [name]: folder({
-      startPos: {
-        value: s.startPos,
+  } = useControls("Developer settings", {
+    [name]: folder(
+      {
+        startPos: {
+          value: s.startPos,
+        },
+        speed: {
+          value: s.speed,
+        },
+        orbitRadius: {
+          value: s.orbitRadius,
+          min: 0,
+        },
+        orbitCentera: {
+          value: s.orbitCentera,
+        },
+        orbitCenterb: {
+          value: s.orbitCenterb,
+        },
+        orbitCenterc: {
+          value: s.orbitCenterc,
+        },
+        orbitTilta: {
+          value: s.orbitTilta,
+        },
+        orbitTiltb: {
+          value: s.orbitTiltb,
+        },
       },
-      speed: {
-        value: s.speed,
-      },
-      orbitRadius: {
-        value: s.orbitRadius,
-        min: 0,
-      },
-      orbitCentera: {
-        value: s.orbitCentera,
-      },
-      orbitCenterb: {
-        value: s.orbitCenterb,
-      },
-      orbitCenterc: {
-        value: s.orbitCenterc,
-      },
-      orbitTilta: {
-        value: s.orbitTilta,
-      },
-      orbitTiltb: {
-        value: s.orbitTiltb,
-      },
-    }),
+      { collapsed: true }
+    ),
   });
 
-  let visible = s.visible;
   //If it's a planet, we add it to the Planets menu so that it can be toggled on/off
   if (s.type === "planet") {
     const { [s.name]: isVisible } = useControls("Planets", {
       [s.name]: s.visible,
     });
-    visible = isVisible;
+    //Modify the planets props to refelect if it should be visible or not
+    s.visible = isVisible;
   }
 
   const posRef: any = useStore((state) => state.posRef);
@@ -121,7 +124,7 @@ export const Cobj = ({ name, children }: Props) => {
         rotation-z={orbitTiltb * (Math.PI / 180)}
       >
         {s.orbitRadius ? (
-          <group rotation-x={-Math.PI / 2} visible={visible}>
+          <group rotation-x={-Math.PI / 2} visible={s.visible}>
             {/* <group rotation-x={-Math.PI / 2} visible={true}> */}
             <Orbit
               radius={orbitRadius}
@@ -136,9 +139,7 @@ export const Cobj = ({ name, children }: Props) => {
         <group name="Orbit" ref={orbitRef}>
           <group name="Pivot" ref={pivotRef} position={[orbitRadius, 0, 0]}>
             {s.axesHelper ? <axesHelper args={[10]} /> : null}
-            <group visible={visible}>
-              {s.type === "planet" ? <Planet {...s} /> : null}
-            </group>
+            {s.type === "planet" ? <Planet {...s} /> : null}
             {children}
           </group>
         </group>

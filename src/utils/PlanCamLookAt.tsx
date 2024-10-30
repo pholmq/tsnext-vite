@@ -27,7 +27,7 @@ export default function PlanCamLookAt({ position, size = 2, color = "red" }) {
           <meshBasicMaterial
             depthTest={false}
             color={color}
-            opacity={0.5}
+            opacity={0.3}
             transparent
           />
         </mesh>

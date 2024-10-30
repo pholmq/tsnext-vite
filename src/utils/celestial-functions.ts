@@ -170,6 +170,7 @@ export function getRaDecDistance(name: string, scene: Scene) {
   const sunPos = new Vector3();
 
   scene.updateMatrixWorld();
+  scene.getObjectByName(name).getWorldPosition(objectPos);
   scene.getObjectByName("CelestialSphere").getWorldPosition(csPos);
   const csLookAtObj = scene.getObjectByName("CSLookAtObj");
   csLookAtObj.lookAt(objectPos);
