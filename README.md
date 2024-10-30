@@ -66,10 +66,13 @@ Men det går att bocka ur "presets" alt heter den "Custom trace on/off". Och då
 ## PlanetCamera
 
 Tar sig. Åntligen! Men funderar på att skriva om den så att den är en egen komponent precis som SystemCamera. Fördelen med det är att då kan man attacha den med useThree och getObjectByName till en planet och kan attacha den till planetens
-group som inte roterar. Dvs man får en planetkamera som inte följer med i planetens dagliga rotation
+group som inte roterar. Dvs man får en planetkamera som inte följer med i planetens dagliga rotation.
+Time to do this. Lots of problems with it being a component attached to the planet.
 
 ## ToDo
 
-Funktioner som gör om Azimuth, Altitude, Lat, Long och tid till RA och Dec så att det kan visas i planetkamerapanelen
+- [x] Funktioner som gör om Azimuth, Altitude, Lat, Long och tid till RA och Dec så att det kan visas i planetkamerapanelen. Solved this with a camera "lookat" object placed far away from the camera that follow its movement which we can then use the raDecDistance to calculate the RA and Dec of the lookat object.
 
 Layer Planets, so that planet camera see a different size than the system camera. Three has a layer system where you assign objects to layers. So the idea is to assign differently sized planets to a layer and then make the camera see those layers.
+
+- [ ] PlanetCamera controls needs to be rewritten (rerender hell). Soulution: useFrame loop?
