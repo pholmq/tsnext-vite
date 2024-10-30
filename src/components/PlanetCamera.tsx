@@ -121,27 +121,36 @@ export default function PlanetCamera({ planetRadius }) {
     if (keyPressed) {
       latRotationX = latAxisRef.current.rotation.x;
     }
+    //The higher the camera, the more it can be moved up and down
+    let heightFact = 0.2;
+    if (camMountRef.current.position.y > 0.01)
+      heightFact = 0.02 * camMountRef.current.position.y;
+
     switch (keyPressed) {
       case "w":
-        latRotationX += 0.05;
+        latRotationX += 0.005;
         break;
       case "s":
-        latRotationX -= 0.05;
+        latRotationX -= 0.005;
         break;
       case "a":
-        longAxisRef.current.rotation.y -= 0.05;
+        longAxisRef.current.rotation.y -= 0.005;
         break;
       case "d":
-        longAxisRef.current.rotation.y += 0.05;
+        longAxisRef.current.rotation.y += 0.005;
         break;
       case "q":
-        camMountRef.current.position.y += 0.05;
+        camMountRef.current.position.y += heightFact;
         break;
       case "e":
         // if (camMountRef.current.position.y >= planetRadius + 0.1) {
-        if (camMountRef.current.position.y >= 0.2) {
-          camMountRef.current.position.y -= 0.05;
+        if (camMountRef.current.position.y >= 0) {
+          camMountRef.current.position.y -= heightFact;
         }
+        if (camMountRef.current.position.y < 0) {
+          camMountRef.current.position.y = 0;
+        }
+
         break;
     }
 
@@ -196,7 +205,7 @@ export default function PlanetCamera({ planetRadius }) {
       {/* We put the camera system in a group and rotate it so that lat and long are at 0 */}
       <group ref={longAxisRef}>
         <group ref={latAxisRef}>
-          <Ground size={planetRadius} position={[0, 0, 0]} />
+          <Ground size={planetRadius} position={[0, -0.2, 0]} />
           <group ref={camMountRef} position={[0, cameraHeight, 0]}>
             <group
               name="CamBox"
