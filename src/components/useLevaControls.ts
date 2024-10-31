@@ -107,7 +107,7 @@ export const useLevaControls = () => {
       },
       { collapsed: true }
     ),
-    Camera: folder(
+    "System Camera": folder(
       {
         cameratip: {
           label: "Tip:",
@@ -128,6 +128,20 @@ export const useLevaControls = () => {
         Follow: {
           value: useStore.getState().cameraFollow,
           onChange: (v) => useStore.setState({ cameraFollow: v }),
+        },
+      },
+      { collapsed: true }
+    ),
+    "Planet Camera": folder(
+      {
+        Planet: {
+          value: useStore.getState().planetCameraTarget,
+          // options: ["Earth", "Sun", "Mars"],
+          options: planetCameraArray,
+          onChange: (v) => {
+            useStore.setState({ planetCameraTarget: v });
+            // console.log(v);
+          },
         },
 
         "Planet camera": {

@@ -15,6 +15,8 @@ export const useStore = create((set) => ({
   cameraTarget: "Earth",
   cameraFollow: false,
   planetCamera: false,
+  planetCameraTarget: "Earth",
+  planetCameraTargetData: {},
   planetCameraHelper: false,
   planetCameraDirection: {
     camRotationy: 0,
@@ -32,7 +34,6 @@ export const useStore = create((set) => ({
   traceDots: false,
   menuRight: false,
   showStats: false,
-  planetCameraLookAt: new Vector3(),
 
   //Trigger update flags
   runPosWriter: false,

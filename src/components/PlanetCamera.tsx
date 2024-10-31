@@ -12,39 +12,37 @@ import Ballrod from "../utils/Ballrod";
 
 import PlanCamLookAt from "../utils/PlanCamLookAt";
 import Ground from "../utils/Ground";
-// import { Spherical, Vector3, Scene, Camera } from "three";
-
-/*2024-10-14 Weird bug/problem
-It seems that the cameras up/down is only maintained properly when the camera
-is active, which means that when it's moved in the system camera view it's 
-up/down is messed up.
-*/
-/*2024-10-15 Solved! By rewriting the camera system. Short story if the default canvas camera is 
-  used and connected to Drei Camera controls, weird things happen. So I made a new SystemCamera component
-  with a PerspectiveCamera camera as default
-  */
-export default function PlanetCamera({ planetRadius }) {
-  let cameraHeight = planetRadius + 0.1;
-
+export default function PlanetCamera() {
   const posRef = useStore((s) => s.posRef);
 
   const planetCamRef = useRef(null);
+  const planetCamSystemRef = useRef(null);
   const camBoxRef = useRef(null);
   const longAxisRef = useRef(null);
   const latAxisRef = useRef(null);
   const camMountRef = useRef(null);
   const keyPressed = useKeyPress();
+  const targetObjRef = useRef(null);
 
   const { scene, camera, gl } = useThree();
   const planetCamera = useStore((s) => s.planetCamera);
   const planetCameraHelper = useStore((s) => s.planetCameraHelper);
-  const cameraTarget = useStore((s) => s.cameraTarget);
+  // const cameraTarget = useStore((s) => s.cameraTarget);
+  const planetCameraTarget = useStore((s) => s.planetCameraTarget);
+  const planetData = useStore((s) => s.planetCameraTargetData);
+  const cameraHeight = 0;
+
   let planetCameraLookAt = new Vector3();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     loadCameraPosition();
+    targetObjRef.current = scene.getObjectByName(planetCameraTarget);
+    targetObjRef.current.add(planetCamSystemRef.current);
     planetCamRef.current.updateProjectionMatrix();
-  }, [cameraTarget]);
+    useStore.setState({
+      planetCameraTargetData: targetObjRef.current.userData,
+    });
+  }, [planetCameraTarget]);
 
   function loadCameraPosition() {
     const planetCameraDirection = useStore.getState().planetCameraDirection;
@@ -201,40 +199,41 @@ export default function PlanetCamera({ planetRadius }) {
 
   return (
     <>
-      {/* <PlanCamDirMarker /> */}
-      {/* We put the camera system in a group and rotate it so that lat and long are at 0 */}
-      <group ref={longAxisRef}>
-        <group ref={latAxisRef}>
-          <Ground size={planetRadius} position={[0, -0.2, 0]} />
-          <group ref={camMountRef} position={[0, cameraHeight, 0]}>
-            <group
-              name="CamBox"
-              ref={camBoxRef}
-              rotation={[0, Math.PI, 0]}
-              rotation-order={"YXZ"}
-              // show the box if planetcamera is not active and show camera pos is on
-            >
-              <mesh visible={!planetCamera && planetCameraHelper}>
-                <boxGeometry args={[0.2, 0.2, 0.2]} />
-                <meshStandardMaterial color="red" />
-              </mesh>
-              <Ballrod
-                visible={!planetCamera && planetCameraHelper}
-                size={0.2}
-                length={0.5}
-              />
-              <PlanCamLookAt position={[0, 0, -100000]} size={10} />
-            </group>
-            <group>
-              <PerspectiveCamera
-                name="PlanetCamera"
+      <group ref={planetCamSystemRef}>
+        {/* We put the camera system in a group and rotate it so that lat and long are at 0 */}
+        <group ref={longAxisRef}>
+          <group ref={latAxisRef}>
+            <Ground data={planetData} position={[0, -0.2, 0]} />
+            <group ref={camMountRef} position={[0, cameraHeight, 0]}>
+              <group
+                name="CamBox"
+                ref={camBoxRef}
                 rotation={[0, Math.PI, 0]}
-                near={0.01}
-                far={10000000}
-                makeDefault={planetCamera}
-                ref={planetCamRef}
                 rotation-order={"YXZ"}
-              ></PerspectiveCamera>
+                // show the box if planetcamera is not active and show camera pos is on
+              >
+                <mesh visible={!planetCamera && planetCameraHelper}>
+                  <boxGeometry args={[0.2, 0.2, 0.2]} />
+                  <meshStandardMaterial color="red" />
+                </mesh>
+                <Ballrod
+                  visible={!planetCamera && planetCameraHelper}
+                  size={0.2}
+                  length={0.5}
+                />
+                <PlanCamLookAt position={[0, 0, -100000]} size={10} />
+              </group>
+              <group>
+                <PerspectiveCamera
+                  name="PlanetCamera"
+                  rotation={[0, Math.PI, 0]}
+                  near={0.01}
+                  far={20000}
+                  makeDefault={planetCamera}
+                  ref={planetCamRef}
+                  rotation-order={"YXZ"}
+                ></PerspectiveCamera>
+              </group>
             </group>
           </group>
         </group>
