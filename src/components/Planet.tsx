@@ -6,9 +6,7 @@ import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
 import { ContextMenu } from "./ContextMenu";
 import { PlanetRings } from "./PlanetRings";
-import { addEffect } from "@react-three/fiber";
 import { useLevaControls } from "./useLevaControls";
-import PlanetCamera from "./PlanetCamera";
 import Clouds from "./Clouds";
 import { PlanetDescription } from "./PlanetDescription";
 
@@ -78,11 +76,8 @@ export function Planet(props: any) {
           visible={props.visible}
           ref={planetRef}
           scale={1}
-          // onPointerOver={(e) => {
-          //   if (props.visible) {
-          //     setHover(true);
-          //   }
-          // }}
+          // Store the planet props in the userData so that we can access it in the PlanetCamera
+          userData={props}
           onPointerOver={(e) => {
             setHover(true);
           }}
@@ -119,9 +114,9 @@ export function Planet(props: any) {
             />
           )}
 
-          {props.name === cameraTarget && (
+          {/* {props.name === cameraTarget && (
             <PlanetCamera planetRadius={props.size} />
-          )}
+          )} */}
         </mesh>
       </group>
     </>

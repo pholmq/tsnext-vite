@@ -19,6 +19,7 @@ import InfoPanel from "./components/InfoPanel";
 import PosWriter from "./components/PosWriter";
 import Ra0Dec0 from "./components/Ra0Dec0";
 import Ra0Dec02 from "./components/Ra0Dec02";
+import PlanetCamera from "./components/PlanetCamera";
 
 function TSNext() {
   return (
@@ -35,6 +36,7 @@ function TSNext() {
       >
         <Suspense>
           <SystemCamera />
+          <PlanetCamera />
           <ambientLight intensity={0.5} />
           {/* Remove this comment below? */}
           <Stars count={800} radius={5000} />
@@ -44,7 +46,6 @@ function TSNext() {
           <TraceController />
           <PosWriter />
           {/* <CopyPosToClipb /> */}
-          <axesHelper args={[5]} position={[0, 0, 0]} />
           {/* <ExoplanetStars /> */}
           {/* <AsteroidBelt /> */}
         </Suspense>

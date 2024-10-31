@@ -76,3 +76,6 @@ Time to do this. Lots of problems with it being a component attached to the plan
 Layer Planets, so that planet camera see a different size than the system camera. Three has a layer system where you assign objects to layers. So the idea is to assign differently sized planets to a layer and then make the camera see those layers.
 
 - [ ] PlanetCamera controls needs to be rewritten (rerender hell). Soulution: useFrame loop?
+- [ ] Seperate planet camera component and attach it to planets runtime
+- [ ] North South West East markers on the camera Ground component
+- [ ] Hover menu is wonky and it needs an option to be turned off

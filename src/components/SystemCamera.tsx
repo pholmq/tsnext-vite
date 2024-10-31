@@ -25,14 +25,15 @@ export default function SystemCamera() {
     cameraControlsRef.current.setTarget(target.x, target.y, target.z, false);
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     //Wait for camera to load
     setTimeout(() => {
+      if (!cameraControlsRef.current) return;
       cameraControlsRef.current.smoothTime = 2;
       cameraControlsRef.current.rotatePolarTo(Math.PI / 3, true);
     }, 0);
   }, []);
-  useEffect(() => {
+  useLayoutEffect(() => {
     //Reset camera and stop when the Reset button is clicked
     useStore.setState((state) => ({ run: false }));
     updateControls({ "Planet camera": false });

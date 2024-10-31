@@ -3,10 +3,11 @@
     "name": "SystemCenter",
     "color": "black",
     "type": "planet",
-    "visible": true,
+    "visible": false,
     "texture": "",
     "unicodeSymbol": "",
-    "planetCamera": true
+    "planetCamera": true,
+    "axesHelper": true
   },
   {
     "name": "Earth",
