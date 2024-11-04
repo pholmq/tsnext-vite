@@ -177,7 +177,7 @@ export const Controls = () => {
           >
             {showMenu ? <FaTimes /> : <FaBars />}
             <span className="p-1 ml-2 text-2xl font-cambria text-white text-center font-bold">
-              TYCHOSIUM (Beta version)
+              TYCHOSIUM (Sand version)
             </span>
           </button>
         </div>

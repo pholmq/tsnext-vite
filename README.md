@@ -79,4 +79,4 @@ Layer Planets, so that planet camera see a different size than the system camera
 - [ ] Seperate planet camera component and attach it to planets runtime
 - [ ] North South West East markers on the camera Ground component
 - [ ] Hover menu is wonky and it needs an option to be turned off
-- [ ] Make it so that when earth is spinning at a certain speed, that the textures are replaced by a blue ball. 
+- [ ] Make it so that when earth is spinning at a certain speed, that the textures are replaced by a blue ball.
