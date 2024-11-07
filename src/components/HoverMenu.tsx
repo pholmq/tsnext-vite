@@ -4,11 +4,19 @@ import { getRaDecDistance } from "../utils/celestial-functions";
 import { useThree } from "@react-three/fiber";
 import { useStore } from "../store";
 
-export function HoverMenu({ hovered, planetInfo, name, symbol = "*" }) {
+export function HoverMenu({
+  hovered,
+  contextMenu,
+  planetInfo,
+  name,
+  symbol = "*",
+}) {
   const labelRef = useRef(null);
   const intervalRef = useRef(null);
   const { scene, camera } = useThree();
   const run = useStore((s) => s.run);
+  const planetCameraTarget = useStore((s) => s.planetCameraTarget);
+  const planetCamera = useStore((s) => s.planetCamera);
 
   function update() {
     if (!labelRef.current) return;
@@ -46,10 +54,20 @@ export function HoverMenu({ hovered, planetInfo, name, symbol = "*" }) {
     update();
   }, [run, hovered]);
 
+  function hideMenu() {
+    if (!hovered) return true;
+    if (contextMenu) return true;
+    if (planetInfo) return true;
+
+    if (name === planetCameraTarget && planetCamera) return true;
+
+    return false;
+  }
+
   return (
     <Html position={[0, 0, 0]} style={{ pointerEvents: "none" }}>
       <div
-        hidden={hovered && !planetInfo ? false : true}
+        hidden={hideMenu()}
         className="p-1 text-white text-opacity-100 bg-gray-900 
         bg-opacity-50 rounded-md select-none"
       >

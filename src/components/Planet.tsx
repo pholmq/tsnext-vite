@@ -48,27 +48,29 @@ export function Planet(props: any) {
   return (
     <>
       <group rotation={[tiltb * (Math.PI / 180), 0, tilt * (Math.PI / 180)]}>
-        {contextMenu ? (
+        <HoverMenu
+          hovered={hovered}
+          contextMenu={contextMenu}
+          planetInfo={planetInfo}
+          name={props.name}
+          symbol={props.unicodeSymbol}
+        />
+
+        {contextMenu && (
           <ContextMenu
+            contextMenu={contextMenu}
             setContextMenu={setContextMenu}
             setPlanetInfo={setPlanetInfo}
             planetName={props.name}
           />
-        ) : (
-          <HoverMenu
-            hovered={hovered}
-            planetInfo={planetInfo}
-            name={props.name}
-            symbol={props.unicodeSymbol}
-          />
         )}
 
-        {planetInfo ? (
+        {planetInfo && (
           <PlanetDescription
             planetName={props.name}
             setPlanetInfo={setPlanetInfo}
           />
-        ) : null}
+        )}
 
         {props.name === "Earth" ? <CelestialSphere visible={false} /> : null}
 

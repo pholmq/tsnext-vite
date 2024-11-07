@@ -4,11 +4,19 @@ import distanceFromHtmlElement from "../utils/distanceFromHtmlElement";
 import { useStore } from "../store";
 import { useControls } from "leva";
 import { useLevaControls } from "./useLevaControls";
-export function ContextMenu({ setContextMenu, setPlanetInfo, planetName }) {
+export function ContextMenu({
+  contextMenu,
+  setContextMenu,
+  setPlanetInfo,
+  planetName,
+}) {
   // const [showH, setHelper] = useControls("Planet Camera", () => ({
   //   showHelper: true,
   // }));
   const { updateControls } = useLevaControls();
+  const planetCameraTarget = useStore((s) => s.planetCameraTarget);
+  const planetCamera = useStore((s) => s.planetCamera);
+
   const handleMouseMove = (e) => {
     const element = document.getElementById("ContextMenu");
     if (element) {
@@ -29,9 +37,17 @@ export function ContextMenu({ setContextMenu, setPlanetInfo, planetName }) {
     };
   }, []);
 
+  function hideMenu() {
+    if (!contextMenu) return true;
+    if (name === planetCameraTarget && planetCamera) return true;
+
+    return false;
+  }
+
   return (
     <Html position={[0, 0, 0]}>
       <div
+        hidden={hideMenu()}
         id="ContextMenu"
         // hidden={hovered || on ? false : true}
         className="m-1 text-white text-opacity-100 bg-gray-900 
