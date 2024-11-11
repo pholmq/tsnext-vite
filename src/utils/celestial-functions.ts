@@ -162,13 +162,11 @@ export function getAllPositions() {}
 
 export function getRaDecDistance(name: string, scene: Scene) {
   //Returns Right Ascension, Declination and Distance for an object
-
   const objectPos = new Vector3();
   const lookAtDir = new Vector3(0, 0, 1);
   const csPos = new Vector3();
   const sphericalPos = new Spherical();
   const sunPos = new Vector3();
-
   scene.updateMatrixWorld();
   scene.getObjectByName(name).getWorldPosition(objectPos);
   scene.getObjectByName("CelestialSphere").getWorldPosition(csPos);
@@ -179,7 +177,6 @@ export function getRaDecDistance(name: string, scene: Scene) {
   sphericalPos.setFromVector3(lookAtDir);
   const ra = radToRa(sphericalPos.theta);
   const dec = radToDec(sphericalPos.phi);
-
   //Distance
   let distKm;
   let distAU;
@@ -191,7 +188,6 @@ export function getRaDecDistance(name: string, scene: Scene) {
     distKm = ((sphericalPos.radius / 100) * 149597871).toFixed(0);
     distAU = (sphericalPos.radius / 100).toFixed(2);
   }
-
   //Elongation
   scene.getObjectByName("Sun").getWorldPosition(sunPos);
   const earthSunDistance = csPos.distanceTo(sunPos);
@@ -252,7 +248,6 @@ export function radToDec(rad) {
     degDec *= -1.0;
     degreesSign = "-";
   }
-
   const degrees = Math.floor(degDec);
   const minutesSeconds = (degDec - degrees) * 60;
   const minutes = Math.floor((degDec - degrees) * 60);
@@ -265,6 +260,45 @@ export function radToDec(rad) {
     leadZero(Number(seconds.toFixed(0))) +
     '"'
   );
+}
+
+export function radiansToAzimuth(radians) {
+  // Convert radians to degrees
+  let degrees = radians * (180 / Math.PI);
+  // Adjust to azimuth convention
+  let azimuth = (degrees - 90) % 360;
+  // Ensure the result is positive
+  if (azimuth < 0) {
+    azimuth += 360;
+  }
+  // Round to two decimal places
+  return Math.round(azimuth * 100) / 100;
+}
+
+export function rad2lat(rad: number) {
+  // Convert radians to degrees
+  let deg = (rad * 180) / Math.PI;
+  // Normalize to -180 to 180 range
+  deg = deg % 360;
+  // Adjust for latitude range (-90 to 90)
+  if (deg > 90) {
+    deg = 180 - deg;
+  } else if (deg < -90) {
+    deg = -180 - deg;
+  }
+  // Round to 6 decimal places
+  return Math.round(deg * 1000000) / 1000000;
+}
+
+export function rad2lon(rad: number) {
+  let deg = (rad * 180) / Math.PI;
+  deg = deg % 360;
+  if (deg > 180) {
+    deg -= 360;
+  } else if (deg < -180) {
+    deg += 360;
+  }
+  return Math.round(deg * 1000000) / 1000000;
 }
 
 function leadZero(n: number, plus?: boolean) {

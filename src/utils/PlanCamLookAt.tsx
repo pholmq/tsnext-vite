@@ -7,12 +7,12 @@ export default function PlanCamLookAt({ position, size = 2, color = "red" }) {
   return (
     <>
       <group position={position}>
-        <HoverMenu
+        {/* <HoverMenu
           hovered={hovered}
           name={"CameraTarget"}
           planetInfo={false}
           symbol={"X"}
-        />
+        /> */}
 
         <mesh
           name="CameraTarget"

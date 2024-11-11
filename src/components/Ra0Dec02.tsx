@@ -10,12 +10,12 @@ export default function Ra0Dec02() {
   return (
     <>
       <group position={[-60, -400, 100000]}>
-        <HoverMenu
+        {/* <HoverMenu
           hovered={hovered}
           planetInfo={false}
           name={"Ra0Dec02"}
           symbol={"X"}
-        />
+        /> */}
 
         <mesh
           name="Ra0Dec02"
