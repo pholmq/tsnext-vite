@@ -128,7 +128,7 @@ export function Planet(props: any) {
           }}
         >
           <sphereGeometry args={[props.size, 128, 128]} />
-          <meshPhongMaterial
+          <meshStandardMaterial
             ref={materialRef}
             // map={props.texture ? useTexture([props.texture])[0] : null}
             color={props.color}
