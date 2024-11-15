@@ -12,7 +12,7 @@
   {
     "name": "Earth",
     "earth": true,
-    "color": "skyblue",
+    "color": "#287AB8",
     "type": "planet",
     "visible": true,
     "axesHelper": false,
@@ -57,7 +57,7 @@
   },
   {
     "name": "Sun",
-    "color": "yellow",
+    "color": "orange",
     "type": "planet",
     "visible": true,
     "axesHelper": false,
@@ -97,7 +97,7 @@
   },
   {
     "name": "Venus deferent A",
-    "color": "orange",
+    "color": "#FFC649",
     "type": "deferent",
     "visible": false
   },
@@ -109,7 +109,7 @@
   },
   {
     "name": "Venus",
-    "color": "orange",
+    "color": "#FFC649",
     "type": "planet",
     "visible": true,
     "axesHelper": false,

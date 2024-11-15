@@ -34,6 +34,7 @@ export const useStore = create((set) => ({
   traceDots: false,
   menuRight: false,
   showStats: false,
+  showTexture: true,
 
   //Trigger update flags
   runPosWriter: false,

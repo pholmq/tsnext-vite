@@ -201,6 +201,10 @@ export const useLevaControls = () => {
           value: useStore.getState().menuRight,
           onChange: (v) => useStore.setState({ menuRight: v }),
         },
+        "Show planet textures": {
+          value: useStore.getState().showTexture,
+          onChange: (v) => useStore.setState({ showTexture: v }),
+        },
       },
       { collapsed: true }
     ),
