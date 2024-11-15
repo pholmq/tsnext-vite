@@ -2,7 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "../store";
 import { useTexture } from "@react-three/drei";
-import { Mesh, MeshStandardMaterial, Texture, sRGBEncoding } from "three";
+import {
+  Mesh,
+  MeshStandardMaterial,
+  Texture,
+  sRGBEncoding,
+  Color,
+} from "three";
 import { HoverMenu } from "./HoverMenu";
 import { CelestialSphere } from "./CelestialSphere";
 import { useFrame } from "@react-three/fiber";
@@ -36,17 +42,19 @@ export function Planet(props: any) {
   const rotationSpeed = props.rotationSpeed || 0;
   const rotationStart = props.rotationStart || 0;
 
-  // useEffect(() => {
-  //   if (materialRef.current) {
-  //     if (showTexture) {
-  //       materialRef.current.map = texture;
-  //     } else {
-  //       materialRef.current.map = null;
-  //     }
-  //     // materialRef.current.toneMapped = false;
-  //     // materialRef.current.needsUpdate = true;
-  //   }
-  // }, [showTexture, texture]);
+  useEffect(() => {
+    if (materialRef.current) {
+      if (showTexture) {
+        materialRef.current.map = texture;
+        materialRef.current.color = new Color(0xffffff);
+      } else {
+        materialRef.current.map = null;
+        materialRef.current.color = new Color(props.color);
+      }
+      // materialRef.current.toneMapped = false;
+      materialRef.current.needsUpdate = true;
+    }
+  }, [showTexture, texture]);
 
   useFrame(() => {
     planetRef.current.rotation.y =
@@ -120,9 +128,9 @@ export function Planet(props: any) {
           }}
         >
           <sphereGeometry args={[props.size, 128, 128]} />
-          <meshStandardMaterial
+          <meshPhongMaterial
             ref={materialRef}
-            map={props.texture ? useTexture([props.texture])[0] : null}
+            // map={props.texture ? useTexture([props.texture])[0] : null}
             color={props.color}
           />
           {/* Add clouds to Earth */}
