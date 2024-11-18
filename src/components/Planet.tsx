@@ -134,7 +134,9 @@ export function Planet(props: any) {
             color={props.color}
           />
           {/* Add clouds to Earth */}
-          {props.name === "Earth" && <Clouds size={props.size} />}
+          {props.name === "Earth" && showTexture ? (
+            <Clouds size={props.size} />
+          ) : null}
 
           {props.light && <pointLight intensity={3} />}
 
